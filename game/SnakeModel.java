@@ -110,10 +110,21 @@ public class SnakeModel {
 	 * Returns the radius of the snake
 	 * @return
 	 */
-	public double getRadius()
+	public double getOuterRadius()
 	{
-		return outerEdge.height;
+		return outerEdge.height / 2;
 	}
+	
+	/**
+	 * Returns the inner radius of the snake
+	 * @return
+	 */
+	public double getInnerRadius()
+	{
+		return innerEdge.height / 2;
+	}
+	
+	
 	/**
 	 * Moves the snake to the up by a certain amount
 	 */
