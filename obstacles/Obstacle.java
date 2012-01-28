@@ -1,6 +1,7 @@
 package obstacles;
 
 public abstract class Obstacle {
+	
 	/**
 	 * 
 	 */
@@ -13,5 +14,8 @@ public abstract class Obstacle {
 	 * 
 	 */
 	public abstract boolean haveCollided();
+	
+	public int timer;
+	public int origTimer;
 
 }
