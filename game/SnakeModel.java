@@ -1,7 +1,6 @@
 package game;
 
 import java.awt.geom.Point2D;
-import java.awt.geom.Point2D.Double;
 import java.awt.geom.Ellipse2D;
 
 /**
@@ -12,6 +11,35 @@ public class SnakeModel {
 	
 	// instance variables
 	Ellipse2D.Double outerEdge;
+	Ellipse2D.Double innerEdge;
+	
+	// constants
+	// TODO confirm snake radius
+	/**
+	 * The distance from the centre of the snake to the outer edge
+	 */
+	private final int DEFAULT_SNAKE_RADIUS = 250;
+	
+	// TODO this should be the actual snake width
+	private final int SNAKE_WIDTH = 30;
+	
+	// constructor
+	SnakeModel()
+	{
+		final int DEFAULT_X_POS = 0;
+		final int DEFAULT_Y_POS = 0;
+		outerEdge = new Ellipse2D.Double(
+					DEFAULT_X_POS, 
+					DEFAULT_Y_POS,
+					DEFAULT_SNAKE_RADIUS,
+					DEFAULT_SNAKE_RADIUS);
+		double innerRadius = DEFAULT_SNAKE_RADIUS - SNAKE_WIDTH;
+		innerEdge = new Ellipse2D.Double(
+					DEFAULT_X_POS + SNAKE_WIDTH,
+					DEFAULT_Y_POS + SNAKE_WIDTH,
+					innerRadius,
+					innerRadius);
+	}
 	
 	/**
 	 * Increases the radius of the snake
@@ -43,12 +71,29 @@ public class SnakeModel {
 	}
 	
 	/**
+	 * Sets the position of the upper left hand corner
+	 * of the snake
+	 * @param origin
+	 */
+	public void setOrigin(Point2D.Double origin)
+	{
+		double outerRadius = outerEdge.height;
+		outerEdge.setFrame(origin.x, origin.y, outerRadius, outerRadius);
+		double innerRadius = innerEdge.height;
+		innerEdge.setFrame(	origin.x + SNAKE_WIDTH,
+							origin.y + SNAKE_WIDTH,
+							innerRadius,
+							innerRadius);
+		
+	}
+	
+	/**
 	 * Returns the radius of the snake
 	 * @return
 	 */
 	public double getRadius()
 	{
-		return 0;
+		return outerEdge.height;
 	}
 	
 	/**
@@ -60,4 +105,8 @@ public class SnakeModel {
 		double radius = outerEdge.getHeight();
 		outerEdge.setFrame(point.x, point.y, radius, radius);
 	}
+	
+	
+	
+	
 }
