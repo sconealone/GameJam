@@ -1,11 +1,9 @@
 package obstacles;
 
-<<<<<<< HEAD
 import game.GameOverException;
 
 public abstract class Obstacle {
 	
->>>>>>> 06fef1554299010cedc25a6a830ab0a08052ffaf
 	/**
 	 * 
 	 */

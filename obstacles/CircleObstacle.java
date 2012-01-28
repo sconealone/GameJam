@@ -1,22 +1,9 @@
 package obstacles;
 
-<<<<<<< HEAD
-import game.Wall;
-
-=======
 import game.GameOverException;
-
 import java.awt.geom.Ellipse2D;
->>>>>>> 06fef1554299010cedc25a6a830ab0a08052ffaf
 
 
-<<<<<<< HEAD
-	public CircleObstacle(int eventualX, int eventualY, int speed, Wall wall) {
-		super(eventualX, eventualY, speed, wall);
-		// TODO Auto-generated constructor stub
-	}
-
-=======
 public class CircleObstacle extends Obstacle{
 	private final int FRAMES_PER_SECOND = 4;
 	public CircleObstacle(int duration, double xloc, double yloc, double r){
@@ -26,7 +13,7 @@ public class CircleObstacle extends Obstacle{
 	}
 	
 	public Ellipse2D.Double circle;
->>>>>>> 06fef1554299010cedc25a6a830ab0a08052ffaf
+	
 	@Override
 	public void update() throws GameOverException {
 		timer++;
@@ -80,6 +67,12 @@ public class CircleObstacle extends Obstacle{
 			return (distance+rObstacle) < r1;
 		if(distance > r2)
 			return (distance-rObstacle) > r2;
+	}
+
+	@Override
+	public void draw(Graphics2D g) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
