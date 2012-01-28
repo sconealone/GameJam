@@ -7,8 +7,8 @@ import java.awt.geom.Ellipse2D;
 
 public class CircleObstacle extends Obstacle{
 	private final int FRAMES_PER_SECOND = 4;
-	public CircleObstacle(int duration, double xloc, double yloc, double r){
-		circle = new Ellipse2D.Double(xloc, yloc, r, r);
+	public CircleObstacle(int duration, double xloc, double yloc, double d){
+		circle = new Ellipse2D.Double(xloc, yloc, d, d);
 		origTimer = duration;
 		timer = 0;
 	}
@@ -26,14 +26,15 @@ public class CircleObstacle extends Obstacle{
 			double alpha = 1 + (timer / origTimer * FRAMES_PER_SECOND);
 			double x = circle.getX();
 			double y = circle.getY();
-			double r = circle.getWidth();
-			double centerX = x + r / 2;
-			double centerY = y - r / 2;
-			r = r * alpha;
-			x = centerX - r;
-			y = centerY + r;
-			circle.setFrame(x, y, r, r);
+			double d = circle.getWidth();
+			double centerX = x + d / 2;
+			double centerY = y - d / 2;
+			d = d * alpha;
+			x = centerX - d;
+			y = centerY + d;
+			circle.setFrame(x, y, d, d);
 		}
+		draw();
 	}
 
 	@Override

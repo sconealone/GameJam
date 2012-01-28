@@ -8,8 +8,8 @@ import java.awt.geom.Rectangle2D;
 public class RectObstacle extends Obstacle{
 	private final int FRAMES_PER_SECOND = 4;
 	public Rectangle2D rect;
-	public RectObstacle(int duration, double xloc, double yloc, double r){
-		rect = new Rectangle2D.Double(xloc, yloc, r, r);
+	public RectObstacle(int duration, double xloc, double yloc, double d){
+		rect = new Rectangle2D.Double(xloc, yloc, d, d);
 		origTimer = duration;
 		timer = 0;
 	}
@@ -26,15 +26,16 @@ public class RectObstacle extends Obstacle{
 			double alpha = 1 + (timer / origTimer * FRAMES_PER_SECOND);
 			double x = rect.getX();
 			double y = rect.getY();
-			double r = rect.getWidth();
+			double d = rect.getWidth();
 			//double h = rect.getHeight();
-			double centerX = x + r / 2;
-			double centerY = y - r / 2;
-			r = r * alpha;
-			x = centerX - r;
-			y = centerY + r;
-			rect.setRect(x, y, r, r);
+			double centerX = x + d / 2;
+			double centerY = y - d / 2;
+			d = d * alpha;
+			x = centerX - d;
+			y = centerY + d;
+			rect.setRect(x, y, d, d);
 		}
+		draw();
 	}
 
 	@Override
