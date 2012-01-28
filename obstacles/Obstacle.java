@@ -1,20 +1,15 @@
 package obstacles;
 
-import game.Game;
-import game.Wall;
-
-import java.awt.Graphics2D;
+<<<<<<< HEAD
+import game.GameOverException;
 
 public abstract class Obstacle {
 	
-	public Obstacle(int eventualX, int eventualY, int speed, Wall wall) {
-		
-	}
-	
+>>>>>>> 06fef1554299010cedc25a6a830ab0a08052ffaf
 	/**
 	 * 
 	 */
-	public abstract void update();
+	public abstract void update() throws GameOverException;
 	/**
 	 * 
 	 */
@@ -23,6 +18,9 @@ public abstract class Obstacle {
 	 * 
 	 */
 	public abstract boolean haveCollided();
+	
+	public int timer;
+	public int origTimer;
 
 	public void draw() {
 		// TODO Auto-generated method stub

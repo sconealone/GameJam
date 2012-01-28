@@ -1,19 +1,52 @@
 package obstacles;
 
+<<<<<<< HEAD
 import game.Wall;
 
+=======
+import game.GameOverException;
 
-public class CircleObstacle extends Obstacle{
+import java.awt.geom.Ellipse2D;
+>>>>>>> 06fef1554299010cedc25a6a830ab0a08052ffaf
 
+
+<<<<<<< HEAD
 	public CircleObstacle(int eventualX, int eventualY, int speed, Wall wall) {
 		super(eventualX, eventualY, speed, wall);
 		// TODO Auto-generated constructor stub
 	}
 
+=======
+public class CircleObstacle extends Obstacle{
+	private final int FRAMES_PER_SECOND = 4;
+	public CircleObstacle(int duration, double xloc, double yloc, double r){
+		circle = new Ellipse2D.Double(xloc, yloc, r, r);
+		origTimer = duration;
+		timer = 0;
+	}
+	
+	public Ellipse2D.Double circle;
+>>>>>>> 06fef1554299010cedc25a6a830ab0a08052ffaf
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
+	public void update() throws GameOverException {
+		timer++;
+		if (timer == origTimer * FRAMES_PER_SECOND){
+			if (haveCollided())
+				throw new GameOverException();
+			circle.setFrame(0,0,0,0);
+		}
+		else {
+			double alpha = 1 + (timer / origTimer * FRAMES_PER_SECOND);
+			double x = circle.getX();
+			double y = circle.getY();
+			double r = circle.getWidth();
+			double centerX = x + r / 2;
+			double centerY = y - r / 2;
+			r = r * alpha;
+			x = centerX - r;
+			y = centerY + r;
+			circle.setFrame(x, y, r, r);
+		}
 	}
 
 	@Override
