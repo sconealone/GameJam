@@ -32,7 +32,7 @@ public class Wall {
 		num =  (((int )Math.random()*100)%maxDiffObstacles);
 		switch(num){
 		case 0: 	obstacles.add(new CircleObstacle(dur, x, y , r));		break;
-		case 1: 	obstacles.add(new RectObstacle());			break;
+		case 1: 	obstacles.add(new RectObstacle(dur, x, y, r));			break;
 		}
 		
 	}
