@@ -11,7 +11,7 @@ public abstract class Obstacle {
 	/**
 	 * 
 	 */
-	public abstract  void draw();
+	public abstract  void draw(Graphics2D g);
 	/**
 	 * 
 	 */
@@ -19,5 +19,10 @@ public abstract class Obstacle {
 	
 	public int timer;
 	public int origTimer;
+
+	public void draw() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

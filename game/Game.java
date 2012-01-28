@@ -8,8 +8,7 @@ import java.awt.event.KeyListener;
 import javax.swing.*;
 
 
-public class Game //implements KeyListener
-{
+public class Game {
 	private static int gameTime=0;
 	
 	public static void main (String [ ] args) throws InterruptedException {
@@ -44,54 +43,4 @@ public class Game //implements KeyListener
 		}
 	}
 	
-	  @Override
-
-	  public void keyPressed(KeyEvent e) {
-
-	    char charPressed = e.getKeyChar();
-
-	    if (charPressed == 'w' || charPressed == 'W')
-
-	    {
-
-
-	     }
-
-	    
-
-	  }
-
-	
-
-	  @Override
-	  public void keyReleased(KeyEvent e) {
-
-	    // do nothing
-
-	  }
-
-	
-
-	  @Override
-
-	  public void keyTyped(KeyEvent e) {
-
-	    // do nothing
-
-	    
-
-	  }
-
-	  
-
-	  public boolean isShrinkKeyPressed()
-
-	  {
-
-	    return shrinkKeyPressed;
-
-	   }
-
-	 
-
 }
