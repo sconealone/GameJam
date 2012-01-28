@@ -9,7 +9,7 @@ import javax.swing.*;
 public class Game extends JFrame{
 	private static boolean isGameOver = false;
 	public Game(){
-		JPanel wall = new Wall(20);
+		Wall wall = new Wall(20);
 		JPanel snake = new Snake(300,300);
 		setSize(300,300);
 		getContentPane().add(wall);
