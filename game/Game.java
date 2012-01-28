@@ -6,24 +6,19 @@ import java.awt.Graphics;
 import javax.swing.*;
 
 
-public class Game extends JFrame{
-	private static boolean isGameOver = false;
-	public Game(){
-		JPanel wall = new Wall(20);
-		JPanel snake = new Snake(300,300);
-		setSize(300,300);
-		getContentPane().add(wall);
-		getContentPane().add(snake);
-	}
+public class Game {
+	private static int gameTime=0;
 	
-	public static void main (String [ ] args) throws InterruptedException{
-		JFrame frame = new Game();
-		int k = 0;
-		frame.pack();
-		frame.show();
-		while (!isGameOver){
-			if (k == 100) isGameOver = true;
-			frame.repaint();
+	public static void main (String [ ] args) throws InterruptedException {
+		try{
+			gameLoop();
+		}catch(GameOverException e){
+			
+		}
+	}
+	public static void gameLoop() throws InterruptedException{
+		while(true){
+			gameTime++;
 			Thread.sleep(250);
 		}
 	}
