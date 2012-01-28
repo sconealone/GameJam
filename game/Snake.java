@@ -1,4 +1,5 @@
 package game;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -7,7 +8,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.*;
-
 
 public class Snake extends JPanel implements KeyListener{
 	private final int snakeWidth = 20;
@@ -65,6 +65,11 @@ public class Snake extends JPanel implements KeyListener{
 		
 		
 	}
+
+	
+	
+	
+	
 
 	
 	
