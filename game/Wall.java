@@ -1,21 +1,40 @@
 package game;
-import java.awt.Color;
-import java.awt.Graphics;
 
-import javax.swing.JPanel;
+import java.util.*;
+
+import obstacles.CircleObstacle;
+import obstacles.Obstacle;
+import obstacles.RectObstacle;
 
 
-public class Wall extends JPanel{
-	private int live = 15;
-	public Wall(){
-	
+
+
+public class Wall {
+	private int maxNumObstacles;
+	private int maxDiffObstacles = 2;
+	private ArrayList<Obstacle> obstacles;
+	/**
+	 * 
+	 * @param n the max amount of obstacles on the screen at any given time
+	 */
+	public Wall(int n){
+		obstacles = new ArrayList<Obstacle>();
+		maxNumObstacles = n;
 	}
-	public void paintComponent(Graphics g){
-		super.paintComponents(g);
-		int sizeScalar = 15-live;
-		g.drawOval(150, 150, sizeScalar*10, sizeScalar*10);
-		g.setColor(Color.red);
-		live --;
+	/**
+	 * Create a random obstacle at a random location on the screen
+	 * 
+	 */
+	public void createObstacle(){
+		int num = 0;
+		int dur = 5;
+		double x= 50, y= 50 , r = 20;
+		num =  (((int )Math.random()*100)%maxDiffObstacles);
+		switch(num){
+		case 0: 	obstacles.add(new CircleObstacle(dur, x, y , r));		break;
+		case 1: 	obstacles.add(new RectObstacle(dur, x, y, r));			break;
+		}
+		
 	}
 
 }

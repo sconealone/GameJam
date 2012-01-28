@@ -1,12 +1,15 @@
 package obstacles;
 
+import java.awt.Polygon;
+
 
 public class TriangleObstacle extends Obstacle{
 
+	private Polygon tri;
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
+		float alpha = 1 + (1 - timer / origTimer);
+
 	}
 
 	@Override
