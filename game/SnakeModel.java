@@ -23,6 +23,12 @@ public class SnakeModel {
 	// TODO this should be the actual snake width
 	private final int SNAKE_WIDTH = 30;
 	
+	private final int MAX_SNAKE_RADIUS = 768;
+	
+	private final int MOVE_BY_AMOUNT = 10; // pixels
+	
+	private final int CHANGE_DIAMETER_BY = 50; // pixels
+	
 	// constructor
 	SnakeModel()
 	{
@@ -31,34 +37,47 @@ public class SnakeModel {
 		outerEdge = new Ellipse2D.Double(
 					DEFAULT_X_POS, 
 					DEFAULT_Y_POS,
-					DEFAULT_SNAKE_RADIUS,
-					DEFAULT_SNAKE_RADIUS);
+					DEFAULT_SNAKE_RADIUS + DEFAULT_SNAKE_RADIUS,
+					DEFAULT_SNAKE_RADIUS + DEFAULT_SNAKE_RADIUS);
 		double innerRadius = DEFAULT_SNAKE_RADIUS - SNAKE_WIDTH;
 		innerEdge = new Ellipse2D.Double(
 					DEFAULT_X_POS + SNAKE_WIDTH,
 					DEFAULT_Y_POS + SNAKE_WIDTH,
-					innerRadius,
-					innerRadius);
+					innerRadius + innerRadius,
+					innerRadius + innerRadius);
 	}
 	
 	/**
 	 * Increases the radius of the snake
-	 * @param radius
+	 * @param growRadiusBy
 	 */
-	public void grow(double radius)
+	public void grow()
 	{
-		this.outerEdge.width += radius;
-		this.outerEdge.height += radius;
+		this.outerEdge.width += CHANGE_DIAMETER_BY;
+		this.outerEdge.height += CHANGE_DIAMETER_BY;
+		this.innerEdge.width += CHANGE_DIAMETER_BY;
+		this.innerEdge.height += CHANGE_DIAMETER_BY;
 	}
 	
 	/**
 	 * Decreases the radius of the snake
-	 * @param radius
+	 * @param shrinkRadiusBy
 	 */
-	public void shrink(double radius)
+	public void shrink()
 	{
-		this.outerEdge.width -= radius;
-		this.outerEdge.height -= radius;
+		if (innerEdge.width - CHANGE_DIAMETER_BY < 0)
+		{
+			innerEdge.width = 0;
+			innerEdge.height = 0;
+			double snakeDiameter = SNAKE_WIDTH + SNAKE_WIDTH;
+			outerEdge.width = snakeDiameter;
+			outerEdge.height = snakeDiameter;
+			return;
+		}
+		this.innerEdge.width -= CHANGE_DIAMETER_BY;
+		this.innerEdge.height -= CHANGE_DIAMETER_BY;
+		this.outerEdge.width -= CHANGE_DIAMETER_BY;
+		this.outerEdge.height -= CHANGE_DIAMETER_BY;
 	}
 	
 	/**
@@ -95,18 +114,129 @@ public class SnakeModel {
 	{
 		return outerEdge.height;
 	}
-	
 	/**
-	 * Moves the origin of the snake to the new point
-	 * @param point
+	 * Moves the snake to the up by a certain amount
 	 */
-	public void moveTo(Point2D.Double point)
-	{
-		double radius = outerEdge.getHeight();
-		outerEdge.setFrame(point.x, point.y, radius, radius);
+	public void moveUp(){
+			
+			outerEdge.setFrame(	outerEdge.x,
+								outerEdge.y+MOVE_BY_AMOUNT,
+								outerEdge.width,
+								outerEdge.height);
+			innerEdge.setFrame(	innerEdge.x,
+					innerEdge.y+MOVE_BY_AMOUNT,
+					innerEdge.width,
+					innerEdge.height);
+		
 	}
+	/**
+	 * Moves the snake to the down by a certain amount
+	 */
+	public void moveDown(){
+		
+		outerEdge.setFrame(	outerEdge.x,
+							outerEdge.y-MOVE_BY_AMOUNT,
+							outerEdge.width,
+							outerEdge.height);
+		innerEdge.setFrame(	innerEdge.x,
+				innerEdge.y-MOVE_BY_AMOUNT,
+				innerEdge.width,
+				innerEdge.height);
 	
+	}
+	/**
+	 * Moves the snake to the right by a certain amount
+	 */
+	public void moveRight(){
+		
+		outerEdge.setFrame(	outerEdge.x+MOVE_BY_AMOUNT,
+							outerEdge.y,
+							outerEdge.width,
+							outerEdge.height);
+		innerEdge.setFrame(	innerEdge.x+MOVE_BY_AMOUNT,
+				innerEdge.y,
+				innerEdge.width,
+				innerEdge.height);
 	
+	}
+
+	/**
+	 * Moves the snake to the left by a certain amount
+	 */
+	public void moveLeft(){
+		
+		outerEdge.setFrame(	outerEdge.x-MOVE_BY_AMOUNT,
+							outerEdge.y,
+							outerEdge.width,
+							outerEdge.height);
+		innerEdge.setFrame(	innerEdge.x-MOVE_BY_AMOUNT,
+				innerEdge.y,
+				innerEdge.width,
+				innerEdge.height);
 	
+	}
+@Override
+	public String toString(){
+		String self = "Origin of outer circ = (" + outerEdge.x + ", " 
+					+ outerEdge.y 
+					+ ")\n";
+		self +="Inner Origin: = ("+innerEdge.x + ", " + innerEdge.y +
+				")\n";
+		self += "Outer radius = "+outerEdge.height/2+"\n";
+		self += "Inner radius = "+innerEdge.height/2+"\n";
+		
+		self += "difference between heights = " + (outerEdge.height - innerEdge.height)
+				+"\n";
+		self += "difference between widths = " + (outerEdge.width - innerEdge.width)
+				+"\n";
+		self += "Snake width (should be half the above) = " + SNAKE_WIDTH;
+				
+		return self;
+		
+	}
+
+	public static void main(String[] args)
+	{
+		System.out.println("Default snake");
+		SnakeModel s1 = new SnakeModel();
+		System.out.println(s1);
+		System.out.println();
+		
+		System.out.println("Testing move up");
+		s1.moveUp();
+		System.out.println(s1);
+
+		System.out.println();
+		System.out.println("Testing move down");
+		s1.moveDown();
+		System.out.println(s1);
+		System.out.println();
+		System.out.println("Testing move left");
+		s1.moveLeft();
+		System.out.println(s1);
+		System.out.println();
+		System.out.println("Testing move right");
+		s1.moveRight();
+		System.out.println(s1);
+		
+		System.out.println("Testing grow");
+		s1.grow();
+		System.out.println(s1);
+		
+		System.out.println("\nTesting shrink");
+		s1.shrink();
+		System.out.println(s1);
+		System.out.println();
+		s1.shrink();
+		System.out.println(s1);
+		System.out.println("\nTesting that you can't shrink inner circle past 0");
+		for (int i = 0; i < 10; i++)
+		{
+			s1.shrink();
+		}
+		System.out.println(s1);
+		
+		
+	}
 	
 }
