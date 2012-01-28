@@ -1,5 +1,7 @@
 package obstacles;
 
+import game.GameOverException;
+
 import java.awt.geom.Ellipse2D;
 
 
@@ -13,7 +15,7 @@ public class CircleObstacle extends Obstacle{
 	
 	public Ellipse2D.Double circle;
 	@Override
-	public void update() {
+	public void update() throws GameOverException {
 		timer++;
 		if (timer == origTimer * FRAMES_PER_SECOND){
 			if (haveCollided())

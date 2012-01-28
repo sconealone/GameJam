@@ -1,5 +1,5 @@
 package obstacles;
-
+import game.GameOverException;
 import java.awt.geom.Rectangle2D;
 
 
@@ -15,7 +15,7 @@ public class RectObstacle extends Obstacle{
 	}
 
 	@Override
-	public void update() {
+	public void update() throws GameOverException {
 		timer++;
 		if (timer == origTimer * FRAMES_PER_SECOND){
 			if (haveCollided())

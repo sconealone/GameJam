@@ -1,11 +1,13 @@
 package obstacles;
 
+import game.GameOverException;
+
 public abstract class Obstacle {
 	
 	/**
 	 * 
 	 */
-	public abstract void update();
+	public abstract void update() throws GameOverException;
 	/**
 	 * 
 	 */
