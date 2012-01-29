@@ -39,6 +39,8 @@ public class Game implements KeyListener,MouseListener{
 	private ArrayList<Obstacle> obstacles;
 	private boolean isUp, isDown, isLeft, isRight, isShrink = false;
 	private boolean isGameOver = false;
+	
+	private Image background;
 
 	JFrame frame;
 	Image gmenu;
@@ -66,6 +68,13 @@ public class Game implements KeyListener,MouseListener{
 		frame.requestFocus();
 		frame.addKeyListener(this);
 		obstacles = wall.getObstacles();
+		
+		try {
+			background = ImageIO.read(new File("src"+File.separatorChar+"resources"+File.separatorChar+"bkground.jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	//reads the game menu
@@ -107,10 +116,10 @@ public class Game implements KeyListener,MouseListener{
 		game.readMenu();
 		while (!hasClickedStart)
 		{
-			System.out.println("has not clicked");
+
 		}
-				game.initGame();
-		
+		game.initGame();
+//>>>>>>> d55b6b183ba24a07d6a9dc3833e07ced5bdaa574
 		try{
 			game.gameLoop();
 
@@ -165,7 +174,8 @@ public class Game implements KeyListener,MouseListener{
 				
 				g = bf.getDrawGraphics();
 				g.setColor(new Color(255,255,255));
-				g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
+				//g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
+				g.drawImage(background, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
 				Obstacle myO;
 				for( int i = 0; i < obstacles.size(); i ++)//Obstacle o: obstacles) {
 				{	
