@@ -36,7 +36,7 @@ public class SnakeBoundary {
 	// TODO this should be the actual snake width
 	private final int SNAKE_WIDTH = 30;
 	
-	private final int MAX_SNAKE_RADIUS = 768;
+	private final int MAX_SNAKE_RADIUS = 600;
 	
 	private final int MOVE_BY_AMOUNT = 10; // pixels
 	
@@ -72,10 +72,11 @@ public class SnakeBoundary {
 	 */
 	public void grow()
 	{
-		this.outerEdge.width += CHANGE_DIAMETER_BY;
-		this.outerEdge.height += CHANGE_DIAMETER_BY;
-		this.innerEdge.width += CHANGE_DIAMETER_BY;
-		this.innerEdge.height += CHANGE_DIAMETER_BY;
+		float change = changeDiameterBy(true);
+		this.outerEdge.width += change;
+		this.outerEdge.height += change;
+		this.innerEdge.width += change;
+		this.innerEdge.height += change;
 	}
 	
 	/**
@@ -84,7 +85,8 @@ public class SnakeBoundary {
 	 */
 	public void shrink()
 	{
-		if (innerEdge.width - CHANGE_DIAMETER_BY < 0)
+		float change = changeDiameterBy(false);
+		if (innerEdge.width - change < 0)
 		{
 			innerEdge.width = 0;
 			innerEdge.height = 0;
@@ -93,16 +95,16 @@ public class SnakeBoundary {
 			outerEdge.height = snakeDiameter;
 			return;
 		}
-		this.innerEdge.width -= CHANGE_DIAMETER_BY;
-		this.innerEdge.height -= CHANGE_DIAMETER_BY;
-		this.outerEdge.width -= CHANGE_DIAMETER_BY;
-		this.outerEdge.height -= CHANGE_DIAMETER_BY;
+		this.innerEdge.width -= change;
+		this.innerEdge.height -= change;
+		this.outerEdge.width -= change;
+		this.outerEdge.height -= change;
 	}
-	
+	/*
 	public void draw(Graphics2D g) {
 		AffineTransform at = new AffineTransform();
 		g.drawImage(img, at, null);
-	}
+	}*/
 	
 	/**
 	 * Gets the upper left hand corner of the snake
@@ -210,7 +212,23 @@ public class SnakeBoundary {
 				innerEdge.height);
 	
 	}
-@Override
+	
+	
+
+	/**
+	 * Returns the amount to change the diameter of the
+	 * snake by based on the stage and if it is growing or shrinking
+	 * @param growing whether or not the snake is growing
+	 * @return
+	 */
+	public float changeDiameterBy(boolean growing)
+	{
+		// TODO implement
+		return 0f;
+	}
+	
+	
+	@Override
 	public String toString(){
 		String self = "Origin of outer circ = (" + outerEdge.x + ", " 
 					+ outerEdge.y 
