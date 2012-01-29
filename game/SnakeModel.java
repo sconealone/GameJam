@@ -50,8 +50,9 @@ public class SnakeModel {
 	SnakeModel(){
 		x = y = 0;
 		dx = dy = 5;
+		char fs = File.separatorChar;
 		try {
-			img = ImageIO.read(new File("src\\resources\\test0036.png"));
+			img = ImageIO.read(new File("test0036.png"));
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
