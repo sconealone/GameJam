@@ -186,13 +186,13 @@ public class GameProcessing extends PApplet
 			for (Obstacle o : obs)
 			{
 				o.update();
-				Ellipse2D.Double circleModel = ((CircleObstacle) o).circle;
+				Ellipse2D.Float circleModel = ((CircleObstacle) o).circle;
 				float circleX, circleY, circleHeight, circleWidth;
 				circleX = (float)circleModel.x;
 				circleY = (float)circleModel.y;
 				circleHeight = (float)circleModel.height;
 				circleWidth = (float)circleModel.width;
-				
+				ellipseMode(CORNER);
 				ellipse(circleX, circleY, circleWidth, circleHeight);
 			}
 		}
@@ -208,11 +208,14 @@ public class GameProcessing extends PApplet
 		// redraw stuff
 		
 		// regenerate obstacles
-		int obstaclesAtATime = 3;
+		int obstaclesAtATime = 1;
 		if (wall.getObstacles().size() < obstaclesAtATime)
 		{
 			wall.createObstacle();
 		}
+		CircleObstacle mycircle = (CircleObstacle) wall.getObstacles().get(0);
+		if (mycircle.circle.getWidth() == 0)
+			wall.getObstacles().remove(0);
 		
 	}
 

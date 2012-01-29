@@ -30,7 +30,7 @@ public class Wall {
 	public void createObstacle(){
 		int num = 0;
 		int dur = 5;
-		double x= 50, y= 50 , r = 20;
+		float x= 250, y= 250 , r = 50;
 		num =  (((int )Math.random()*100)%maxDiffObstacles);
 		switch(num){
 		case 0: 	obstacles.add(new CircleObstacle(dur, x, y , r, snake));		break;

@@ -41,8 +41,8 @@ public class SnakeModel {
 	// constructor
 	SnakeModel()
 	{
-		final int DEFAULT_X_POS = 0;
-		final int DEFAULT_Y_POS = 0;
+		final int DEFAULT_X_POS = 300;
+		final int DEFAULT_Y_POS = 300;
 		outerEdge = new Ellipse2D.Double(
 					DEFAULT_X_POS, 
 					DEFAULT_Y_POS,

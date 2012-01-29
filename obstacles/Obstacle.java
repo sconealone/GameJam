@@ -19,7 +19,7 @@ public abstract class Obstacle {
 	 */
 	public abstract boolean haveCollided();
 	
-	public int timer;
-	public int origTimer;
+	protected int timer;
+	protected int origTimer;
 
 }
