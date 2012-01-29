@@ -106,7 +106,9 @@ public class Game implements KeyListener,MouseListener{
 		
 		game.readMenu();
 		while (!hasClickedStart)
-		{}
+		{
+			System.out.println("has not clicked");
+		}
 				game.initGame();
 		
 		try{
@@ -270,10 +272,11 @@ public class Game implements KeyListener,MouseListener{
 		if((e.getX() >= 185) && (e.getX() <= 420) && (e.getY() >= 440) && (e.getY() <=510)){
 			System.out.println("CLICKED");
 			hasClickedStart = true;
-			//System.out.println("you clicked start");
+			System.out.println("you clicked start");
 		}
 		if((e.getX() >= 194) && (e.getX() <= 419) && (e.getY() >= 490) && (e.getY() <=515)){
 			hasClickedRetry = true;
+			System.out.println("you clicked retry");
 		}
 
 		System.out.print(e.getX()+","+e.getY()+hasClickedRetry +"\n");
