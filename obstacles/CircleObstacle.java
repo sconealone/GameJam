@@ -12,7 +12,7 @@ public class CircleObstacle extends Obstacle{
 	SnakeModel mySnake;
 	public Ellipse2D.Double circle;
 	public CircleObstacle(int duration, double xloc, double yloc, double d, SnakeModel snake){
-		circle = new Ellipse2D.Double(xloc, yloc, d, d);
+		circle = new Ellipse2D.Double(xloc, yloc, 2 * d, 2 * d);
 		origTimer = duration;
 		timer = 0;
 		mySnake = snake;
@@ -38,7 +38,8 @@ public class CircleObstacle extends Obstacle{
 			d = d * alpha;
 			x = centerX - d / 2;
 			y = centerY - d / 2;
-			circle.setFrame(x, y, d, d);
+			circle = new Ellipse2D.Double(x, y, d, d);
+			//circle.setFrame(x, y, d, d);
 		}
 	}
 
