@@ -4,8 +4,11 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
+
+import obstacles.Obstacle;
 
 
 public class Game{
@@ -49,20 +52,48 @@ public class Game{
 		while(true){
 			// check for key presses
 	
-			
-	
-			 // update snake
-	
+			// update snake
 			
 			// check for captures
 	
-			  
-	
 			// check for collisions (game over)
 			
-		     
-	
 			// repaint
+			
+			
+			
+			
+			
+			
+			// update wall
+			
+			ArrayList<Obstacle> obstacles = wall.getObstacles();
+			for(int i=0; i< obstacles.size(); i++){
+				obstacles.get(i).update();
+			}
+			
+			// move snake according to key pressed
+			
+			if(upKeyPressed){
+				snake.moveUp();
+			}
+			if(downKeyPressed){
+				snake.moveDown();
+			}
+			if(rightKeyPressed){
+				snake.moveRight();
+			}
+			if(leftKeyPressed){
+				snake.moveLeft();
+			}
+			
+			// reset key pressed
+			upKeyPressed = false;
+			downKeyPressed = false;
+			rightKeyPressed = false;
+			leftKeyPressed = false;
+			
+			// autogrow snake
 			gameTime++;
 			Thread.sleep(250);
 		}
