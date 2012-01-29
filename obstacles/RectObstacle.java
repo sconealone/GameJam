@@ -42,18 +42,12 @@ public class RectObstacle extends Obstacle{
 			y = centerY + d;
 			rect.setRect(x, y, d, d);
 		}
-		draw();
-	}
-
-	@Override
-	public void draw(Graphics2D g) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public boolean haveCollided() {
 		boolean tempresult = false;
+
 		// get dimensions of snake
 		double r1 = mySnake.getInnerRadius();
 		double r2 = mySnake.getOuterRadius();
@@ -77,7 +71,13 @@ public class RectObstacle extends Obstacle{
 						return true;
 				}
 		}
+
 		return false;
+	}
+
+	@Override
+	public void draw(Graphics2D g) {
+		g.drawRect((int)rect.getX(), (int)rect.getY(), (int)rect.getWidth(), (int)rect.getHeight());
 	}
 
 }

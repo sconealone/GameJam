@@ -40,13 +40,6 @@ public class CircleObstacle extends Obstacle{
 			y = centerY + d;
 			circle.setFrame(x, y, d, d);
 		}
-		draw();
-	}
-
-	@Override
-	public void draw() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -83,8 +76,7 @@ public class CircleObstacle extends Obstacle{
 
 	@Override
 	public void draw(Graphics2D g) {
-		// TODO Auto-generated method stub
-		
+		g.drawOval((int)circle.getX(), (int)circle.getY(), (int)circle.getWidth(), (int)circle.getHeight());
 	}
 
 }
