@@ -221,6 +221,7 @@ public class Game implements KeyListener, MouseListener {
 
 				snake.spin();
 				snake.draw(g);
+				//snakeBoundary.draw(g);
 				// /// Update the score (based on system time)
 				//
 				if (gameTime % 10 == (int) (Math.random() * 10))
