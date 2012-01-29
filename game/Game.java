@@ -41,7 +41,8 @@ public class Game implements KeyListener,MouseListener{
 	private boolean isGameOver = false;
 	
 	private Image background;
-
+	 private String filename;
+	Music bgm;
 	JFrame frame;
 	Image gmenu;
 	
@@ -56,6 +57,9 @@ public class Game implements KeyListener,MouseListener{
 	static boolean hasClickedRetry = false;
 	
 	public void initGame(){
+		bgm = new Music("MainTheme.wav");
+		bgm.play();
+		
 		snakeBoundary = new SnakeBoundary();
 		snake = new SnakeSpriteManager();
 		wall = new Wall(4, snakeBoundary);
@@ -107,6 +111,8 @@ public class Game implements KeyListener,MouseListener{
 		frame.addMouseListener(this);
 		
 	}
+	
+	
 	
 	public static void main (String [ ] args) throws InterruptedException, GameOverException {
 		
