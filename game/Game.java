@@ -48,11 +48,11 @@ public class Game{
 	public static void gameLoop() throws InterruptedException{
 		while(true){
 			// check for key presses
-	
+			
 			
 	
 			 // update snake
-	
+				
 			
 			// check for captures
 	
