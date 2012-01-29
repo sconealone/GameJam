@@ -166,7 +166,7 @@ public class Game implements KeyListener,MouseListener{
 				//g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
 				g.drawImage(background, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
 				Obstacle myO;
-				for( int i = 0; i < obstacles.size() - 1; i ++)//Obstacle o: obstacles) {
+				for( int i = 0; i < obstacles.size(); i ++)//Obstacle o: obstacles) {
 				{	
 					myO =  obstacles.get(i);
 					arrived[i] = myO.update();
@@ -179,6 +179,7 @@ public class Game implements KeyListener,MouseListener{
 					{
 						wall.deleteObstacle(arrivedObstacle[i]);
 						arrived[i] = true;
+						
 					}
 
 				}
