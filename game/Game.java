@@ -27,7 +27,7 @@ public class Game implements KeyListener, MouseListener {
 
 	public static final int FRAME_WIDTH = 600;
 	public static final int FRAME_HEIGHT = 600;
-	private static final int GROW_EVERY_NUM_LOOPS = 20;
+	private static final int GROW_EVERY_NUM_LOOPS = 100;
 
 	private int gameTime = 0;
 	private int score = 0;

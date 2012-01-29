@@ -144,11 +144,7 @@ public class SnakeSpriteManager {
 		AffineTransform at = new AffineTransform();
 		at.translate(x+img.getWidth(null)/2, y+img.getHeight(null)/2);
 		//at.scale(CHANGE_DIAMETER_BY, CHANGE_DIAMETER_BY);
-		//at.rotate(angle);
-		//g2d.scale(CHANGE_DIAMETER_BY, CHANGE_DIAMETER_BY);
-		//g2d.translate(x+img.getWidth(null)/2, y+img.getHeight(null)/2);
-		//g2d.scale(CHANGE_DIAMETER_BY, CHANGE_DIAMETER_BY);
-		//g2d.rotate(angle);
+		at.rotate(angle);
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setTransform(at);
 		g2d.drawImage(img, -img.getWidth(null)/2, -img.getHeight(null)/2, img.getWidth(null), img.getHeight(null), null);
