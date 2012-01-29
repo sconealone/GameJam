@@ -278,22 +278,12 @@ public class Game implements KeyListener,MouseListener{
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-//		System.out.println("mouse clicked");
-//		System.out.println("e.getX = " + e.getX());
-//		System.out.println("e.getY = " + e.getY());
-		// TODO Auto-generated method stub
 		if((e.getX() >= 185) && (e.getX() <= 420) && (e.getY() >= 440) && (e.getY() <=510)){
-			System.out.println("CLICKED");
 			hasClickedStart = true;
-			System.out.println("you clicked start");
 		}
 		if((e.getX() >= 194) && (e.getX() <= 419) && (e.getY() >= 490) && (e.getY() <=515)){
 			hasClickedRetry = true;
-			System.out.println("you clicked retry");
 		}
-
-		System.out.print(e.getX()+","+e.getY()+hasClickedRetry +"\n");
-		
 	}
 
 	@Override
