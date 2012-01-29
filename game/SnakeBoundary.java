@@ -2,6 +2,7 @@
 package game;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
@@ -30,7 +31,7 @@ public class SnakeBoundary {
 	// constants
 	
 	// TODO this should be the actual snake width
-	private final int SNAKE_WIDTH = 106; // measured
+	private final int SNAKE_WIDTH = 52; // measured
 	
 //	private final int MAX_SNAKE_RADIUS = 600;
 	
@@ -244,24 +245,15 @@ public class SnakeBoundary {
 	
 	}
 	
-	
-
-//	/**
-//	 * Returns the amount to change the diameter of the
-//	 * snake by based on the stage and if it is growing or shrinking
-//	 * @param growing whether or not the snake is growing
-//	 * @return
-//	 */
-//	public float changeDiameterBy(boolean growing)
-//	{
-//		if (growing)
-//		{
-//			if (stageCounter == 0) {
-//				return 0;
-//			}
-//			
-//		}
-//	}
+	/**
+	 * Debugging method
+	 * @param g
+	 */
+	void draw(Graphics g) {
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.draw(outerEdge);
+		g2d.draw(innerEdge);
+	}
 	
 	
 	@Override

@@ -114,14 +114,13 @@ public class Game implements KeyListener,MouseListener{
 		
 		Game game = new Game();
 		game.readMenu();
-		while (!hasClickedStart)System.out.println(hasClickedStart);
+		while (!hasClickedStart){}
 
 		game.initGame();
 		try{
 			game.gameLoop();
 
 		}catch(GameOverException e){	
-			System.out.println(e);
 			game.gameOverScene();
 				if(hasClickedRetry == true){
 					game= null;
@@ -204,6 +203,10 @@ public class Game implements KeyListener,MouseListener{
 				
 				snake.spin();
 				snake.draw(g);
+				
+				//debugging
+				//snakeBoundary.draw(g);
+				
 				
 				if(gameTime % 10 == (int) (Math.random() * 10))
 					wall.createObstacle();
