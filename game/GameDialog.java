@@ -16,7 +16,7 @@ import obstacles.CircleObstacle;
 import obstacles.Obstacle;
 import java.awt.image.BufferedImage;
 
-
+@Deprecated
 public class GameDialog implements KeyListener{
 	
 	public static final int FRAME_WIDTH = 600;

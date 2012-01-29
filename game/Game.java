@@ -22,7 +22,6 @@ public class Game implements KeyListener{
 	private int score;
 	private int loopCounter = 0;
 	
-	private SnakeModel snakeModel;
 	private SnakeBoundary snakeBoundary;
 	private SnakeSpriteManager snake;
 	private Wall wall;
@@ -37,7 +36,6 @@ public class Game implements KeyListener{
 	private boolean hasCaughtInside = false;
 	
 	public void initGame(){
-		snakeModel = new SnakeModel();
 		snakeBoundary = new SnakeBoundary();
 		snake = new SnakeSpriteManager();
 		wall = new Wall(10, snakeBoundary);
