@@ -13,12 +13,12 @@ public class Wall {
 	private int maxNumObstacles;
 	private int maxDiffObstacles = 2;
 	private ArrayList<Obstacle> obstacles;
-	private SnakeModel snake;
+	private SnakeBoundary snake;
 	/**
 	 * 
 	 * @param n the max amount of obstacles on the screen at any given time
 	 */
-	public Wall(int n, SnakeModel snake){
+	public Wall(int n, SnakeBoundary snake){
 		obstacles = new ArrayList<Obstacle>();
 		maxNumObstacles = n;
 		this.snake = snake;

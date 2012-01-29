@@ -21,6 +21,8 @@ public class Game implements KeyListener{
 	private int score;
 	
 	private SnakeModel snake;
+	private SnakeBoundary snakeBoundary;
+	private SnakeSpriteManager snakeManager;
 	private Wall wall;
 	
 	private boolean isUp, isDown, isLeft, isRight, isShrink = false;
@@ -34,7 +36,8 @@ public class Game implements KeyListener{
 	
 	public void initGame(){
 		snake = new SnakeModel();
-		wall = new Wall(10, snake);
+		snakeManager = new SnakeSpriteManager();
+		wall = new Wall(10, snakeBoundary);
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//frame.setUndecorated(true);
