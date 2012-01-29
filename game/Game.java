@@ -87,6 +87,9 @@ public class Game implements KeyListener{
 				snake.spin();
 				snake.draw(g);
 				
+				if(gameTime % 10 == (int) (Math.random() * 10))
+					wall.createObstacle();
+				
 				// autogrow snake
 				snake.grow();
 				gameTime++;

@@ -70,9 +70,19 @@ public class SnakeSpriteManager {
 			}
 		}
 		catch (IOException e)
-		{
-			// TODO actually handle this
-			e.printStackTrace();
+		{	
+			try
+			{
+				String windowsPath  = "src"+File.separatorChar+"resources"+File.separatorChar;
+				for (int i = 0; i < NUM_GROWTH_STAGES; i++)
+				{
+					snakeImages[i] = ImageIO.read(new File(windowsPath+snakeNames[i]));
+				}
+			}
+			catch (IOException ex){
+				e.printStackTrace();
+			}
+				
 		}
 		
 		

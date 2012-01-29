@@ -3,13 +3,14 @@ package obstacles;
 import game.GameOverException;
 import game.SnakeBoundary;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 
 
 public class CircleObstacle extends Obstacle{
-	private final int FRAMES_PER_SECOND = 4;
+	private final int FRAMES_PER_SECOND = 50;
 	private float originalDiameter;
 	
 	SnakeBoundary mySnake;
@@ -62,7 +63,7 @@ public class CircleObstacle extends Obstacle{
 		double topy = circle.getY();
 		double d = circle.getWidth();
 		double x = topx + d / 2;
-		double y = topy - d / 2;
+		double y = topy + d / 2;
 		
 
 		// smaller and larger radii of snake
@@ -83,7 +84,10 @@ public class CircleObstacle extends Obstacle{
 	@Override
 	public void draw(Graphics g) {
 		Graphics2D g2d = (Graphics2D)g;
+		Color color = g2d.getColor();
+		g2d.setColor(Color.red);
 		g2d.draw(circle);
+		g2d.setColor(color);
 	}
 
 }

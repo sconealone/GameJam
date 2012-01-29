@@ -50,13 +50,10 @@ public class SnakeModel {
 	SnakeModel(){
 		x = y = 0;
 		dx = dy = 5;
-		r2 = 100;
+		r1 = 75;
+		r2 = 125;
 		try {
-<<<<<<< HEAD
 			img = ImageIO.read(new File("src"+File.separatorChar+"resources"+File.separatorChar+"test0036.png"));
-=======
-			img = ImageIO.read(new File("test0036.png"));
->>>>>>> 1ec2cf5d4ab2807c0bea7e12541c4e436ef31e4e
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -110,6 +107,10 @@ public class SnakeModel {
 	public void draw(Graphics g) {
 		Graphics2D g2d = (Graphics2D)g;
 		AffineTransform at = new AffineTransform();
+		g2d.setColor(Color.blue);
+		g2d.fillOval(x+img.getWidth(null)/2-r2, y+img.getHeight(null)/2-r2,2*r2, 2*r2);
+		g2d.setColor(Color.red);
+		g2d.fillOval(x+img.getWidth(null)/2-r1,y+img.getHeight(null)/2-r1,2*r1, 2*r1);
 		at.translate(x+img.getWidth(null)/2, y+img.getHeight(null)/2);
 		//at.scale(CHANGE_DIAMETER_BY, CHANGE_DIAMETER_BY);
 		at.rotate(angle);
@@ -138,7 +139,7 @@ public class SnakeModel {
 	public Point2D.Double getOrigin()
 	{
 		//return new Point2D.Double(outerEdge.x, outerEdge.y);
-		return null;
+		return new Point2D.Double(x+img.getWidth(null)/2, y+img.getHeight(null)/2);
 	}
 	
 	/**
@@ -165,7 +166,7 @@ public class SnakeModel {
 	public double getOuterRadius()
 	{
 		//return outerEdge.height / 2;
-		return 0d;
+		return r2;
 	}
 	
 	/**
@@ -175,7 +176,7 @@ public class SnakeModel {
 	public double getInnerRadius()
 	{
 		//return innerEdge.height / 2;
-		return 0d;
+		return r1;
 	}
 	
 	
