@@ -122,7 +122,8 @@ public class Game implements KeyListener,MouseListener{
 		game.readMenu();
 		while (!hasClickedStart)
 		{
-			System.out.println(hasClickedStart);
+			Thread.sleep(1);
+			//System.out.println(hasClickedStart);
 		}
 
 		game.initGame();
@@ -130,7 +131,7 @@ public class Game implements KeyListener,MouseListener{
 			game.gameLoop();
 
 		}catch(GameOverException e){	
-			System.out.println(e);
+			//System.out.println(e);
 			game.gameOverScene();
 				if(hasClickedRetry == true){
 					game= null;
@@ -286,8 +287,10 @@ public class Game implements KeyListener,MouseListener{
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		
 		if((e.getX() >= 185) && (e.getX() <= 420) && (e.getY() >= 440) && (e.getY() <=510)){
 			hasClickedStart = true;
+			System.out.print("clicked");
 		}
 		if((e.getX() >= 194) && (e.getX() <= 419) && (e.getY() >= 490) && (e.getY() <=515)){
 			hasClickedRetry = true;
