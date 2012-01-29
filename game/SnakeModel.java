@@ -50,6 +50,7 @@ public class SnakeModel {
 	SnakeModel(){
 		x = y = 0;
 		dx = dy = 5;
+		r2 = 100;
 		try {
 			img = ImageIO.read(new File("src\\resources\\test0036.png"));
 		}catch (IOException e) {
@@ -104,11 +105,9 @@ public class SnakeModel {
 	
 	public void draw(Graphics g) {
 		Graphics2D g2d = (Graphics2D)g;
-		g2d.setColor(Color.red);
-		g2d.fillRect(x+img.getWidth(null)/2,  y+img.getHeight(null)/2, 50, 50);
 		AffineTransform at = new AffineTransform();
 		at.translate(x+img.getWidth(null)/2, y+img.getHeight(null)/2);
-		at.scale(CHANGE_DIAMETER_BY, CHANGE_DIAMETER_BY);
+		//at.scale(CHANGE_DIAMETER_BY, CHANGE_DIAMETER_BY);
 		at.rotate(angle);
 		//g2d.scale(CHANGE_DIAMETER_BY, CHANGE_DIAMETER_BY);
 		//g2d.translate(x+img.getWidth(null)/2, y+img.getHeight(null)/2);
@@ -117,8 +116,12 @@ public class SnakeModel {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setTransform(at);
 		g2d.drawImage(img, -img.getWidth(null)/2, -img.getHeight(null)/2, img.getWidth(null), img.getHeight(null), null);
-		r1 = img.getWidth(null)/2 - 50;
-		r2 = img.getWidth(null)/2;
+		AffineTransform atc = new AffineTransform();
+		//atc.translate(x+r2/2, y+r2/2);
+		//atc.scale(CHANGE_DIAMETER_BY, CHANGE_DIAMETER_BY);
+		/*g2d.setTransform(atc);
+		g2d.setColor(Color.red);
+		g2d.fillOval(x+img.getWidth(null)/2 - r2/2,  y+img.getHeight(null)/2 - r2/2, r2, r2);*/
 		/*g2d.fillOval(x, y, r2, r2);
 		g2d.setColor(Color.RED);
 		g2d.fillOval(x + img.getWidth(null)/2, y + img.getHeight(null)/2, r1, r1);*/
