@@ -54,12 +54,12 @@ public class SnakeModel {
 					DEFAULT_Y_POS + SNAKE_WIDTH,
 					innerRadius + innerRadius,
 					innerRadius + innerRadius);
-		try {
+		/*try {
 			img = ImageIO.read(new File("src/resources/snakes2.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	/**
