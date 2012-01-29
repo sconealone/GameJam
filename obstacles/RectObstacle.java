@@ -64,7 +64,7 @@ public class RectObstacle extends Obstacle{
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.drawRect((int)rect.getX(), (int)rect.getY(), (int)rect.getWidth(), (int)rect.getHeight());
+		g.draw(rect);
 	}
 
 }

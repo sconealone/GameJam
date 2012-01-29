@@ -48,7 +48,7 @@ public class Game{
 		return score;
 	}
 	
-	public static void gameLoop() throws InterruptedException{
+	public static void gameLoop() throws InterruptedException, GameOverException{
 		while(true){
 			// check for key presses
 			
@@ -71,6 +71,7 @@ public class Game{
 			}
 			
 			// move snake according to key pressed
+			
 			
 			if(upKeyPressed){
 				snake.moveUp();

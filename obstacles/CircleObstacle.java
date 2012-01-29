@@ -76,7 +76,7 @@ public class CircleObstacle extends Obstacle{
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.drawOval((int)circle.getX(), (int)circle.getY(), (int)circle.getWidth(), (int)circle.getHeight());
+		g.draw(circle);
 	}
 
 }
