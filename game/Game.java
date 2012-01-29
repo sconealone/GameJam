@@ -4,62 +4,31 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 import javax.swing.*;
 
-
-public class Game {
-	private static int gameTime=0;
-	private static int score;
+public class Game extends JFrame {
 	
-	// just a variable to check if the obstacle is
-	//inside the snake, change this when you get ur collision methods working
-	private boolean hasCaughtInside = false;
+	private static GameDialog mainDlg = new GameDialog();
 	
-	public static void main (String [ ] args) throws InterruptedException {
+//	private static int gameTime = 0;
+//	private static int score = 0;
+//	
+//	JFrame parent = new JFrame("Snaketris");
+//	JPanel gamePanel = new JPanel();
+	
+	// true if an obstacle is captured, false otherwise
+//	private boolean hasCaughtInside = false;
+	
+	public static void main (String [] args) throws InterruptedException, IOException {
 		// TODO are we adding the KeyListener in this class?
-		try{
-			gameLoop();
+//		try{
+			mainDlg.Init();
 			
-		}catch(GameOverException e){
-			
-		}
+			//mainDlg.update();
+//		}catch(GameOverException e){}
 		
-	}
-	
-	
-	
-	public int getScore(int start, int end) {
-		//actual time elapsed in the game
-		if( hasCaughtInside == true) {
-			score +=10;
-		}
-		int actual_time = gameTime*4;
-		score += actual_time*10;
-		return score;
-	}
-	
-	public static void gameLoop() throws InterruptedException{
-		while(true){
-			// check for key presses
-	
-			
-	
-			 // update snake
-	
-			
-			// check for captures
-	
-			  
-	
-			// check for collisions (game over)
-	
-		     
-	
-			// repaint
-			gameTime++;
-			Thread.sleep(250);
-		}
-	}
-	
+	}	
+		
 }
