@@ -36,7 +36,7 @@ public class GameProcessing extends PApplet
 	private boolean hasCaughtInside = false;
 	
 	Wall wall;
-	SnakeModel snakeModel;
+	SnakeBoundary snakeBoundary;
 	PImage snakeSprite;
 	SnakeSpriteManager snakeManager;
 	
@@ -66,13 +66,13 @@ public class GameProcessing extends PApplet
 		background(0, 0,  0xff); // rgb
 		
 		// initialize instance classes
-		snakeModel = new SnakeModel();
-		double originX = WINDOW_X / 2.0 - snakeModel.getOuterRadius();
-		double originY = WINDOW_Y / 2.0 - snakeModel.getOuterRadius();
+		snakeBoundary = new SnakeBoundary();
+		double originX = WINDOW_X / 2.0 - snakeBoundary.getOuterRadius();
+		double originY = WINDOW_Y / 2.0 - snakeBoundary.getOuterRadius();
 		Point2D.Double origin = new Point2D.Double(originX, originY);
-		snakeModel.setOrigin(origin);
+		snakeBoundary.setOrigin(origin);
 		final int DEFAULT_NUM_OBSTACLES = 5;
-		wall = new Wall(DEFAULT_NUM_OBSTACLES, snakeModel);
+		wall = new Wall(DEFAULT_NUM_OBSTACLES, snakeBoundary);
 		wall.createObstacle();
 		
 		// initialize snake sprite
@@ -142,7 +142,7 @@ public class GameProcessing extends PApplet
 		// auto grow snake model
 		if (loopCounter % GROW_EVERY_NUM_LOOPS == 0)
 		{
-			snakeModel.grow();
+			snakeBoundary.grow();
 			snakeManager.grow();
 			String snakeName = snakeManager.getSpriteName();
 			snakeSprite = loadImage(snakeName);
@@ -157,24 +157,24 @@ public class GameProcessing extends PApplet
 		// handle key presses
 		
 		if(upKeyPressed){
-			snakeModel.moveUp();
+			snakeBoundary.moveUp();
 		}
 		if(downKeyPressed){
-			snakeModel.moveDown();
+			snakeBoundary.moveDown();
 		}
 		if(rightKeyPressed){
-			snakeModel.moveRight();
+			snakeBoundary.moveRight();
 		}
 		if(leftKeyPressed){
-			snakeModel.moveLeft();
+			snakeBoundary.moveLeft();
 		}
 		if(shrinkKeyPressed){
-			snakeModel.shrink();
+			snakeBoundary.shrink();
 			snakeManager.shrink();
 			String snakeName = snakeManager.getSpriteName();
 			snakeSprite = loadImage(snakeName);
 		}
-		Point2D.Double origin = snakeModel.getOrigin();
+		Point2D.Double origin = snakeBoundary.getOrigin();
 		image(snakeSprite, (float)origin.x, (float)origin.y);
 
 		fill(0xff, 0, 0);
