@@ -114,16 +114,14 @@ public class Game implements KeyListener,MouseListener{
 		Game game = new Game();
 		
 		game.readMenu();
-		while (!hasClickedStart)
-		{
-
-		}
+		while (!hasClickedStart)System.out.println(hasClickedStart);
 		game.initGame();
 //>>>>>>> d55b6b183ba24a07d6a9dc3833e07ced5bdaa574
 		try{
 			game.gameLoop();
 
 		}catch(GameOverException e){	
+			System.out.println(e);
 			game.gameOverScene();
 				if(hasClickedRetry == true){
 					game= null;
