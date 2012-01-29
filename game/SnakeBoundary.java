@@ -1,6 +1,7 @@
 
 package game;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
@@ -24,7 +25,7 @@ public class SnakeBoundary {
 	Ellipse2D.Double outerEdge;
 	Ellipse2D.Double innerEdge;
 	
-	private Image img;
+	//private Image img;
 	
 	// constants
 	// TODO confirm snake radius
@@ -36,15 +37,24 @@ public class SnakeBoundary {
 	// TODO this should be the actual snake width
 	private final int SNAKE_WIDTH = 30;
 	
-	private final int MAX_SNAKE_RADIUS = 768;
+//	private final int MAX_SNAKE_RADIUS = 600;
 	
-	private final int MOVE_BY_AMOUNT = 10; // pixels
+	private final int MOVE_BY_AMOUNT = 5; // pixels
 	
-	private final int CHANGE_DIAMETER_BY = 50; // pixels
+//	private final int CHANGE_DIAMETER_BY = 50; // pixels
+	private final int INNER = 0;
+	private final int OUTER = 1;
+	
+	private Dimension[][] stageSizes;
+	
+	// synced with SnakeSpriteManager stage counter
+	private int stageCounter = 3;
+	private final int NUM_STAGES = 6;
 	
 	// constructor
 	SnakeBoundary()
 	{
+		
 		final int DEFAULT_X_POS = 300;
 		final int DEFAULT_Y_POS = 300;
 		outerEdge = new Ellipse2D.Double(
@@ -58,12 +68,40 @@ public class SnakeBoundary {
 					DEFAULT_Y_POS + SNAKE_WIDTH,
 					innerRadius + innerRadius,
 					innerRadius + innerRadius);
-		/*try {
-			img = ImageIO.read(new File("src/resources/snakes2.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		
+		stageSizes = new Dimension[NUM_STAGES][];
+		for (int i = 0; i < NUM_STAGES; i++)
+		{
+			stageSizes[i] = new Dimension[2];
+		}
+		stageSizes[0][INNER] = new Dimension(370, 370);
+		stageSizes[0][OUTER] = new Dimension(475, 475);
+		stageSizes[1][INNER] = new Dimension(253, 253);
+		stageSizes[1][OUTER] = new Dimension(363, 363);
+		stageSizes[2][INNER] = new Dimension(235,235);
+		stageSizes[2][OUTER] = new Dimension(339,339);
+		stageSizes[3][INNER] = new Dimension(163,163);
+		stageSizes[3][OUTER] = new Dimension(280,280);
+		stageSizes[4][INNER] = new Dimension(100,100);
+		stageSizes[4][OUTER] = new Dimension(210,210);
+		stageSizes[5][INNER] = new Dimension(100,100);
+		stageSizes[5][OUTER] = new Dimension(210,210);
+	}
+	
+	/**
+	 * Getter method for 2D array of snake image properties
+	 * 
+	 */
+	public Dimension[][] getDimArray() {
+		return stageSizes;
+	}
+	
+	/**
+	 * Getter method for stage counter
+	 * 
+	 */
+	public int getCounter() {
+		return stageCounter;
 	}
 	
 	/**
@@ -72,10 +110,18 @@ public class SnakeBoundary {
 	 */
 	public void grow()
 	{
-		this.outerEdge.width += CHANGE_DIAMETER_BY;
-		this.outerEdge.height += CHANGE_DIAMETER_BY;
-		this.innerEdge.width += CHANGE_DIAMETER_BY;
-		this.innerEdge.height += CHANGE_DIAMETER_BY;
+		if (stageCounter > 0 && stageCounter <= 5)
+		{
+			stageCounter--;
+		}
+		else if (stageCounter == 0)
+		{
+			return;
+		}
+		this.outerEdge.width = stageSizes[stageCounter][OUTER].width;
+		this.outerEdge.height = stageSizes[stageCounter][OUTER].height;
+		this.innerEdge.width = stageSizes[stageCounter][INNER].width;
+		this.innerEdge.height = stageSizes[stageCounter][INNER].height;
 	}
 	
 	/**
@@ -84,25 +130,24 @@ public class SnakeBoundary {
 	 */
 	public void shrink()
 	{
-		if (innerEdge.width - CHANGE_DIAMETER_BY < 0)
+		if (stageCounter >= 0 && stageCounter < 5)
 		{
-			innerEdge.width = 0;
-			innerEdge.height = 0;
-			double snakeDiameter = SNAKE_WIDTH + SNAKE_WIDTH;
-			outerEdge.width = snakeDiameter;
-			outerEdge.height = snakeDiameter;
+			stageCounter++;
+		}
+		else if (stageCounter == 5)
+		{
 			return;
 		}
-		this.innerEdge.width -= CHANGE_DIAMETER_BY;
-		this.innerEdge.height -= CHANGE_DIAMETER_BY;
-		this.outerEdge.width -= CHANGE_DIAMETER_BY;
-		this.outerEdge.height -= CHANGE_DIAMETER_BY;
+		this.outerEdge.width = stageSizes[stageCounter][OUTER].width;
+		this.outerEdge.height = stageSizes[stageCounter][OUTER].height;
+		this.innerEdge.width = stageSizes[stageCounter][INNER].width;
+		this.innerEdge.height = stageSizes[stageCounter][INNER].height;
 	}
-	
+	/*
 	public void draw(Graphics2D g) {
 		AffineTransform at = new AffineTransform();
 		g.drawImage(img, at, null);
-	}
+	}*/
 	
 	/**
 	 * Gets the upper left hand corner of the snake
@@ -210,7 +255,28 @@ public class SnakeBoundary {
 				innerEdge.height);
 	
 	}
-@Override
+	
+	
+
+//	/**
+//	 * Returns the amount to change the diameter of the
+//	 * snake by based on the stage and if it is growing or shrinking
+//	 * @param growing whether or not the snake is growing
+//	 * @return
+//	 */
+//	public float changeDiameterBy(boolean growing)
+//	{
+//		if (growing)
+//		{
+//			if (stageCounter == 0) {
+//				return 0;
+//			}
+//			
+//		}
+//	}
+	
+	
+	@Override
 	public String toString(){
 		String self = "Origin of outer circ = (" + outerEdge.x + ", " 
 					+ outerEdge.y 
@@ -229,7 +295,7 @@ public class SnakeBoundary {
 		return self;
 		
 	}
-
+/*
 	public static void main(String[] args)
 	{
 		System.out.println("Default snake");
@@ -272,7 +338,7 @@ public class SnakeBoundary {
 		System.out.println(s1);
 			
 			
-	}
+	}*/
 		
 }
 
