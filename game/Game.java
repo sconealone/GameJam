@@ -36,7 +36,7 @@ public class Game implements KeyListener,MouseListener{
 	private SnakeBoundary snakeBoundary;
 	private SnakeSpriteManager snake;
 	private Wall wall;
-	
+	private ArrayList<Obstacle> obstacles;
 	private boolean isUp, isDown, isLeft, isRight, isShrink = false;
 	private boolean isGameOver = false;
 
@@ -65,6 +65,7 @@ public class Game implements KeyListener,MouseListener{
 		frame.createBufferStrategy(2);
 		frame.requestFocus();
 		frame.addKeyListener(this);
+		obstacles = wall.getObstacles();
 	}
 	
 	//reads the game menu
@@ -110,6 +111,7 @@ public class Game implements KeyListener,MouseListener{
 		
 		try{
 			game.gameLoop();
+
 		}catch(GameOverException e){	
 			game.gameOverScene();
 				if(hasClickedRetry == true){
@@ -129,19 +131,56 @@ public class Game implements KeyListener,MouseListener{
 	public void gameLoop() throws InterruptedException, GameOverException{
 		BufferStrategy bf = frame.getBufferStrategy();
 		Graphics g = null;
+		boolean[] arrived = new boolean[10];
+		Obstacle[] arrivedObstacle = new Obstacle[10];
+		for (int i = 0; i < arrived.length - 1; i++)
+		{
+			arrived[i] = true;
+			arrivedObstacle[i] = null;
+		}
 		while(true){
 			try{
-				if(isDown) snake.moveUp();
-				if(isUp) snake.moveDown();
-				if(isRight) snake.moveRight();
-				if(isLeft) snake.moveLeft();
+				if(isDown) 
+				{
+					snake.moveUp();
+					snakeBoundary.moveUp();
+				}
+				if(isUp) 
+				{
+					snake.moveDown();
+					snakeBoundary.moveDown();
+				}
+				if(isRight) 
+				{
+					snake.moveRight();
+					snakeBoundary.moveRight();
+				}
+				if(isLeft) 
+				{
+					snake.moveLeft();
+					snakeBoundary.moveLeft();
+				}
 				
 				g = bf.getDrawGraphics();
 				g.setColor(new Color(255,255,255));
 				g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
-				
-				for(Obstacle o: wall.getObstacles()) {
-					o.update();
+				Obstacle myO;
+				for( int i = 0; i < obstacles.size(); i ++)//Obstacle o: obstacles) {
+				{	
+					myO =  obstacles.get(i);
+					arrived[i] = myO.update();
+					arrivedObstacle[i] = myO;
+					
+				}
+				for( int i = 0; i < arrived.length - 1; i ++)
+				{
+					if (!arrived[i])
+					{
+						wall.deleteObstacle(arrivedObstacle[i]);
+						arrived[i] = true;
+						
+					}
+
 				}
 				// repaint
 				for(Obstacle o: wall.getObstacles()) {
@@ -263,6 +302,21 @@ public class Game implements KeyListener,MouseListener{
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	
+	/**
+	 * Computes a score based on the time that the game has been running
+	 * and the number of objects you captured
+	 * @param time
+	 * @param captures
+	 * @return
+	 */
+	private int getScore(int time, int captures)
+	{
+		final int FRAMES_PER_SECOND = 50;
+		final int CAPTURE_MULTIPLIER = 100;
+		return time / FRAMES_PER_SECOND + CAPTURE_MULTIPLIER * captures;
 	}
 	
 }

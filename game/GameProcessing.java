@@ -15,7 +15,7 @@ import processing.core.*;
 public class GameProcessing extends PApplet
 {
 	// constants
-	private static final int GROW_EVERY_NUM_LOOPS = 20;
+	private static final int GROW_EVERY_NUM_LOOPS = 60;
 	
 	// game instance fields
 	private int gameTime = 0;
@@ -58,7 +58,7 @@ public class GameProcessing extends PApplet
 		size(WINDOW_X, WINDOW_Y);
 		
 		// set frame rate
-		frameRate(4);
+		frameRate(50);
 		
 		loop();
 		
@@ -82,10 +82,11 @@ public class GameProcessing extends PApplet
 		image(snakeSprite, (float) originX, (float) originY);
 		fill(0xff, 0, 0);
 		ellipseMode(CENTER);
-		//ellipse((float) originX, (float) originY, (float)snakeModel.getOuterRadius(), (float)snakeModel.getOuterRadius());
+		ellipse((float) originX + (float)snakeBoundary.getOuterRadius(), (float) originY+ (float)snakeBoundary.getOuterRadius(), (float)snakeBoundary.getOuterRadius(), (float)snakeBoundary.getOuterRadius());
 
+		fill(0xff, 0xff, 0);
 		ellipseMode(CENTER);
-		//ellipse((float) origin.x, (float) origin.x, (float)snakeModel.getInnerRadius(), (float)snakeModel.getInnerRadius());
+		ellipse((float) origin.x+ (float)snakeBoundary.getOuterRadius(), (float) origin.y+ (float)snakeBoundary.getOuterRadius(), (float)snakeBoundary.getInnerRadius(), (float)snakeBoundary.getInnerRadius());
 	}
 	
 	/**
@@ -155,7 +156,6 @@ public class GameProcessing extends PApplet
 		
 		
 		// handle key presses
-		System.out.println(snakeBoundary);
 		if(upKeyPressed){
 			snakeBoundary.moveUp();
 		}
@@ -178,12 +178,13 @@ public class GameProcessing extends PApplet
 		image(snakeSprite, (float)origin.x, (float)origin.y);
 
 		fill(0xff, 0, 0);
-		ellipseMode(CENTER);
-		//ellipse((float) origin.x, (float) origin.y, (float)snakeModel.getOuterRadius(), (float)snakeModel.getOuterRadius());
-		fill(0xff, 0xff, 0);
 
 		ellipseMode(CENTER);
-		//ellipse((float) origin.x, (float) origin.y, (float)snakeModel.getInnerRadius(), (float)snakeModel.getInnerRadius());
+		ellipse((float) origin.x + (float)snakeBoundary.getOuterRadius(), (float) origin.y+ (float)snakeBoundary.getOuterRadius(), (float)snakeBoundary.getOuterRadius(), (float)snakeBoundary.getOuterRadius());
+
+		fill(0xff, 0xff, 0);
+		ellipseMode(CENTER);
+		ellipse((float) origin.x+ (float)snakeBoundary.getOuterRadius(), (float) origin.y+ (float)snakeBoundary.getOuterRadius(), (float)snakeBoundary.getInnerRadius(), (float)snakeBoundary.getInnerRadius());
 		
 		// reset key pressed
 		upKeyPressed = false;

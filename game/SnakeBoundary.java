@@ -39,7 +39,7 @@ public class SnakeBoundary {
 	
 //	private final int MAX_SNAKE_RADIUS = 600;
 	
-	private final int MOVE_BY_AMOUNT = 10; // pixels
+	private final int MOVE_BY_AMOUNT = 5; // pixels
 	
 //	private final int CHANGE_DIAMETER_BY = 50; // pixels
 	private final int INNER = 0;

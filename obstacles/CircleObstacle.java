@@ -66,7 +66,7 @@ public class CircleObstacle extends Obstacle{
 
 	@Override
 	public boolean haveCollided() {
-		System.out.println("COLIDED!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.println("COLLISION IS BEING TESTED!!!!!!!!!!!!!!!!!!!!!!!!");
 		System.out.println(mySnake);
 		// centre of snake
 		double snakeX = mySnake.getOrigin().getX() + mySnake.getOuterRadius();
@@ -81,15 +81,16 @@ public class CircleObstacle extends Obstacle{
 		//double circleY = topy - d / 2;
 		double circleX = circle.getCenterX();
 		double circleY = circle.getCenterY();
-
+		double r1 = mySnake.getInnerRadius();
+		double r2 = mySnake.getOuterRadius();
 		// smaller and larger radii of snake
-		Dimension[][] dimArray = mySnake.getDimArray();
+		/*Dimension[][] dimArray = mySnake.getDimArray();
 		int counter = mySnake.getCounter() - 1;
 		if(counter >= 0 && counter < 6) {
 		int INNER = 0, OUTER = 1;
 		System.out.println("Values:"+counter+":"+INNER+" "+OUTER);
 		double r1 = dimArray[counter][INNER].height; 
-		double r2 = dimArray[counter][OUTER].height;
+		double r2 = dimArray[counter][OUTER].height;*/
 
 		double distance = Math.sqrt( Math.pow( circleX - snakeX, 2 ) + Math.pow( circleY - snakeY, 2 ) );
 		if(distance >= r1 && distance <= r2)
@@ -98,10 +99,10 @@ public class CircleObstacle extends Obstacle{
 			return (distance + d / 2) >= r1;
 		else 
 			return (distance - d / 2) <= r2;
-		} else {
+		/*} else {
 			System.err.println("counter invalid");
 			return false;
-		}
+		}*/
 	}
 
 	@Override
