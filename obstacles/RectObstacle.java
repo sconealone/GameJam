@@ -2,6 +2,7 @@ package obstacles;
 import game.GameOverException;
 import game.SnakeModel;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 
@@ -39,18 +40,11 @@ public class RectObstacle extends Obstacle{
 			y = centerY + d;
 			rect.setRect(x, y, d, d);
 		}
-		draw();
-	}
-
-	@Override
-	public void draw() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public boolean haveCollided() {
-		// get dimensions of rectangle
+		/*// get dimensions of rectangle
 		int rx, ry, width, height;
 
 		// get dimensions of snake
@@ -63,9 +57,14 @@ public class RectObstacle extends Obstacle{
 		if(e.contains(rx, ry, width, height))
 			return false;
 		if(e.intersects(rx, ry, width, height) || e2.intersects(rx, ry, width, height)
-			return true;
+			return true;*/
 			
 		return false;
+	}
+
+	@Override
+	public void draw(Graphics2D g) {
+		g.drawRect((int)rect.getX(), (int)rect.getY(), (int)rect.getWidth(), (int)rect.getHeight());
 	}
 
 }
