@@ -58,7 +58,9 @@ public class Game implements KeyListener,MouseListener{
 	static boolean hasClickedRetry = false;
 	
 	public void initGame(){
+
 		bgm = new Music();
+
 		bgm.play();
 		
 		snakeBoundary = new SnakeBoundary();
@@ -131,17 +133,17 @@ public class Game implements KeyListener,MouseListener{
 		try{
 			game.gameLoop();
 
-		}catch(GameOverException e){	
-			//System.out.println(e);
+		}
+		catch(GameOverException e){	
 			game.gameOverScene();
-				if(hasClickedRetry == true){
-					game= null;
-					game = new Game();
-					
-					hasClickedRetry = false;
-				}
+			if(hasClickedRetry == true){
+				game= null;
+				game = new Game();
+				
+				hasClickedRetry = false;
 			}
 		}
+	}
 	
 		
 	
@@ -215,6 +217,10 @@ public class Game implements KeyListener,MouseListener{
 				
 				snake.spin();
 				snake.draw(g);
+				
+				//debugging
+				//snakeBoundary.draw(g);
+				
 				
 				if(gameTime % 10 == (int) (Math.random() * 10))
 					wall.createObstacle();
@@ -291,7 +297,6 @@ public class Game implements KeyListener,MouseListener{
 		
 		if((e.getX() >= 185) && (e.getX() <= 420) && (e.getY() >= 440) && (e.getY() <=510)){
 			hasClickedStart = true;
-			System.out.print("clicked");
 		}
 		if((e.getX() >= 194) && (e.getX() <= 419) && (e.getY() >= 490) && (e.getY() <=515)){
 			hasClickedRetry = true;

@@ -10,7 +10,7 @@ public class Music {
 	 
 	 public Music(){
 		 try{
-			 in = new FileInputStream("MainTheme.wav");
+			 in = new FileInputStream("src" + File.separatorChar + "resources" + File.separatorChar + "MainTheme.wav");
 			 as = new AudioStream(in);
 		 } catch (IOException e){
 			 e.printStackTrace();
