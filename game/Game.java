@@ -12,16 +12,17 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+
 import javax.swing.*;
 
 import obstacles.Obstacle;
-import sun.audio.*;
-import java.io.*;
+
 
 public class Game implements KeyListener,MouseListener{
 	
@@ -76,7 +77,7 @@ public class Game implements KeyListener,MouseListener{
 			e.printStackTrace();
 		}
 	}
-	
+
 	//reads the game menu
 	public void readMenu(){
 		try {
@@ -112,17 +113,15 @@ public class Game implements KeyListener,MouseListener{
 		
 		
 		Game game = new Game();
-		
 		game.readMenu();
-		while (!hasClickedStart){
-			// do nothing
-		
-		}
+		while (!hasClickedStart)System.out.println(hasClickedStart);
+
 		game.initGame();
 		try{
 			game.gameLoop();
 
 		}catch(GameOverException e){	
+			System.out.println(e);
 			game.gameOverScene();
 				if(hasClickedRetry == true){
 					game= null;
