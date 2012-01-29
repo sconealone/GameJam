@@ -58,7 +58,7 @@ public class Game implements KeyListener,MouseListener{
 	static boolean hasClickedRetry = false;
 	
 	public void initGame(){
-		bgm = new Music("MainTheme.wav");
+		bgm = new Music("src" + File.separatorChar + "resources" + File.separatorChar + "MainTheme.wav");
 		bgm.play();
 		
 		snakeBoundary = new SnakeBoundary();
