@@ -25,7 +25,7 @@ public class RectObstacle extends Obstacle{
 	}
 
 	@Override
-	public void update() throws GameOverException {
+	public boolean update() throws GameOverException {
 		timer++;
 		if (timer >= origTimer * FRAMES_PER_SECOND){
 			if (haveCollided())
@@ -45,6 +45,7 @@ public class RectObstacle extends Obstacle{
 			y = centerY - d / 2;
 			rect.setRect(x, y, d, d);
 		}
+		return false;
 	}
 
 	@Override

@@ -59,7 +59,8 @@ public class Game implements KeyListener{
 		try{
 			game.gameLoop();
 		}catch(GameOverException e){
-			
+			System.out.println("Your score is "+game.getScore(game.gameTime, 0));
+			game.gameTime = 0; 
 		}
 		
 	}
@@ -153,6 +154,21 @@ public class Game implements KeyListener{
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	
+	/**
+	 * Computes a score based on the time that the game has been running
+	 * and the number of objects you captured
+	 * @param time
+	 * @param captures
+	 * @return
+	 */
+	private int getScore(int time, int captures)
+	{
+		final int FRAMES_PER_SECOND = 50;
+		final int CAPTURE_MULTIPLIER = 100;
+		return time / FRAMES_PER_SECOND + CAPTURE_MULTIPLIER * captures;
 	}
 	
 }
