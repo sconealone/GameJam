@@ -5,9 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-
 import javax.swing.*;
-
 import obstacles.Obstacle;
 
 
@@ -17,6 +15,7 @@ public class Game{
 	
 	// just a variable to check if the obstacle is
 	//inside the snake, change this when you get ur collision methods working
+	// true if an obstacle is captured, false otherwise
 	private boolean hasCaughtInside = false;
 	
 	public void initGame(){
@@ -46,7 +45,7 @@ public class Game{
 		});
 	}
 	
-	public static void main (String [ ] args) throws InterruptedException {
+	public static void main (String [ ] args) throws InterruptedException, GameOverException {
 		// TODO are we adding the KeyListener in this class?
 		try{
 			
@@ -56,18 +55,6 @@ public class Game{
 			
 		}
 		
-	}
-	
-	
-	
-	public int getScore(int start, int end) {
-		//actual time elapsed in the game
-		if( hasCaughtInside == true) {
-			score +=10;
-		}
-		int actual_time = gameTime*4;
-		score += actual_time*10;
-		return score;
 	}
 	
 	public static void gameLoop() throws InterruptedException, GameOverException{
