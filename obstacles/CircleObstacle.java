@@ -7,8 +7,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.geom.Ellipse2D;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 
 public class CircleObstacle extends Obstacle{
@@ -16,6 +21,8 @@ public class CircleObstacle extends Obstacle{
 	private final int FRAMES_PER_SECOND = 50;
 	private float originalDiameter;
 
+	Image circleImage;
+	
 	SnakeBoundary mySnake;
 
 	public Ellipse2D.Float circle = new Ellipse2D.Float();
@@ -26,6 +33,12 @@ public class CircleObstacle extends Obstacle{
 		timer = 0;
 		mySnake = snake;
 		originalDiameter = d;
+		try {
+			circleImage = ImageIO.read(new File("src" + File.separatorChar + "resources" + File.separatorChar + "Circle_deep_outerGlow.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 
@@ -55,7 +68,7 @@ public class CircleObstacle extends Obstacle{
 		}
 		else
 		{
-			float alpha = 1 + (timer * 2.0f / (origTimer * FRAMES_PER_SECOND));
+			float alpha = 1 + (timer * 1.0f / (origTimer * FRAMES_PER_SECOND));
 			float d = originalDiameter * alpha;
 			x = centerX - (float) d / 2;
 			y = centerY - (float) d / 2;
@@ -66,8 +79,6 @@ public class CircleObstacle extends Obstacle{
 
 	@Override
 	public boolean haveCollided() {
-		System.out.println("COLLISION IS BEING TESTED!!!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println(mySnake);
 		// centre of snake
 		double snakeX = mySnake.getOrigin().getX() + mySnake.getOuterRadius();
 		double snakeY = mySnake.getOrigin().getY() + mySnake.getOuterRadius();
@@ -88,7 +99,6 @@ public class CircleObstacle extends Obstacle{
 		int counter = mySnake.getCounter() - 1;
 		if(counter >= 0 && counter < 6) {
 		int INNER = 0, OUTER = 1;
-		System.out.println("Values:"+counter+":"+INNER+" "+OUTER);
 		double r1 = dimArray[counter][INNER].height; 
 		double r2 = dimArray[counter][OUTER].height;*/
 
@@ -110,6 +120,7 @@ public class CircleObstacle extends Obstacle{
 		Graphics2D g2d = (Graphics2D)g;
 		Color color = g2d.getColor();
 		g2d.setColor(Color.red);
-		g2d.draw(circle);
+		g2d.drawImage(circleImage, (int)circle.getX(), (int)circle.getY(), 
+				(int)circle.getWidth(), (int)circle.getHeight(), null);
 	}
 }

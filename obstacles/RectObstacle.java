@@ -12,7 +12,7 @@ import java.awt.geom.Ellipse2D;
 
 
 public class RectObstacle extends Obstacle{
-	private final int FRAMES_PER_SECOND = 4;
+	private final int FRAMES_PER_SECOND = 50;
 	public Rectangle2D rect;
 	public SnakeBoundary mySnake;
 	double originalDiameter;
@@ -31,6 +31,7 @@ public class RectObstacle extends Obstacle{
 			if (haveCollided())
 				throw new GameOverException();
 			rect.setFrame(0,0,0,0);
+			return false;
 		}
 		else {
 			double alpha = 1 + (timer*1.0 / (origTimer * FRAMES_PER_SECOND));

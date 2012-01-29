@@ -2,6 +2,7 @@
 package game;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
@@ -28,14 +29,9 @@ public class SnakeBoundary {
 	//private Image img;
 	
 	// constants
-	// TODO confirm snake radius
-	/**
-	 * The distance from the centre of the snake to the outer edge
-	 */
-	private final int DEFAULT_SNAKE_RADIUS = 250;
 	
 	// TODO this should be the actual snake width
-	private final int SNAKE_WIDTH = 30;
+	private final int SNAKE_WIDTH = 52; // measured
 	
 //	private final int MAX_SNAKE_RADIUS = 600;
 	
@@ -54,20 +50,7 @@ public class SnakeBoundary {
 	// constructor
 	SnakeBoundary()
 	{
-		
-		final int DEFAULT_X_POS = 300;
-		final int DEFAULT_Y_POS = 300;
-		outerEdge = new Ellipse2D.Double(
-					DEFAULT_X_POS, 
-					DEFAULT_Y_POS,
-					DEFAULT_SNAKE_RADIUS + DEFAULT_SNAKE_RADIUS,
-					DEFAULT_SNAKE_RADIUS + DEFAULT_SNAKE_RADIUS);
-		double innerRadius = DEFAULT_SNAKE_RADIUS - SNAKE_WIDTH;
-		innerEdge = new Ellipse2D.Double(
-					DEFAULT_X_POS + SNAKE_WIDTH,
-					DEFAULT_Y_POS + SNAKE_WIDTH,
-					innerRadius + innerRadius,
-					innerRadius + innerRadius);
+
 		
 		stageSizes = new Dimension[NUM_STAGES][];
 		for (int i = 0; i < NUM_STAGES; i++)
@@ -86,6 +69,20 @@ public class SnakeBoundary {
 		stageSizes[4][OUTER] = new Dimension(210,210);
 		stageSizes[5][INNER] = new Dimension(100,100);
 		stageSizes[5][OUTER] = new Dimension(210,210);
+		final int DEFAULT_X_POS = 300;
+		final int DEFAULT_Y_POS = 300;
+		double diameter = stageSizes[stageCounter][OUTER].width + stageSizes[stageCounter][OUTER].width;
+		outerEdge = new Ellipse2D.Double(
+					DEFAULT_X_POS, 
+					DEFAULT_Y_POS,
+					diameter, 
+					diameter);
+		double innerDiameter = diameter - SNAKE_WIDTH;
+		innerEdge = new Ellipse2D.Double(
+					DEFAULT_X_POS + SNAKE_WIDTH,
+					DEFAULT_Y_POS + SNAKE_WIDTH,
+					innerDiameter,
+					innerDiameter);
 	}
 	
 	/**
@@ -114,10 +111,6 @@ public class SnakeBoundary {
 		{
 			stageCounter--;
 		}
-		else if (stageCounter == 0)
-		{
-			return;
-		}
 		this.outerEdge.width = stageSizes[stageCounter][OUTER].width;
 		this.outerEdge.height = stageSizes[stageCounter][OUTER].height;
 		this.innerEdge.width = stageSizes[stageCounter][INNER].width;
@@ -133,10 +126,6 @@ public class SnakeBoundary {
 		if (stageCounter >= 0 && stageCounter < 5)
 		{
 			stageCounter++;
-		}
-		else if (stageCounter == 5)
-		{
-			return;
 		}
 		this.outerEdge.width = stageSizes[stageCounter][OUTER].width;
 		this.outerEdge.height = stageSizes[stageCounter][OUTER].height;
@@ -256,24 +245,15 @@ public class SnakeBoundary {
 	
 	}
 	
-	
-
-//	/**
-//	 * Returns the amount to change the diameter of the
-//	 * snake by based on the stage and if it is growing or shrinking
-//	 * @param growing whether or not the snake is growing
-//	 * @return
-//	 */
-//	public float changeDiameterBy(boolean growing)
-//	{
-//		if (growing)
-//		{
-//			if (stageCounter == 0) {
-//				return 0;
-//			}
-//			
-//		}
-//	}
+	/**
+	 * Debugging method
+	 * @param g
+	 */
+	void draw(Graphics g) {
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.draw(outerEdge);
+		g2d.draw(innerEdge);
+	}
 	
 	
 	@Override

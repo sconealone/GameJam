@@ -10,16 +10,18 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
 import javax.imageio.ImageIO;
+
 import javax.swing.*;
 
 import obstacles.Obstacle;
-import sun.audio.*;
-import java.io.*;
+
 
 public class Game implements KeyListener, MouseListener {
 
@@ -41,6 +43,8 @@ public class Game implements KeyListener, MouseListener {
 	private Image background;
 	private JLabel scoreLabel = new JLabel("Score: " + Integer.toString(score));
 
+	private String filename;
+	Music bgm;
 	JFrame frame;
 	Image gmenu;
 
@@ -55,6 +59,11 @@ public class Game implements KeyListener, MouseListener {
 	static boolean hasClickedRetry = false;
 
 	public void initGame() {
+
+		bgm = new Music();
+
+		bgm.play();
+		
 		snakeBoundary = new SnakeBoundary();
 		snake = new SnakeSpriteManager();
 		wall = new Wall(4, snakeBoundary);
@@ -80,8 +89,8 @@ public class Game implements KeyListener, MouseListener {
 		systemStart = origDate.getTime();
 	}
 
-	// reads the game menu
-	public void readMenu() {
+	//reads the game menu
+	public void readMenu(){
 		try {
 			gmenu = ImageIO
 					.read(new File("src" + File.separatorChar + "resources"
@@ -99,6 +108,9 @@ public class Game implements KeyListener, MouseListener {
 	}
 
 	public void gameOverScene() {
+
+		bgm.stopBGM();
+
 		try {
 			gover = ImageIO.read(new File("src" + File.separatorChar
 					+ "resources" + File.separatorChar
@@ -114,33 +126,34 @@ public class Game implements KeyListener, MouseListener {
 		frame.addMouseListener(this);
 
 	}
-
-	public static void main(String[] args) throws InterruptedException,
-			GameOverException {
-
+	
+	public static void main (String [ ] args) throws InterruptedException, GameOverException {
+		
+		
 		Game game = new Game();
-
 		game.readMenu();
-		while (!hasClickedStart) {
-
+		while (!hasClickedStart)
+		{
+			Thread.sleep(1);
 		}
+
 		game.initGame();
 		try {
 			game.gameLoop();
 
-		} catch (GameOverException e) {
+		}
+		catch(GameOverException e){	
 			game.gameOverScene();
-			if (hasClickedRetry == true) {
-				game = null;
+			if(hasClickedRetry == true){
+				game= null;
 				game = new Game();
-
+				
 				hasClickedRetry = false;
 			}
 		}
 	}
 
-	public void gameLoop() throws InterruptedException, GameOverException {
-
+	public void gameLoop() throws InterruptedException, GameOverException{
 		BufferStrategy bf = frame.getBufferStrategy();
 		Graphics g = null;
 		boolean[] arrived = new boolean[10];
@@ -208,18 +221,8 @@ public class Game implements KeyListener, MouseListener {
 
 				snake.spin();
 				snake.draw(g);
-
 				// /// Update the score (based on system time)
 				//
-				// frame.getContentPane().add(scoreLabel);
-				// Date date = new Date();
-				// long time = date.getTime();
-				// scoreLabel.setText("Score: " +
-				// Integer.toString(getScore((int) time)));
-				// scoreLabel.setBounds(200, 200, 100, 100);
-				// scoreLabel.repaint();
-				// scoreLabel.setVisible(true);
-
 				if (gameTime % 10 == (int) (Math.random() * 10))
 					wall.createObstacle();
 
@@ -290,8 +293,8 @@ public class Game implements KeyListener, MouseListener {
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if ((e.getX() >= 185) && (e.getX() <= 420) && (e.getY() >= 440)
-				&& (e.getY() <= 510)) {
+		
+		if((e.getX() >= 185) && (e.getX() <= 420) && (e.getY() >= 440) && (e.getY() <=510)){
 			hasClickedStart = true;
 		}
 		if ((e.getX() >= 194) && (e.getX() <= 419) && (e.getY() >= 490)

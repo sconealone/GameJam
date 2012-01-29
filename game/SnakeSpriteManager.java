@@ -66,13 +66,13 @@ public class SnakeSpriteManager {
 		{
 			for (int i = 0; i < NUM_GROWTH_STAGES; i++)
 			{
-				snakeImages[i] = ImageIO.read(new File("./src"+File.pathSeparatorChar+"resources"+File.pathSeparatorChar+snakeNames[i]));
+				snakeImages[i] = ImageIO.read(new File(snakeNames[i]));
 			}
 		}
 		catch (IOException e)
 		{	
 			try
-			{
+			{ 
 				String windowsPath  = "src"+File.separatorChar+"resources"+File.separatorChar;
 				for (int i = 0; i < NUM_GROWTH_STAGES; i++)
 				{
