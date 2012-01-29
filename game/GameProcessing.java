@@ -155,7 +155,7 @@ public class GameProcessing extends PApplet
 		
 		
 		// handle key presses
-		
+		System.out.println(snakeBoundary);
 		if(upKeyPressed){
 			snakeBoundary.moveUp();
 		}

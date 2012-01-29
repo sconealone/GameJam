@@ -38,14 +38,15 @@ public class Wall {
 		float r = 30;
 		
 		num =  (((int )Math.random()*100)%maxDiffObstacles);
-		if (obstacles.size() <= maxNumObstacles)
+
+		if (obstacles.size() < maxNumObstacles)
 		{
 		switch(num){
 		case 0: 	obstacles.add(new CircleObstacle(dur, x, y , r, snake));		break;
 		case 1: 	obstacles.add(new RectObstacle(dur, x, y, r, snake));			break;
 		}
 		}
-		
+
 	}
 	
 	/**

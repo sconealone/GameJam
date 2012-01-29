@@ -295,7 +295,7 @@ public class SnakeBoundary {
 		return self;
 		
 	}
-
+/*
 	public static void main(String[] args)
 	{
 		System.out.println("Default snake");
@@ -338,7 +338,7 @@ public class SnakeBoundary {
 		System.out.println(s1);
 			
 			
-	}
+	}*/
 		
 }
 
