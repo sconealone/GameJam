@@ -53,13 +53,6 @@ public class Game implements KeyListener,MouseListener{
 	static boolean hasClickedStart = false;
 	
 	public void initGame(){
-//<<<<<<< HEAD
-//		snake = new SnakeModel();
-//
-//		snakeManager = new SnakeSpriteManager();
-//		wall = new Wall(3, snakeBoundary);
-//		//frame = new JFrame();
-//=======
 		snakeBoundary = new SnakeBoundary();
 		snake = new SnakeSpriteManager();
 		wall = new Wall(4, snakeBoundary);
@@ -140,10 +133,26 @@ public class Game implements KeyListener,MouseListener{
 		}
 		while(true){
 			try{
-				if(isDown) snake.moveUp();
-				if(isUp) snake.moveDown();
-				if(isRight) snake.moveRight();
-				if(isLeft) snake.moveLeft();
+				if(isDown) 
+				{
+					snake.moveUp();
+					snakeBoundary.moveUp();
+				}
+				if(isUp) 
+				{
+					snake.moveDown();
+					snakeBoundary.moveDown();
+				}
+				if(isRight) 
+				{
+					snake.moveRight();
+					snakeBoundary.moveRight();
+				}
+				if(isLeft) 
+				{
+					snake.moveLeft();
+					snakeBoundary.moveLeft();
+				}
 				
 				g = bf.getDrawGraphics();
 				g.setColor(new Color(255,255,255));
@@ -278,6 +287,21 @@ public class Game implements KeyListener,MouseListener{
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	
+	/**
+	 * Computes a score based on the time that the game has been running
+	 * and the number of objects you captured
+	 * @param time
+	 * @param captures
+	 * @return
+	 */
+	private int getScore(int time, int captures)
+	{
+		final int FRAMES_PER_SECOND = 50;
+		final int CAPTURE_MULTIPLIER = 100;
+		return time / FRAMES_PER_SECOND + CAPTURE_MULTIPLIER * captures;
 	}
 	
 }
