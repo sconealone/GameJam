@@ -36,5 +36,9 @@ public class Wall {
 		}
 		
 	}
+	
+	public ArrayList<Obstacle> getObstacles(){
+		return obstacles;
+	}
 
 }
