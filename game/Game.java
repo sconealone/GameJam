@@ -40,6 +40,8 @@ public class Game implements KeyListener,MouseListener{
 	private ArrayList<Obstacle> obstacles;
 	private boolean isUp, isDown, isLeft, isRight, isShrink = false;
 	private boolean isGameOver = false;
+	
+	private Image background;
 
 	JFrame frame;
 	Image gmenu;
@@ -52,6 +54,7 @@ public class Game implements KeyListener,MouseListener{
 	// true if an obstacle is captured, false otherwise
 	private boolean hasCaughtInside = false;
 	static boolean hasClickedStart = false;
+	static boolean hasClickedRetry = false;
 	
 	public void initGame(){
 		snakeBoundary = new SnakeBoundary();
@@ -66,6 +69,13 @@ public class Game implements KeyListener,MouseListener{
 		frame.requestFocus();
 		frame.addKeyListener(this);
 		obstacles = wall.getObstacles();
+		
+		try {
+			background = ImageIO.read(new File("src"+File.separatorChar+"resources"+File.separatorChar+"bkground.jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	//reads the game menu
@@ -86,7 +96,7 @@ public class Game implements KeyListener,MouseListener{
 	
 	public void gameOverScene(){
 		try {
-			gover = ImageIO.read(new File("src"+File.separatorChar+"resources"+File.separatorChar+"game_over.png"));
+			gover = ImageIO.read(new File("src"+File.separatorChar+"resources"+File.separatorChar+"game_over_retryButton.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -96,6 +106,7 @@ public class Game implements KeyListener,MouseListener{
 		frame.pack();
 		frame.setVisible(true);
 		frame.addMouseListener(this);
+		
 	}
 	
 	public static void main (String [ ] args) throws InterruptedException, GameOverException {
@@ -103,23 +114,28 @@ public class Game implements KeyListener,MouseListener{
 		
 		Game game = new Game();
 		game.readMenu();
-		
-		while (!hasClickedStart)
-		{
-			if(hasClickedStart == true){
-				game.initGame();
-			}
-		}
+		while (!hasClickedStart)System.out.println(hasClickedStart);
+
+		game.initGame();
 		try{
 			game.gameLoop();
 
 		}catch(GameOverException e){	
+			System.out.println(e);
 			game.gameOverScene();
-			
+				if(hasClickedRetry == true){
+					game= null;
+					game = new Game();
+					
+					hasClickedRetry = false;
+				}
+			}
 		}
 	
+		
 	
-	}
+	
+	
 	
 	public void gameLoop() throws InterruptedException, GameOverException{
 		BufferStrategy bf = frame.getBufferStrategy();
@@ -153,10 +169,16 @@ public class Game implements KeyListener,MouseListener{
 					snake.moveLeft();
 					snakeBoundary.moveLeft();
 				}
-				
+				if(isShrink)
+				{
+					snake.shrink();
+					snakeBoundary.shrink();
+					isShrink = false;
+				}
 				g = bf.getDrawGraphics();
 				g.setColor(new Color(255,255,255));
-				g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
+				//g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
+				g.drawImage(background, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
 				Obstacle myO;
 				for( int i = 0; i < obstacles.size(); i ++)//Obstacle o: obstacles) {
 				{	
@@ -223,8 +245,7 @@ public class Game implements KeyListener,MouseListener{
 			isRight = true;
 		}
 		if(code == KeyEvent.VK_A){
-			snake.shrink();
-			snakeBoundary.shrink();
+			isShrink = true;
 		}
 	}
 
@@ -261,9 +282,17 @@ public class Game implements KeyListener,MouseListener{
 //		System.out.println("e.getY = " + e.getY());
 		// TODO Auto-generated method stub
 		if((e.getX() >= 185) && (e.getX() <= 420) && (e.getY() >= 440) && (e.getY() <=510)){
+			System.out.println("CLICKED");
 			hasClickedStart = true;
-			//System.out.println("you clicked start");
+			System.out.println("you clicked start");
 		}
+		if((e.getX() >= 194) && (e.getX() <= 419) && (e.getY() >= 490) && (e.getY() <=515)){
+			hasClickedRetry = true;
+			System.out.println("you clicked retry");
+		}
+
+		System.out.print(e.getX()+","+e.getY()+hasClickedRetry +"\n");
+		
 	}
 
 	@Override
