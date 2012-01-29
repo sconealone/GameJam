@@ -73,14 +73,14 @@ public class SnakeBoundary {
 		final int DEFAULT_Y_POS = 300;
 		double diameter = stageSizes[stageCounter][OUTER].width + stageSizes[stageCounter][OUTER].width;
 		outerEdge = new Ellipse2D.Double(
-					DEFAULT_X_POS, 
-					DEFAULT_Y_POS,
+					DEFAULT_X_POS-diameter / 2, // 
+					DEFAULT_Y_POS-diameter / 2, //DEFAULT_Y_POS
 					diameter, 
 					diameter);
 		double innerDiameter = diameter - SNAKE_WIDTH;
 		innerEdge = new Ellipse2D.Double(
-					DEFAULT_X_POS + SNAKE_WIDTH,
-					DEFAULT_Y_POS + SNAKE_WIDTH,
+					DEFAULT_X_POS + SNAKE_WIDTH - diameter / 2,
+					DEFAULT_Y_POS + SNAKE_WIDTH - diameter / 2,
 					innerDiameter,
 					innerDiameter);
 	}

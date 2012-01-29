@@ -15,7 +15,7 @@ public class Wall {
 	private ArrayList<Obstacle> obstacles;
 	private SnakeBoundary snake;
 
-	private Random r = new 	Random();
+
 	/**
 	 * 
 	 * @param n the max amount of obstacles on the screen at any given time
@@ -31,19 +31,19 @@ public class Wall {
 	 * 
 	 */
 	public void createObstacle(){
-		int num = 0;
-		int dur = 5;
+		Random r = new 	Random();
+		int num = r.nextInt(2);
+		int dur = 5 +  (int) (r.nextFloat() * 5);
 		float x =100 + r.nextFloat() * 400;
 		float y = 100 + r.nextFloat() * 400;
-		float r = 60;
+		float d = 60;
 		
-		num =  (((int )Math.random()*100)%maxDiffObstacles);
-
+		//num =  (((int )Math.random()*100)%maxDiffObstacles);
 		if (obstacles.size() < maxNumObstacles)
 		{
 		switch(num){
-		case 0: 	obstacles.add(new CircleObstacle(dur, x, y , r, snake));		break;
-		case 1: 	obstacles.add(new RectObstacle(dur, x, y, r, snake));			break;
+		case 0: 	obstacles.add(new CircleObstacle(dur, x, y , d, snake));		break;
+		case 1: 	obstacles.add(new RectObstacle(dur, x, y, d, snake));			break;
 		}
 		}
 
