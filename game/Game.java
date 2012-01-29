@@ -106,9 +106,10 @@ public class Game implements KeyListener,MouseListener{
 		
 		while (!hasClickedStart)
 		{
-			if(hasClickedStart == true){
-				game.initGame();
-			}
+			// do nothing
+		}
+		if(hasClickedStart == true){
+			game.initGame();
 		}
 		try{
 			game.gameLoop();
