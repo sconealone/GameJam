@@ -116,7 +116,6 @@ public class Game implements KeyListener,MouseListener{
 		game.readMenu();
 		while (!hasClickedStart)System.out.println(hasClickedStart);
 		game.initGame();
-//>>>>>>> d55b6b183ba24a07d6a9dc3833e07ced5bdaa574
 		try{
 			game.gameLoop();
 
@@ -169,7 +168,12 @@ public class Game implements KeyListener,MouseListener{
 					snake.moveLeft();
 					snakeBoundary.moveLeft();
 				}
-				
+				if(isShrink)
+				{
+					snake.shrink();
+					snakeBoundary.shrink();
+					isShrink = false;
+				}
 				g = bf.getDrawGraphics();
 				g.setColor(new Color(255,255,255));
 				//g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
@@ -240,8 +244,7 @@ public class Game implements KeyListener,MouseListener{
 			isRight = true;
 		}
 		if(code == KeyEvent.VK_A){
-			snake.shrink();
-			snakeBoundary.shrink();
+			isShrink = true;
 		}
 	}
 
