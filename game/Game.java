@@ -27,13 +27,14 @@ public class Game implements KeyListener,MouseListener{
 	
 	public static final int FRAME_WIDTH = 600;
 	public static final int FRAME_HEIGHT = 600;
+	private static final int GROW_EVERY_NUM_LOOPS = 20;
 	
 	private int gameTime=0;
 	private int score;
+	private int loopCounter = 0;
 	
-	private SnakeModel snake;
 	private SnakeBoundary snakeBoundary;
-	private SnakeSpriteManager snakeManager;
+	private SnakeSpriteManager snake;
 	private Wall wall;
 	
 	private boolean isUp, isDown, isLeft, isRight, isShrink = false;
@@ -42,6 +43,9 @@ public class Game implements KeyListener,MouseListener{
 	JFrame frame;
 	Image gmenu;
 	
+	//game over scene
+	Image gover;
+	
 	// just a variable to check if the obstacle is
 	//inside the snake, change this when you get ur collision methods working
 	// true if an obstacle is captured, false otherwise
@@ -49,10 +53,16 @@ public class Game implements KeyListener,MouseListener{
 	static boolean hasClickedStart = false;
 	
 	public void initGame(){
-		snake = new SnakeModel();
-
-		snakeManager = new SnakeSpriteManager();
-		wall = new Wall(3, snakeBoundary);
+//<<<<<<< HEAD
+//		snake = new SnakeModel();
+//
+//		snakeManager = new SnakeSpriteManager();
+//		wall = new Wall(3, snakeBoundary);
+//		//frame = new JFrame();
+//=======
+		snakeBoundary = new SnakeBoundary();
+		snake = new SnakeSpriteManager();
+		wall = new Wall(4, snakeBoundary);
 		//frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -79,6 +89,20 @@ public class Game implements KeyListener,MouseListener{
 		frame.addMouseListener(this);
 	}
 	
+	public void gameOverScene(){
+		try {
+			gover = ImageIO.read(new File("src"+File.separatorChar+"resources"+File.separatorChar+"game_over.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		frame.setContentPane(new JLabel(new ImageIcon(gover)));
+		frame.pack();
+		frame.setVisible(true);
+		frame.addMouseListener(this);
+	}
+	
 	public static void main (String [ ] args) throws InterruptedException, GameOverException {
 		
 		
@@ -94,7 +118,8 @@ public class Game implements KeyListener,MouseListener{
 		}
 		try{
 			game.gameLoop();
-		}catch(GameOverException e){
+		}catch(GameOverException e){	
+			game.gameOverScene();
 			
 		}
 	
@@ -106,13 +131,13 @@ public class Game implements KeyListener,MouseListener{
 		Graphics g = null;
 		while(true){
 			try{
-				if(isUp) snake.moveUp();
-				if(isDown) snake.moveDown();
+				if(isDown) snake.moveUp();
+				if(isUp) snake.moveDown();
 				if(isRight) snake.moveRight();
 				if(isLeft) snake.moveLeft();
 				
 				g = bf.getDrawGraphics();
-				g.setColor(new Color(0 , true));
+				g.setColor(new Color(255,255,255));
 				g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
 				
 				for(Obstacle o: wall.getObstacles()) {
@@ -125,8 +150,21 @@ public class Game implements KeyListener,MouseListener{
 				
 				snake.spin();
 				snake.draw(g);
+				
+				if(gameTime % 10 == (int) (Math.random() * 10))
+					wall.createObstacle();
+				
 				// autogrow snake
-				snake.grow();
+				if (loopCounter % GROW_EVERY_NUM_LOOPS == 0)
+				{
+					snakeBoundary.grow();
+					snake.grow();
+					loopCounter = 1;			
+				}
+				else
+				{
+					loopCounter++;
+				}
 				gameTime++;
 				bf.show();
 				Thread.sleep(20);
@@ -154,6 +192,7 @@ public class Game implements KeyListener,MouseListener{
 		}
 		if(code == KeyEvent.VK_A){
 			snake.shrink();
+			snakeBoundary.shrink();
 		}
 	}
 

@@ -70,11 +70,20 @@ public class SnakeSpriteManager {
 			}
 		}
 		catch (IOException e)
-		{
-			// TODO actually handle this
-			e.printStackTrace();
+		{	
+			try
+			{
+				String windowsPath  = "src"+File.separatorChar+"resources"+File.separatorChar;
+				for (int i = 0; i < NUM_GROWTH_STAGES; i++)
+				{
+					snakeImages[i] = ImageIO.read(new File(windowsPath+snakeNames[i]));
+				}
+			}
+			catch (IOException ex){
+				e.printStackTrace();
+			}
+				
 		}
-		
 		
 	}
 	
@@ -110,7 +119,7 @@ public class SnakeSpriteManager {
 	 */
 	public void spin()
 	{
-		angle -= 0.1f;
+		angle -= 0.4f;
 		if (angle <= -2*Math.PI)
 		{
 			angle = 0f;

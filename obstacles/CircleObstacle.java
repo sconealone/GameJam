@@ -47,10 +47,10 @@ public class CircleObstacle extends Obstacle{
 		float centerY = (float) centerYdouble;
 
 		if (timer >= origTimer * FRAMES_PER_SECOND) {
-			//if (haveCollided())
-			//	throw new GameOverException();
+			if (haveCollided())
+				throw new GameOverException();
 
-			//circle.setFrame(0,0,0,0);
+			circle.setFrame(0,0,0,0);
 			return false;
 		}
 		else
@@ -66,7 +66,8 @@ public class CircleObstacle extends Obstacle{
 
 	@Override
 	public boolean haveCollided() {
-
+		System.out.println("COLIDED!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.println(mySnake);
 		// centre of snake
 		double snakeX = mySnake.getOrigin().getX() + mySnake.getOuterRadius();
 		double snakeY = mySnake.getOrigin().getY() + mySnake.getOuterRadius();
@@ -75,6 +76,7 @@ public class CircleObstacle extends Obstacle{
 		//double topx = circle.getX();
 		//double topy = circle.getY();
 		double d = circle.getWidth();
+
 		//double circleX = topx + d / 2;
 		//double circleY = topy - d / 2;
 		double circleX = circle.getCenterX();
@@ -84,6 +86,7 @@ public class CircleObstacle extends Obstacle{
 		Dimension[][] dimArray = mySnake.getDimArray();
 		int counter = mySnake.getCounter() - 1;
 		int INNER = 0, OUTER = 1;
+		System.out.println("Values:"+counter+":"+INNER+" "+OUTER);
 		double r1 = dimArray[counter][INNER].height; 
 		double r2 = dimArray[counter][OUTER].height;
 
@@ -100,7 +103,8 @@ public class CircleObstacle extends Obstacle{
 	@Override
 	public void draw(Graphics g) {
 		Graphics2D g2d = (Graphics2D)g;
-		g2d.setColor(Color.BLACK);
-		g2d.fill(circle);
+		Color color = g2d.getColor();
+		g2d.setColor(Color.red);
+		g2d.draw(circle);
 	}
 }
