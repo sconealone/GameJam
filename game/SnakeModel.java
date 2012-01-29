@@ -51,11 +51,7 @@ public class SnakeModel {
 		x = y = 0;
 		dx = dy = 5;
 		try {
-<<<<<<< HEAD
-			img = ImageIO.read(new File("src"+File.separatorChar+"resources"+File.separatorChar+"test0036.png"));
-=======
 			img = ImageIO.read(new File("test0036.png"));
->>>>>>> 1ec2cf5d4ab2807c0bea7e12541c4e436ef31e4e
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -102,7 +98,7 @@ public class SnakeModel {
 	}
 	
 	public void spin(){
-		angle -= 0.05f;
+		angle -= 0.01f;
 		if(angle <= -2*Math.PI) angle = 0.0f;
 	}
 	
