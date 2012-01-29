@@ -147,7 +147,7 @@ public class GameDialog implements KeyListener{
 //				}
 //				snakeBoundary.grow();
 //				snake.grow();
-				snake.spinBack();
+				snake.spin();
 				snake.draw(g);
 				
 				// autogrow snake

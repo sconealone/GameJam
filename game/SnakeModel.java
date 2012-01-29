@@ -55,8 +55,14 @@ public class SnakeModel {
 		try {
 			img = ImageIO.read(new File("test0036.png"));
 		}catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try
+			{
+				String windowsPath = "src"+File.separator+"resources"+File.separatorChar;
+				img = ImageIO.read(new File(windowsPath+"test0036.png"));
+			}
+			catch (IOException e2){
+				e2.printStackTrace();
+			}
 		}
 /*
 	SnakeModel()
