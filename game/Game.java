@@ -58,7 +58,7 @@ public class Game implements KeyListener,MouseListener{
 	static boolean hasClickedRetry = false;
 	
 	public void initGame(){
-		bgm = new Music("MainTheme.wav");
+		bgm = new Music();
 		bgm.play();
 		
 		snakeBoundary = new SnakeBoundary();
@@ -99,6 +99,7 @@ public class Game implements KeyListener,MouseListener{
 	}
 	
 	public void gameOverScene(){
+		bgm.stopBGM();
 		try {
 			gover = ImageIO.read(new File("src"+File.separatorChar+"resources"+File.separatorChar+"game_over_retryButton.png"));
 		} catch (IOException e) {
