@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
 import javax.swing.*;
 
 
-public class Game {
+public class Game{
 	private static int gameTime=0;
 	private static int score;
 	
@@ -16,9 +16,15 @@ public class Game {
 	//inside the snake, change this when you get ur collision methods working
 	private boolean hasCaughtInside = false;
 	
+	public void initGame(){
+		JFrame frame = new JFrame();
+		
+	}
+	
 	public static void main (String [ ] args) throws InterruptedException {
 		// TODO are we adding the KeyListener in this class?
 		try{
+			
 			gameLoop();
 			
 		}catch(GameOverException e){
@@ -53,7 +59,7 @@ public class Game {
 			  
 	
 			// check for collisions (game over)
-	
+			
 		     
 	
 			// repaint

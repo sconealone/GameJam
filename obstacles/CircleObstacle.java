@@ -1,18 +1,24 @@
 package obstacles;
 
 import game.GameOverException;
+import game.SnakeModel;
+
+import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 
 
 public class CircleObstacle extends Obstacle{
 	private final int FRAMES_PER_SECOND = 4;
-	public CircleObstacle(int duration, double xloc, double yloc, double d){
+	SnakeModel mySnake;
+	public Ellipse2D.Double circle;
+	public CircleObstacle(int duration, double xloc, double yloc, double d, SnakeModel snake){
 		circle = new Ellipse2D.Double(xloc, yloc, d, d);
 		origTimer = duration;
 		timer = 0;
+		mySnake = snake;
 	}
 	
-	public Ellipse2D.Double circle;
+
 	
 	@Override
 	public void update() throws GameOverException {
@@ -45,29 +51,34 @@ public class CircleObstacle extends Obstacle{
 
 	@Override
 	public boolean haveCollided() {
-		 int snakeThickness;
 
 		// get two centres somehow
 
 		// centre of snake
-		int cx1, cy1;
+		double cx1 = mySnake.getOrigin().getX();
+		double cy1 = mySnake.getOrigin().getY();
 
 		// centre of circle obstacle
-		int x, y;
+		double topx = circle.getX();
+		double topy = circle.getY();
+		double d = circle.getWidth();
+		double x = topx + d / 2;
+		double y = topy - d / 2;
+		
 
 		// smaller and larger radii of snake
-		int r1, r2;
+		double r1 = mySnake.getInnerRadius(); 
+		double r2 = mySnake.getOuterRadius();
 
-		// radius of obstacle
-		int rObstacle;
 
-		double distance = Math.sqrt(Math.pow(cx3-cx1, 2)+Math.pow(cy3-cy1, 2));
+		double distance = Math.sqrt(Math.pow(x-cx1, 2)+Math.pow(y-cy1, 2));
 		if(distance >= r1 && distance <= r2)
 			return true;
-		if(distance < r1)
-			return (distance+rObstacle) < r1;
-		if(distance > r2)
-			return (distance-rObstacle) > r2;
+		else if(distance < r1)
+			return (distance + d / 2) >= r1;
+		else 
+			return (distance - d / 2) <= r2;
+		
 	}
 
 	@Override

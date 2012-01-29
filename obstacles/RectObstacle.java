@@ -1,5 +1,7 @@
 package obstacles;
 import game.GameOverException;
+import game.SnakeModel;
+
 import java.awt.geom.Rectangle2D;
 
 
@@ -10,7 +12,7 @@ import java.awt.geom.Ellipse2D;
 public class RectObstacle extends Obstacle{
 	private final int FRAMES_PER_SECOND = 4;
 	public Rectangle2D rect;
-	public RectObstacle(int duration, double xloc, double yloc, double d){
+	public RectObstacle(int duration, double xloc, double yloc, double d, SnakeModel snake){
 		rect = new Rectangle2D.Double(xloc, yloc, d, d);
 		origTimer = duration;
 		timer = 0;
