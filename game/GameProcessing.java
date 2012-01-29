@@ -79,13 +79,13 @@ public class GameProcessing extends PApplet
 		snakeManager = new SnakeSpriteManager();
 		String snakeName = snakeManager.getSpriteName();
 		snakeSprite = loadImage(snakeName);
-		//image(snakeSprite, (float) originX, (float) originY);
+		image(snakeSprite, (float) originX, (float) originY);
 		fill(0xff, 0, 0);
 		ellipseMode(CENTER);
-		ellipse((float) originX, (float) originY, (float)snakeModel.getOuterRadius(), (float)snakeModel.getOuterRadius());
+		//ellipse((float) originX, (float) originY, (float)snakeModel.getOuterRadius(), (float)snakeModel.getOuterRadius());
 
 		ellipseMode(CENTER);
-		ellipse((float) origin.x, (float) origin.x, (float)snakeModel.getInnerRadius(), (float)snakeModel.getInnerRadius());
+		//ellipse((float) origin.x, (float) origin.x, (float)snakeModel.getInnerRadius(), (float)snakeModel.getInnerRadius());
 	}
 	
 	/**
@@ -175,15 +175,15 @@ public class GameProcessing extends PApplet
 			snakeSprite = loadImage(snakeName);
 		}
 		Point2D.Double origin = snakeModel.getOrigin();
-		//image(snakeSprite, (float)origin.x, (float)origin.y);
+		image(snakeSprite, (float)origin.x, (float)origin.y);
 
 		fill(0xff, 0, 0);
 		ellipseMode(CENTER);
-		ellipse((float) origin.x, (float) origin.y, (float)snakeModel.getOuterRadius(), (float)snakeModel.getOuterRadius());
+		//ellipse((float) origin.x, (float) origin.y, (float)snakeModel.getOuterRadius(), (float)snakeModel.getOuterRadius());
 		fill(0xff, 0xff, 0);
 
 		ellipseMode(CENTER);
-		ellipse((float) origin.x, (float) origin.y, (float)snakeModel.getInnerRadius(), (float)snakeModel.getInnerRadius());
+		//ellipse((float) origin.x, (float) origin.y, (float)snakeModel.getInnerRadius(), (float)snakeModel.getInnerRadius());
 		
 		// reset key pressed
 		upKeyPressed = false;
