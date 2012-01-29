@@ -25,7 +25,7 @@ public class Game implements KeyListener{
 	private SnakeBoundary snakeBoundary;
 	private SnakeSpriteManager snake;
 	private Wall wall;
-	
+	private ArrayList<Obstacle> obstacles;
 	private boolean isUp, isDown, isLeft, isRight, isShrink = false;
 	
 	JFrame frame;
@@ -48,6 +48,7 @@ public class Game implements KeyListener{
 		frame.createBufferStrategy(2);
 		frame.requestFocus();
 		frame.addKeyListener(this);
+		obstacles = wall.getObstacles();
 	}
 	
 	public static void main (String [ ] args) throws InterruptedException, GameOverException {
@@ -59,7 +60,7 @@ public class Game implements KeyListener{
 		try{
 			game.gameLoop();
 		}catch(GameOverException e){
-			
+			e.printStackTrace();
 		}
 		
 	}
@@ -67,6 +68,13 @@ public class Game implements KeyListener{
 	public void gameLoop() throws InterruptedException, GameOverException{
 		BufferStrategy bf = frame.getBufferStrategy();
 		Graphics g = null;
+		boolean[] arrived = new boolean[10];
+		Obstacle[] arrivedObstacle = new Obstacle[10];
+		for (int i = 0; i < arrived.length - 1; i++)
+		{
+			arrived[i] = true;
+			arrivedObstacle[i] = null;
+		}
 		while(true){
 			try{
 				if(isDown) snake.moveUp();
@@ -77,8 +85,21 @@ public class Game implements KeyListener{
 				g = bf.getDrawGraphics();
 				g.setColor(Color.gray);
 				g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
-				for(Obstacle o: wall.getObstacles()) {
-					o.update();
+				Obstacle myO;
+				for( int i = 0; i < obstacles.size() - 1; i ++)//Obstacle o: obstacles) {
+				{	
+					myO =  obstacles.get(i);
+					arrived[i] = myO.update();
+					arrivedObstacle[i] = myO;
+					
+				}
+				for( int i = 0; i < arrived.length - 1; i ++)
+				{
+					if (!arrived[i])
+					{
+						wall.deleteObstacle(arrivedObstacle[i]);
+						arrived[i] = true;
+					}
 				}
 				// repaint
 				for(Obstacle o: wall.getObstacles()) {
