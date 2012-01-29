@@ -1,6 +1,6 @@
 package obstacles;
 
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.awt.Polygon;
 
 
@@ -20,7 +20,7 @@ public class TriangleObstacle extends Obstacle{
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
+	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
 		
 	}

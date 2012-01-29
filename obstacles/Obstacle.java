@@ -1,6 +1,6 @@
 package obstacles;
 
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 
 import game.GameOverException;
 
@@ -13,7 +13,7 @@ public abstract class Obstacle {
 	/**
 	 * 
 	 */
-	public abstract  void draw(Graphics2D g);
+	public abstract  void draw(Graphics g);
 	/**
 	 * 
 	 */
