@@ -1,7 +1,14 @@
 package game;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Ellipse2D;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 /**
  * Keeps track of snake's size and movement
@@ -12,6 +19,8 @@ public class SnakeModel {
 	// instance variables
 	Ellipse2D.Double outerEdge;
 	Ellipse2D.Double innerEdge;
+	
+	private Image img;
 	
 	// constants
 	// TODO confirm snake radius
@@ -45,6 +54,12 @@ public class SnakeModel {
 					DEFAULT_Y_POS + SNAKE_WIDTH,
 					innerRadius + innerRadius,
 					innerRadius + innerRadius);
+		try {
+			img = ImageIO.read(new File("src/resources/snakes2.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -78,6 +93,11 @@ public class SnakeModel {
 		this.innerEdge.height -= CHANGE_DIAMETER_BY;
 		this.outerEdge.width -= CHANGE_DIAMETER_BY;
 		this.outerEdge.height -= CHANGE_DIAMETER_BY;
+	}
+	
+	public void draw(Graphics2D g) {
+		AffineTransform at = new AffineTransform();
+		g.drawImage(img, at, null);
 	}
 	
 	/**
