@@ -16,13 +16,14 @@ public class Game implements KeyListener{
 	
 	public static final int FRAME_WIDTH = 600;
 	public static final int FRAME_HEIGHT = 600;
+	private static final int GROW_EVERY_NUM_LOOPS = 20;
 	
 	private int gameTime=0;
 	private int score;
+	private int loopCounter = 0;
 	
-	private SnakeModel snake;
 	private SnakeBoundary snakeBoundary;
-	private SnakeSpriteManager snakeManager;
+	private SnakeSpriteManager snake;
 	private Wall wall;
 	
 	private boolean isUp, isDown, isLeft, isRight, isShrink = false;
@@ -35,8 +36,8 @@ public class Game implements KeyListener{
 	private boolean hasCaughtInside = false;
 	
 	public void initGame(){
-		snake = new SnakeModel();
-		snakeManager = new SnakeSpriteManager();
+		snakeBoundary = new SnakeBoundary();
+		snake = new SnakeSpriteManager();
 		wall = new Wall(10, snakeBoundary);
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,8 +69,8 @@ public class Game implements KeyListener{
 		Graphics g = null;
 		while(true){
 			try{
-				if(isUp) snake.moveUp();
-				if(isDown) snake.moveDown();
+				if(isDown) snake.moveUp();
+				if(isUp) snake.moveDown();
 				if(isRight) snake.moveRight();
 				if(isLeft) snake.moveLeft();
 				
@@ -83,7 +84,6 @@ public class Game implements KeyListener{
 				for(Obstacle o: wall.getObstacles()) {
 					o.draw(g);
 				}
-				snake.grow();
 				snake.spin();
 				snake.draw(g);
 				
@@ -91,7 +91,16 @@ public class Game implements KeyListener{
 					wall.createObstacle();
 				
 				// autogrow snake
-				snake.grow();
+				if (loopCounter % GROW_EVERY_NUM_LOOPS == 0)
+				{
+					snakeBoundary.grow();
+					snake.grow();
+					loopCounter = 1;			
+				}
+				else
+				{
+					loopCounter++;
+				}
 				gameTime++;
 				bf.show();
 				Thread.sleep(20);
@@ -119,6 +128,7 @@ public class Game implements KeyListener{
 		}
 		if(code == KeyEvent.VK_A){
 			snake.shrink();
+			snakeBoundary.shrink();
 		}
 	}
 

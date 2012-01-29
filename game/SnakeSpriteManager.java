@@ -85,7 +85,6 @@ public class SnakeSpriteManager {
 				
 		}
 		
-		
 	}
 	
 	public void shrink()
@@ -120,7 +119,7 @@ public class SnakeSpriteManager {
 	 */
 	public void spin()
 	{
-		angle -= 0.1f;
+		angle -= 0.4f;
 		if (angle <= -2*Math.PI)
 		{
 			angle = 0f;

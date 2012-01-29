@@ -20,6 +20,7 @@ import javax.imageio.ImageIO;
  * Keeps track of snake's size and movement
  *
  */
+@Deprecated
 public class SnakeModel {
 	
 	private Image img;
