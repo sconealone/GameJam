@@ -85,6 +85,7 @@ public class CircleObstacle extends Obstacle{
 		// smaller and larger radii of snake
 		Dimension[][] dimArray = mySnake.getDimArray();
 		int counter = mySnake.getCounter() - 1;
+		if(counter >= 0 && counter < 6) {
 		int INNER = 0, OUTER = 1;
 		System.out.println("Values:"+counter+":"+INNER+" "+OUTER);
 		double r1 = dimArray[counter][INNER].height; 
@@ -97,7 +98,10 @@ public class CircleObstacle extends Obstacle{
 			return (distance + d / 2) >= r1;
 		else 
 			return (distance - d / 2) <= r2;
-
+		} else {
+			System.err.println("counter invalid");
+			return false;
+		}
 	}
 
 	@Override

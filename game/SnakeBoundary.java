@@ -110,13 +110,12 @@ public class SnakeBoundary {
 	 */
 	public void grow()
 	{
-		if (stageCounter > 0 && stageCounter <= 6)
+		if (stageCounter > 0 && stageCounter <= 5)
 		{
 			stageCounter--;
 		}
 		else if (stageCounter == 0)
 		{
-			shrink();
 			return;
 		}
 		this.outerEdge.width = stageSizes[stageCounter][OUTER].width;
@@ -137,7 +136,6 @@ public class SnakeBoundary {
 		}
 		else if (stageCounter == 5)
 		{
-			grow();
 			return;
 		}
 		this.outerEdge.width = stageSizes[stageCounter][OUTER].width;

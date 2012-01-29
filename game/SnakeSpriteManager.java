@@ -141,9 +141,6 @@ public class SnakeSpriteManager {
 	public void draw(Graphics g) {
 		Graphics2D g2d = (Graphics2D)g;
 		Image img = snakeImages[stageCounter];
-		
-		g2d.setColor(Color.red);
-		g2d.fillRect(x+img.getWidth(null)/2,  y+img.getHeight(null)/2, 50, 50);
 		AffineTransform at = new AffineTransform();
 		at.translate(x+img.getWidth(null)/2, y+img.getHeight(null)/2);
 		//at.scale(CHANGE_DIAMETER_BY, CHANGE_DIAMETER_BY);
