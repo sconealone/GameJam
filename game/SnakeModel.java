@@ -52,10 +52,32 @@ public class SnakeModel {
 		dx = dy = 5;
 		try {
 			img = ImageIO.read(new File("src\\resources\\test0036.png"));
-		} catch (IOException e) {
+		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+/*
+	SnakeModel()
+	{
+		final int DEFAULT_X_POS = 300;
+		final int DEFAULT_Y_POS = 300;
+		outerEdge = new Ellipse2D.Double(
+					DEFAULT_X_POS, 
+					DEFAULT_Y_POS,
+					DEFAULT_SNAKE_RADIUS + DEFAULT_SNAKE_RADIUS,
+					DEFAULT_SNAKE_RADIUS + DEFAULT_SNAKE_RADIUS);
+		double innerRadius = DEFAULT_SNAKE_RADIUS - SNAKE_WIDTH;
+		innerEdge = new Ellipse2D.Double(
+					DEFAULT_X_POS + SNAKE_WIDTH,
+					DEFAULT_Y_POS + SNAKE_WIDTH,
+					innerRadius + innerRadius,
+					innerRadius + innerRadius);
+		try {
+			img = ImageIO.read(new File("src/resources/snakes2.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 	}
 	
 	/**

@@ -10,43 +10,48 @@ import java.awt.geom.Ellipse2D;
 
 public class CircleObstacle extends Obstacle{
 	private final int FRAMES_PER_SECOND = 4;
+	private float originalDiameter;
+	
 	SnakeModel mySnake;
-	public Ellipse2D.Double circle;
-	public CircleObstacle(int duration, double xloc, double yloc, double d, SnakeModel snake){
-		circle = new Ellipse2D.Double(xloc, yloc, d, d);
+
+	public Ellipse2D.Float circle;
+	public CircleObstacle(int duration, float xloc, float yloc, float d, SnakeModel snake){
+		circle = new Ellipse2D.Float(xloc, yloc,d,d);
 		origTimer = duration;
 		timer = 0;
 		mySnake = snake;
+		originalDiameter = d;
 	}
 	
 
 	
 	@Override
 	public void update() throws GameOverException {
+		float x, y;
 		timer++;
-		if (timer == origTimer * FRAMES_PER_SECOND){
+		
+		double centerXdouble = circle.getCenterX();
+		float centerX = (float) centerXdouble;
+		
+		double centerYdouble = circle.getCenterY();
+		float centerY = (float) centerYdouble;
+		
+		if (timer >= origTimer * FRAMES_PER_SECOND) {
 			if (haveCollided())
 				throw new GameOverException();
 			circle.setFrame(0,0,0,0);
 		}
 		else {
-			double alpha = 1 + (timer / origTimer * FRAMES_PER_SECOND);
-			double x = circle.getX();
-			double y = circle.getY();
-			double d = circle.getWidth();
-			double centerX = x + d / 2;
-			double centerY = y - d / 2;
-			d = d * alpha;
-			x = centerX - d;
-			y = centerY + d;
+			float alpha = 1 + (timer*1.0f / (origTimer * FRAMES_PER_SECOND));
+			float d = originalDiameter * alpha;
+			x = centerX - (float) d/2;
+			y = centerY - (float) d/2;
 			circle.setFrame(x, y, d, d);
 		}
 	}
 
 	@Override
 	public boolean haveCollided() {
-
-		// get two centres somehow
 
 		// centre of snake
 		double cx1 = mySnake.getOrigin().getX();

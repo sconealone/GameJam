@@ -15,32 +15,34 @@ public class RectObstacle extends Obstacle{
 	private final int FRAMES_PER_SECOND = 4;
 	public Rectangle2D rect;
 	public SnakeModel mySnake;
+	double originalDiameter;
 	public RectObstacle(int duration, double xloc, double yloc, double d, SnakeModel snake){
 		rect = new Rectangle2D.Double(xloc, yloc, d, d);
 		origTimer = duration;
 		timer = 0;
 		mySnake = snake;
+		originalDiameter = d;
 	}
 
 	@Override
 	public void update() throws GameOverException {
 		timer++;
-		if (timer == origTimer * FRAMES_PER_SECOND){
+		if (timer >= origTimer * FRAMES_PER_SECOND){
 			if (haveCollided())
 				throw new GameOverException();
 			rect.setFrame(0,0,0,0);
 		}
 		else {
-			double alpha = 1 + (timer / origTimer * FRAMES_PER_SECOND);
+			double alpha = 1 + (timer*1.0 / (origTimer * FRAMES_PER_SECOND));
 			double x = rect.getX();
 			double y = rect.getY();
 			double d = rect.getWidth();
 			//double h = rect.getHeight();
 			double centerX = x + d / 2;
-			double centerY = y - d / 2;
-			d = d * alpha;
-			x = centerX - d;
-			y = centerY + d;
+			double centerY = y + d / 2;
+			d = originalDiameter * alpha;
+			x = centerX - d / 2;
+			y = centerY - d / 2;
 			rect.setRect(x, y, d, d);
 		}
 	}
