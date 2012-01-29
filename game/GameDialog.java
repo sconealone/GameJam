@@ -10,6 +10,7 @@ import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import javax.swing.*;
 import obstacles.Obstacle;
+import java.awt.image.BufferedImage;
 
 
 public class GameDialog implements KeyListener{
