@@ -30,7 +30,7 @@ public class RectObstacle extends Obstacle{
 			rect.setFrame(0,0,0,0);
 		}
 		else {
-			double alpha = 1 + (timer / origTimer * FRAMES_PER_SECOND);
+			double alpha = 1 + (timer / (origTimer * FRAMES_PER_SECOND));
 			double x = rect.getX();
 			double y = rect.getY();
 			double d = rect.getWidth();
@@ -38,8 +38,8 @@ public class RectObstacle extends Obstacle{
 			double centerX = x + d / 2;
 			double centerY = y + d / 2;
 			d = d * alpha;
-			x = centerX - d;
-			y = centerY - d;
+			x = centerX - d / 2;
+			y = centerY - d / 2;
 			rect.setRect(x, y, d, d);
 		}
 	}
