@@ -1,7 +1,7 @@
 package obstacles;
 
 import game.GameOverException;
-import game.SnakeModel;
+import game.SnakeBoundary;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -12,10 +12,10 @@ public class CircleObstacle extends Obstacle{
 	private final int FRAMES_PER_SECOND = 4;
 	private float originalDiameter;
 	
-	SnakeModel mySnake;
+	SnakeBoundary mySnake;
 
 	public Ellipse2D.Float circle;
-	public CircleObstacle(int duration, float xloc, float yloc, float d, SnakeModel snake){
+	public CircleObstacle(int duration, float xloc, float yloc, float d, SnakeBoundary snake){
 		circle = new Ellipse2D.Float(xloc, yloc,d,d);
 		origTimer = duration;
 		timer = 0;

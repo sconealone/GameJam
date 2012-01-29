@@ -43,7 +43,7 @@ public class SnakeBoundary {
 	private final int CHANGE_DIAMETER_BY = 50; // pixels
 	
 	// constructor
-	SnakeModel()
+	SnakeBoundary()
 	{
 		final int DEFAULT_X_POS = 300;
 		final int DEFAULT_Y_POS = 300;
@@ -265,15 +265,15 @@ public class SnakeBoundary {
 		s1.shrink();
 		System.out.println(s1);
 		System.out.println("\nTesting that you can't shrink inner circle past 0");
-			for (int i = 0; i < 10; i++)
-			{
-				s1.shrink();
-			}
-			System.out.println(s1);
-			
-			
+		for (int i = 0; i < 10; i++)
+		{
+			s1.shrink();
 		}
-		
+		System.out.println(s1);
+			
+			
 	}
-
+		
 }
+
+
