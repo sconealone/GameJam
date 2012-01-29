@@ -120,13 +120,24 @@ public class SnakeSpriteManager {
 	 */
 	public void spin()
 	{
-		angle -= 0.5f;
+		angle -= 0.1f;
 		if (angle <= -2*Math.PI)
 		{
 			angle = 0f;
 		}
 	}
 	
+	/**
+	 * spin the image backwards
+	 */
+	public void spinBack()
+	{
+		angle += 0.2f;
+		if (angle <= -2*Math.PI)
+		{
+			angle = 0f;
+		}
+	}
 
 	public void draw(Graphics g) {
 		Graphics2D g2d = (Graphics2D)g;
@@ -171,5 +182,13 @@ public class SnakeSpriteManager {
 	public void moveRight()
 	{
 		x+= dy;
+	}
+	
+	public int getX() {
+		return x;
+	}
+	
+	public int getY() {
+		return y;
 	}
 }

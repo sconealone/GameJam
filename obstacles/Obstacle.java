@@ -9,7 +9,7 @@ public abstract class Obstacle {
 	/**
 	 * 
 	 */
-	public abstract void update() throws GameOverException;
+	public abstract boolean update() throws GameOverException;
 	/**
 	 * 
 	 */
