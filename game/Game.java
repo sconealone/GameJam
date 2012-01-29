@@ -1,17 +1,31 @@
 package game;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import javax.swing.*;
 import obstacles.Obstacle;
 
 
-public class Game{
-	private static int gameTime=0;
-	private static int score;
+public class Game implements KeyListener{
+	
+	public static final int FRAME_WIDTH = 600;
+	public static final int FRAME_HEIGHT = 600;
+	
+	private int gameTime=0;
+	private int score;
+	
+	private SnakeModel snake;
+	private Wall wall;
+	
+	private boolean isUp, isDown, isLeft, isRight, isShrink = false;
+	
+	JFrame frame;
 	
 	// just a variable to check if the obstacle is
 	//inside the snake, change this when you get ur collision methods working
@@ -19,70 +33,110 @@ public class Game{
 	private boolean hasCaughtInside = false;
 	
 	public void initGame(){
-		JFrame frame = new JFrame();
-		frame.addKeyListener(new KeyListener() {
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				switch(e.getKeyCode()) {
-				case KeyEvent.VK_UP:
-					
-				}
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
+		snake = new SnakeModel();
+		wall = new Wall(10, snake);
+		frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//frame.setUndecorated(true);
+		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+		frame.setIgnoreRepaint(true);
+		frame.setVisible(true);
+		frame.createBufferStrategy(2);
+		frame.requestFocus();
+		frame.addKeyListener(this);
 	}
 	
 	public static void main (String [ ] args) throws InterruptedException, GameOverException {
-		// TODO are we adding the KeyListener in this class?
+		
+		Game game = new Game();
+		
+		game.initGame();
+		
 		try{
-			
-			gameLoop();
-			
+			game.gameLoop();
 		}catch(GameOverException e){
 			
 		}
 		
 	}
 	
-	public static void gameLoop() throws InterruptedException, GameOverException{
+	public void gameLoop() throws InterruptedException, GameOverException{
+		BufferStrategy bf = frame.getBufferStrategy();
+		Graphics g = null;
 		while(true){
-			// check for key presses
-			
-			// check for captures
-	
-			// check for collisions (game over)
-			
-			// repaint
-			
-			
-			
-			
-			
-			
-			// update wall
-			
-			ArrayList<Obstacle> obstacles = wall.getObstacles();
-			for(int i=0; i< obstacles.size(); i++){
-				obstacles.get(i).update();
+			try{
+				if(isUp) snake.moveUp();
+				if(isDown) snake.moveDown();
+				if(isRight) snake.moveRight();
+				if(isLeft) snake.moveLeft();
+				
+				g = bf.getDrawGraphics();
+				g.setColor(Color.gray);
+				g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
+				for(Obstacle o: wall.getObstacles()) {
+					o.update();
+				}
+				// repaint
+				for(Obstacle o: wall.getObstacles()) {
+					o.draw(g);
+				}
+				snake.grow();
+				snake.spin();
+				snake.draw(g);
+				
+				// autogrow snake
+				snake.grow();
+				gameTime++;
+				bf.show();
+				Thread.sleep(20);
+				g.dispose();
+			}finally{
+				if(g!=null) g.dispose();
 			}
-			
-			// autogrow snake
-			gameTime++;
-			Thread.sleep(250);
 		}
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		int code = e.getKeyCode();
+		if(code == KeyEvent.VK_UP){
+			isUp = true;
+		}
+		if(code == KeyEvent.VK_DOWN){
+			isDown = true;
+		}
+		if(code == KeyEvent.VK_LEFT){
+			isLeft = true;
+		}
+		if(code == KeyEvent.VK_RIGHT){
+			isRight = true;
+		}
+		if(code == KeyEvent.VK_A){
+			snake.shrink();
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		int code = e.getKeyCode();
+		if(code == KeyEvent.VK_UP){
+			isUp = false;
+		}
+		if(code == KeyEvent.VK_DOWN){
+			isDown = false;
+		}
+		if(code == KeyEvent.VK_LEFT){
+			isLeft = false;
+		}
+		if(code == KeyEvent.VK_RIGHT){
+			isRight = false;
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

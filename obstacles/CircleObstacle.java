@@ -3,6 +3,7 @@ package obstacles;
 import game.GameOverException;
 import game.SnakeModel;
 
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 
@@ -75,8 +76,9 @@ public class CircleObstacle extends Obstacle{
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
-		g.draw(circle);
+	public void draw(Graphics g) {
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.draw(circle);
 	}
 
 }
