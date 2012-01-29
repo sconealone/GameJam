@@ -12,16 +12,17 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+
 import javax.swing.*;
 
 import obstacles.Obstacle;
-import sun.audio.*;
-import java.io.*;
+
 
 public class Game implements KeyListener,MouseListener{
 	
@@ -76,7 +77,7 @@ public class Game implements KeyListener,MouseListener{
 			e.printStackTrace();
 		}
 	}
-	
+
 	//reads the game menu
 	public void readMenu(){
 		try {
@@ -112,7 +113,6 @@ public class Game implements KeyListener,MouseListener{
 		
 		
 		Game game = new Game();
-		
 		game.readMenu();
 		while (!hasClickedStart)System.out.println(hasClickedStart);
 
@@ -277,22 +277,12 @@ public class Game implements KeyListener,MouseListener{
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-//		System.out.println("mouse clicked");
-//		System.out.println("e.getX = " + e.getX());
-//		System.out.println("e.getY = " + e.getY());
-		// TODO Auto-generated method stub
 		if((e.getX() >= 185) && (e.getX() <= 420) && (e.getY() >= 440) && (e.getY() <=510)){
-			System.out.println("CLICKED");
 			hasClickedStart = true;
-			System.out.println("you clicked start");
 		}
 		if((e.getX() >= 194) && (e.getX() <= 419) && (e.getY() >= 490) && (e.getY() <=515)){
 			hasClickedRetry = true;
-			System.out.println("you clicked retry");
 		}
-
-		System.out.print(e.getX()+","+e.getY()+hasClickedRetry +"\n");
-		
 	}
 
 	@Override

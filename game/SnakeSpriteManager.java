@@ -72,7 +72,7 @@ public class SnakeSpriteManager {
 		catch (IOException e)
 		{	
 			try
-			{
+			{ 
 				String windowsPath  = "src"+File.separatorChar+"resources"+File.separatorChar;
 				for (int i = 0; i < NUM_GROWTH_STAGES; i++)
 				{
