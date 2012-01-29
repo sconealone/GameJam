@@ -21,7 +21,29 @@ public class Game{
 	
 	public void initGame(){
 		JFrame frame = new JFrame();
-		
+		frame.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				switch(e.getKeyCode()) {
+				case KeyEvent.VK_UP:
+					
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	}
 	
 	public static void main (String [ ] args) throws InterruptedException {
@@ -69,28 +91,6 @@ public class Game{
 			for(int i=0; i< obstacles.size(); i++){
 				obstacles.get(i).update();
 			}
-			
-			// move snake according to key pressed
-			
-			
-			if(upKeyPressed){
-				snake.moveUp();
-			}
-			if(downKeyPressed){
-				snake.moveDown();
-			}
-			if(rightKeyPressed){
-				snake.moveRight();
-			}
-			if(leftKeyPressed){
-				snake.moveLeft();
-			}
-			
-			// reset key pressed
-			upKeyPressed = false;
-			downKeyPressed = false;
-			rightKeyPressed = false;
-			leftKeyPressed = false;
 			
 			// autogrow snake
 			gameTime++;
