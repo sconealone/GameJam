@@ -114,7 +114,10 @@ public class Game implements KeyListener,MouseListener{
 		
 		Game game = new Game();
 		game.readMenu();
-		while (!hasClickedStart)System.out.println(hasClickedStart);
+		while (!hasClickedStart)
+		{
+			System.out.println(hasClickedStart);
+		}
 
 		game.initGame();
 		try{

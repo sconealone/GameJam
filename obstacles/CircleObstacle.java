@@ -55,7 +55,7 @@ public class CircleObstacle extends Obstacle{
 		}
 		else
 		{
-			float alpha = 1 + (timer * 2.0f / (origTimer * FRAMES_PER_SECOND));
+			float alpha = 1 + (timer * 1.0f / (origTimer * FRAMES_PER_SECOND));
 			float d = originalDiameter * alpha;
 			x = centerX - (float) d / 2;
 			y = centerY - (float) d / 2;
