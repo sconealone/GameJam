@@ -33,8 +33,8 @@ public class Wall {
 	public void createObstacle(){
 		int num = 0;
 		int dur = 5;
-		float x = r.nextFloat() * 300;
-		float y = r.nextFloat() * 300;
+		float x =100 + r.nextFloat() * 400;
+		float y = 100 + r.nextFloat() * 400;
 		float r = 30;
 		
 		num =  (((int )Math.random()*100)%maxDiffObstacles);

@@ -83,7 +83,7 @@ public class CircleObstacle extends Obstacle{
 
 		// smaller and larger radii of snake
 		Dimension[][] dimArray = mySnake.getDimArray();
-		int counter = mySnake.getCounter() - 1;
+		int counter = mySnake.getCounter();
 		int INNER = 0, OUTER = 1;
 		double r1 = dimArray[counter][INNER].height; 
 		double r2 = dimArray[counter][OUTER].height;
