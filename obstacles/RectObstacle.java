@@ -36,10 +36,10 @@ public class RectObstacle extends Obstacle{
 			double d = rect.getWidth();
 			//double h = rect.getHeight();
 			double centerX = x + d / 2;
-			double centerY = y - d / 2;
+			double centerY = y + d / 2;
 			d = d * alpha;
 			x = centerX - d;
-			y = centerY + d;
+			y = centerY - d;
 			rect.setRect(x, y, d, d);
 		}
 	}

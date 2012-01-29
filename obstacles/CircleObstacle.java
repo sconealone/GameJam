@@ -34,10 +34,10 @@ public class CircleObstacle extends Obstacle{
 			double y = circle.getY();
 			double d = circle.getWidth();
 			double centerX = x + d / 2;
-			double centerY = y - d / 2;
+			double centerY = y + d / 2;
 			d = d * alpha;
 			x = centerX - d;
-			y = centerY + d;
+			y = centerY - d;
 			circle.setFrame(x, y, d, d);
 		}
 	}
