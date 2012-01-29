@@ -1,5 +1,6 @@
 package game;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 import java.io.File;
@@ -26,7 +27,9 @@ public class GameDialog {
 	}
 	
 	public void Init() throws IOException {
+		Color transparent = new Color(0, true);
 		parent.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gamePanel.setBackground(transparent);
 		parent.getContentPane().add(gamePanel);
 		parent.setSize(600, 600);
 		parent.setVisible(true);
