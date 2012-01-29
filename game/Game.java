@@ -32,6 +32,8 @@ public class Game implements KeyListener,MouseListener{
 	private int score;
 	
 	private SnakeModel snake;
+	private SnakeBoundary snakeBoundary;
+	private SnakeSpriteManager snakeManager;
 	private Wall wall;
 	
 	private boolean isUp, isDown, isLeft, isRight, isShrink = false;
@@ -48,10 +50,11 @@ public class Game implements KeyListener,MouseListener{
 	
 	public void initGame(){
 		snake = new SnakeModel();
-		wall = new Wall(10, snake);
+
+		snakeManager = new SnakeSpriteManager();
+		wall = new Wall(3, snakeBoundary);
 		//frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//frame.setUndecorated(true);
 		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		frame.setIgnoreRepaint(true);
 		frame.setVisible(true);
@@ -109,8 +112,9 @@ public class Game implements KeyListener,MouseListener{
 				if(isLeft) snake.moveLeft();
 				
 				g = bf.getDrawGraphics();
-				g.setColor(Color.gray);
+				g.setColor(new Color(0 , true));
 				g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
+				
 				for(Obstacle o: wall.getObstacles()) {
 					o.update();
 				}
@@ -118,7 +122,7 @@ public class Game implements KeyListener,MouseListener{
 				for(Obstacle o: wall.getObstacles()) {
 					o.draw(g);
 				}
-				snake.grow();
+				
 				snake.spin();
 				snake.draw(g);
 				// autogrow snake
