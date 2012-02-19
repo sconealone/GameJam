@@ -25,6 +25,8 @@ import obstacles.Obstacle;
 
 public class Game implements KeyListener, MouseListener {
 
+	private enum Scene {START, INSTRUCTION, GAME, GAME_OVER};
+	
 	public static final int FRAME_WIDTH = 600;
 	public static final int FRAME_HEIGHT = 600;
 	private static final int GROW_EVERY_NUM_LOOPS = 80;
@@ -34,6 +36,8 @@ public class Game implements KeyListener, MouseListener {
 	private int captured = 0;
 	private int loopCounter = 0;
 	private long systemStart = System.currentTimeMillis();
+	
+	private Scene scene;
 
 	private SnakeBoundary snakeBoundary;
 	private SnakeSpriteManager snake;
@@ -57,16 +61,20 @@ public class Game implements KeyListener, MouseListener {
 	private boolean hasCaughtInside = false;
 	static boolean hasClickedStart = false;
 	static boolean hasClickedRetry = false;
+	private static boolean hasClickedInstruction = false;
 
 	public Game()
 	{
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+		scene = Scene.START;
+        frame.addMouseListener(this);
+        frame.addKeyListener(this);
 	}
 	
 	public void initGame() {
-
+		scene = Scene.GAME;
 
 		gameTime = 0;
 		score = 0;
@@ -81,12 +89,10 @@ public class Game implements KeyListener, MouseListener {
 		snakeBoundary = new SnakeBoundary();
 		snake = new SnakeSpriteManager();
 		wall = new Wall(4, snakeBoundary);
-		// frame = new JFrame();
 		frame.setIgnoreRepaint(true);
 		frame.setVisible(true);
 		frame.createBufferStrategy(2);
 		frame.requestFocus();
-		frame.addKeyListener(this);
 		obstacles = wall.getObstacles();
 
 		try {
@@ -103,6 +109,7 @@ public class Game implements KeyListener, MouseListener {
 
 	//reads the game menu
 	public void readMenu(){
+		scene = Scene.START;
 		try {
 			gmenu = ImageIO
 					.read(new File("src" + File.separatorChar + "resources"
@@ -114,11 +121,10 @@ public class Game implements KeyListener, MouseListener {
 
 		frame.setContentPane(new JLabel(new ImageIcon(gmenu)));
 		frame.setVisible(true);
-		frame.addMouseListener(this);
 	}
 
 	public void gameOverScene() {
-
+		scene = Scene.GAME_OVER;
 		bgm.stopBGM();
 
 		try {
@@ -132,8 +138,27 @@ public class Game implements KeyListener, MouseListener {
 
 		frame.setContentPane(new JLabel(new ImageIcon(gover)));
 		frame.setVisible(true);
-		frame.addMouseListener(this);
 
+	}
+	
+	/**
+	 * Displays instructions.
+	 */
+	private void instructionScene()
+	{
+		scene = Scene.INSTRUCTION;
+		Image instructions = null;
+		try
+		{
+			instructions = ImageIO.read(new File("src" + File.separatorChar + "resources" + File.separatorChar + "ggjinstructionmenu.png"));
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		frame.setContentPane(new JLabel(new ImageIcon(instructions)));
+		frame.setVisible(true);
+		
 	}
 	
 	public static void main (String [ ] args) throws InterruptedException, GameOverException {
@@ -143,6 +168,10 @@ public class Game implements KeyListener, MouseListener {
 		game.readMenu();
 		while (!hasClickedStart)
 		{
+			if (hasClickedInstruction)
+			{
+				game.instructionScene();
+			}
 			Thread.sleep(1);
 		}
 
@@ -306,13 +335,38 @@ public class Game implements KeyListener, MouseListener {
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
-		if((e.getX() >= 185) && (e.getX() <= 420) && (e.getY() >= 440) && (e.getY() <=510)){
+	    int x = e.getX(), y = e.getY();
+	    //System.out.println("("+x+","+y+")");
+		int startButtonLeftBoundary = 185, startButtonRightBoundary = 420, startButtonTopBoundary = 468, startButtonBottomBoundary = 502;
+		boolean isInStartButtonBoundary = (x >= startButtonLeftBoundary) 
+		        && (x<= startButtonRightBoundary) 
+		        && (y >= startButtonTopBoundary) 
+		        && (y <=startButtonBottomBoundary);
+		if((scene == Scene.START || scene == Scene.INSTRUCTION) && isInStartButtonBoundary){
 			hasClickedStart = true;
+			return;
 		}
-		if ((e.getX() >= 194) && (e.getX() <= 419) && (e.getY() >= 490)
-				&& (e.getY() <= 515)) {
+		int instrButtonLeft = startButtonLeftBoundary;
+		int instrButtonRight = startButtonRightBoundary;
+		int instrButtonOffsetWrtStart = 55; // pixels according to gimp
+		int isntrButtonUp = startButtonTopBoundary + instrButtonOffsetWrtStart;
+		int instrButtonDown = startButtonBottomBoundary + instrButtonOffsetWrtStart;
+		boolean isInInstrButtonBounds = (x >= instrButtonLeft) 
+                && (x<= instrButtonRight) 
+                && (y >= isntrButtonUp) 
+                && (y <=instrButtonDown);
+		if ((scene == Scene.START) && isInInstrButtonBounds)
+		{
+		    hasClickedInstruction = true;
+		    return;
+		}
+		if ((scene == Scene.GAME_OVER) 
+		        && (x >= 194) 
+		        && (x <= 419) 
+		        && (y>= 480)
+				&& (y <= 510)) {
 			hasClickedRetry = true;
+			return;
 		}
 	}
 
