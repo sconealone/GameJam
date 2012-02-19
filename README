@@ -1,13 +1,13 @@
 MENUS WORKING
 
 Get retry button working DONE
-Get instructions button working - Working: Mitch
+Get instructions button working DONE
 
 
 
 COLLISION MODEL
 
-Make coordinates calculate from the centre
+Make coordinates calculate from the centre: Mitch
 Fix offset bug
 Shrink snake width
 Test capture functionality
