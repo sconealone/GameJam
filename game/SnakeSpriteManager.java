@@ -34,7 +34,7 @@ public class SnakeSpriteManager {
 	 * of the snake.
 	 * r1 is the outer radius and r2 is the inner radius
 	 */
-	private int r1, r2;
+	private int outerRadius, innerRadius;
 	
 	/**
 	 * The angle to rotate by?
@@ -141,8 +141,8 @@ public class SnakeSpriteManager {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setTransform(at);
 		g2d.drawImage(img, -img.getWidth(null)/2, -img.getHeight(null)/2, img.getWidth(null), img.getHeight(null), null);
-		r1 = img.getWidth(null)/2 - 50;
-		r2 = img.getWidth(null)/2;
+		outerRadius = img.getWidth(null)/2 - 50;
+		innerRadius = img.getWidth(null)/2;
 		/*g2d.fillOval(x, y, r2, r2);
 		g2d.setColor(Color.RED);
 		g2d.fillOval(x + img.getWidth(null)/2, y + img.getHeight(null)/2, r1, r1);*/

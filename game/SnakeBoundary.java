@@ -245,17 +245,16 @@ public class SnakeBoundary {
 	
 	}
 	
-	/**
-	 * Debugging method
-	 * @param g
-	 */
 	void draw(Graphics g) {
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.draw(outerEdge);
 		g2d.draw(innerEdge);
 	}
 	
-	
+
+    /**
+     * Debugging method
+     */
 	@Override
 	public String toString(){
 		String self = "Origin of outer circ = (" + outerEdge.x + ", " 
