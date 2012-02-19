@@ -1,0 +1,32 @@
+MENUS WORKING
+
+Get retry button working DONE
+Get instructions button working - Working: Mitch
+
+
+
+COLLISION MODEL
+
+Make coordinates calculate from the centre
+Fix offset bug
+Shrink snake width
+Test capture functionality
+
+
+
+SCORING SYSTEM
+
+Give points for captures
+add levels
+Make moons translucent
+
+
+
+GAMEPLAY TWEAKS
+
+Add sound effects for captures
+Make bg music loop
+Add boundaries to screen
+Add penalty for staying at maximum size
+Make score appear on the game over scene
+Give a reason for game overs
