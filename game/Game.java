@@ -58,6 +58,13 @@ public class Game implements KeyListener, MouseListener {
 	static boolean hasClickedStart = false;
 	static boolean hasClickedRetry = false;
 
+	public Game()
+	{
+		frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+	}
+	
 	public void initGame() {
 
 		bgm = new Music();
@@ -68,8 +75,6 @@ public class Game implements KeyListener, MouseListener {
 		snake = new SnakeSpriteManager();
 		wall = new Wall(4, snakeBoundary);
 		// frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		frame.setIgnoreRepaint(true);
 		frame.setVisible(true);
 		frame.createBufferStrategy(2);
@@ -100,9 +105,7 @@ public class Game implements KeyListener, MouseListener {
 			e.printStackTrace();
 		}
 
-		frame = new JFrame();
 		frame.setContentPane(new JLabel(new ImageIcon(gmenu)));
-		frame.pack();
 		frame.setVisible(true);
 		frame.addMouseListener(this);
 	}
@@ -121,7 +124,6 @@ public class Game implements KeyListener, MouseListener {
 		}
 
 		frame.setContentPane(new JLabel(new ImageIcon(gover)));
-		frame.pack();
 		frame.setVisible(true);
 		frame.addMouseListener(this);
 
@@ -137,18 +139,21 @@ public class Game implements KeyListener, MouseListener {
 			Thread.sleep(1);
 		}
 
-		game.initGame();
-		try {
-			game.gameLoop();
-
-		}
-		catch(GameOverException e){	
-			game.gameOverScene();
-			if(hasClickedRetry == true){
-				game= null;
-				game = new Game();
-				
-				hasClickedRetry = false;
+		while (true)
+		{
+			game.initGame();
+			try {
+				game.gameLoop();
+	
+			}
+			catch(GameOverException e){	
+				game.gameOverScene();
+				while (!hasClickedRetry)
+				{
+					// do nothing
+					Thread.sleep(1);
+				}
+				hasClickedRetry = true;
 			}
 		}
 	}
