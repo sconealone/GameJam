@@ -27,7 +27,7 @@ public class Game implements KeyListener, MouseListener {
 
 	public static final int FRAME_WIDTH = 600;
 	public static final int FRAME_HEIGHT = 600;
-	private static final int GROW_EVERY_NUM_LOOPS = 100;
+	private static final int GROW_EVERY_NUM_LOOPS = 80;
 
 	private int gameTime = 0;
 	private int score = 0;
@@ -67,6 +67,13 @@ public class Game implements KeyListener, MouseListener {
 	
 	public void initGame() {
 
+
+		gameTime = 0;
+		score = 0;
+		captured = 0;
+		loopCounter = 0;
+		hasClickedRetry = false;
+		
 		bgm = new Music();
 
 		bgm.play();
