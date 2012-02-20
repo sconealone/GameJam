@@ -15,18 +15,21 @@ public class Music {
 		 try{
 			 in = new FileInputStream("src" + File.separatorChar + "resources" + File.separatorChar + "MainTheme.wav"); 
 			 as = new AudioStream(in);
-			 musicData = as.getData();
-			 loop = new ContinuousAudioDataStream(musicData);
+			 /*
+			  * Crashes when I try to play the loop!
+			  * musicData = as.getData();
+			  * loop = new ContinuousAudioDataStream(musicData);
+			 */
 		 } catch (IOException e){
 			 e.printStackTrace();
 		 }
 	 }
 	 
 	 public void play() {
-		 AudioPlayer.player.start(loop);
+		 AudioPlayer.player.start(as);
 	 }
 	 
 	 public void stopBGM() {
-		 AudioPlayer.player.stop(loop);
+		 AudioPlayer.player.stop(as);
 	 }
 }
