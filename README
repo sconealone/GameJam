@@ -7,16 +7,16 @@ Get instructions button working DONE
 
 COLLISION MODEL
 
-Make coordinates calculate from the centre: Mitch
-Fix offset bug
-Shrink snake width
-Test capture functionality
+Make coordinates calculate from the centre DONE
+Fix offset bug DONE
+Shrink snake width DONE
+Test capture functionality DONE
 
 
 
 SCORING SYSTEM
 
-Give points for captures
+Give points for captures -Mitch
 add levels
 Make moons translucent
 
