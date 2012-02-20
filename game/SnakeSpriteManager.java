@@ -143,9 +143,9 @@ public class SnakeSpriteManager {
 		g2d.drawImage(img, -img.getWidth(null)/2, -img.getHeight(null)/2, img.getWidth(null), img.getHeight(null), null);
 		outerRadius = img.getWidth(null)/2 - 50;
 		innerRadius = img.getWidth(null)/2;
-		/*g2d.fillOval(x, y, r2, r2);
+		/*g2d.fillOval(x, y, outerRadius, outerRadius);
 		g2d.setColor(Color.RED);
-		g2d.fillOval(x + img.getWidth(null)/2, y + img.getHeight(null)/2, r1, r1);*/
+		g2d.fillOval(x + img.getWidth(null)/2, y + img.getHeight(null)/2, innerRadius, innerRadius);*/
 	}
 	
 	
