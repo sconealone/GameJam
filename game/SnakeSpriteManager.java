@@ -3,15 +3,19 @@ package game;
 import java.io.File;
 import java.io.IOException;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Dimension2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 
 import javax.imageio.ImageIO;
 
-public class SnakeSpriteManager {
+public class SnakeSpriteManager extends Snake {
 	
 	// instance variables
 	
@@ -19,15 +23,6 @@ public class SnakeSpriteManager {
 	private Image[] snakeImages;
 	private int stageCounter = 3;
 	
-	/**
-	 * x and y are the coordinates of the top left corner of the rectangle?
-	 */
-	private int x, y; 
-	
-	/**
-	 * dx and dy are how much to change the position by
-	 */
-	private int dx, dy;
 	
 	/**
 	 * r1 and r2 are the radii of the two circles that make up the boundary
@@ -48,10 +43,8 @@ public class SnakeSpriteManager {
 	
 	public SnakeSpriteManager()
 	{
-
-		x = y = 0;
-		dx = dy = 5;
-		
+	    pos = new Point2D.Double(0,0);
+	    
 		// added from largest to smallest
 		snakeNames = new String[NUM_GROWTH_STAGES];
 		snakeNames[0] = "test0001.png";
@@ -80,6 +73,7 @@ public class SnakeSpriteManager {
 		
 	}
 	
+	@Override
 	public void shrink()
 	{
 		if (stageCounter < NUM_GROWTH_STAGES - 1)
@@ -88,6 +82,7 @@ public class SnakeSpriteManager {
 		}
 	}
 	
+	@Override
 	public void grow()
 	{
 		if (stageCounter > 0)
@@ -131,49 +126,46 @@ public class SnakeSpriteManager {
 		}
 	}
 
+	@Override
 	public void draw(Graphics g) {
 		Graphics2D g2d = (Graphics2D)g;
 		Image img = snakeImages[stageCounter];
+		
 		AffineTransform at = new AffineTransform();
-		at.translate(x+img.getWidth(null)/2, y+img.getHeight(null)/2);
-		//at.scale(CHANGE_DIAMETER_BY, CHANGE_DIAMETER_BY);
+		//at.translate(pos.x+img.getWidth(null)/2, pos.y+img.getHeight(null)/2);
+
+        at.translate(pos.x, pos.y);
 		at.rotate(angle);
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setTransform(at);
 		g2d.drawImage(img, -img.getWidth(null)/2, -img.getHeight(null)/2, img.getWidth(null), img.getHeight(null), null);
+		
+		Dimension d = new Dimension(img.getWidth(null), img.getHeight(null));
+		Point2D.Double tlcoord = toTLCoord(pos, d);
+		//g2d.drawImage(img, (int)tlcoord.x, (int)tlcoord.y, d.width, d.height, null);
 		outerRadius = img.getWidth(null)/2 - 50;
 		innerRadius = img.getWidth(null)/2;
-		/*g2d.fillOval(x, y, outerRadius, outerRadius);
-		g2d.setColor(Color.RED);
-		g2d.fillOval(x + img.getWidth(null)/2, y + img.getHeight(null)/2, innerRadius, innerRadius);*/
 	}
 	
 	
-	public void moveUp()
-	{
-		y += dy;
-	}
-	
-	public void moveDown()
-	{
-		y -= dy;
-	}
-	
-	public void moveLeft()
-	{
-		x -= dx;
-	}
-	
-	public void moveRight()
-	{
-		x+= dy;
-	}
-	
-	public int getX() {
-		return x;
-	}
-	
-	public int getY() {
-		return y;
-	}
+
+    @Override
+    public Point2D.Double getPosition()
+    {
+        return pos;
+    }
+
+    @Override
+    public void moveBy(Point2D.Double p)
+    {
+        pos.setLocation(pos.x + p.x, pos.y + p.y);
+        
+    }
+
+    @Override
+    public void moveTo(Point2D.Double p)
+    {
+        pos.setLocation(p);
+        
+    }
 }

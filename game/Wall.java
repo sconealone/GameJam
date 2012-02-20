@@ -32,11 +32,12 @@ public class Wall {
 	 */
 	public void createObstacle(){
 		Random r = new 	Random();
-		int num = r.nextInt(2);
+		//int num = r.nextInt(2);
+		int num = 0;
 		int dur = 5 +  (int) (r.nextFloat() * 5);
 		float x =100 + r.nextFloat() * 400;
 		float y = 100 + r.nextFloat() * 400;
-		float d = 60;
+		float d = 70;
 		
 		//num =  (((int )Math.random()*100)%maxDiffObstacles);
 		if (obstacles.size() < maxNumObstacles)

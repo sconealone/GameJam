@@ -1,11 +1,17 @@
 package game;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.geom.Point2D;
 
 public abstract class Snake
 {
 
+    /**
+     * The position of the snake, calculated from its centre.
+     */
+    protected Point2D.Double pos;
+    
     /**
      * Converts coordinates to read from the top left, to have the origin at the centre
      * @param topLeftCoord
@@ -21,7 +27,7 @@ public abstract class Snake
      * @param centreCoord
      * @return
      */
-    public static java.awt.geom.Point2D.Double toTopLeftCoord(Point2D.Double centreCoord, Dimension d)
+    public static Point2D.Double toTLCoord(Point2D.Double centreCoord, Dimension d)
     {
         return new Point2D.Double(centreCoord.x - d.width/2, centreCoord.y - d.height/2);
     }
@@ -32,11 +38,6 @@ public abstract class Snake
      */
     public abstract Point2D.Double getPosition();
     
-    /**
-     * Sets the position for the centre of the snake
-     * @param p
-     */
-    public abstract void setPosition(Point2D.Double p);
     
     /**
      * Moves the snake by p.x and p.y
@@ -60,4 +61,6 @@ public abstract class Snake
      * Makes the snake shrink by a stage
      */
     public abstract void shrink();
+    
+    public abstract void draw(Graphics g);
 }

@@ -10,7 +10,11 @@ import java.awt.geom.Rectangle2D;
 
 import java.awt.geom.Ellipse2D;
 
-
+@Deprecated
+/**
+ * Not working on this, this time.
+ *
+ */
 public class RectObstacle extends Obstacle{
 	private final int FRAMES_PER_SECOND = 50;
 	public Rectangle2D rect;
@@ -56,8 +60,8 @@ public class RectObstacle extends Obstacle{
 		// get dimensions of snake
 		double r1 = mySnake.getInnerRadius();
 		double r2 = mySnake.getOuterRadius();
-		double cx = mySnake.getOrigin().getX();
-		double cy = mySnake.getOrigin().getY();
+		double cx = mySnake.getPosition().x;
+		double cy = mySnake.getPosition().y;
 
 		Ellipse2D e = new Ellipse2D.Double(cx-r1, cy-r1, 2*r1, 2*r1);
 		Ellipse2D e2 = new Ellipse2D.Double(cx-r2, cy-r2, 2*r2, 2*r2);
@@ -85,5 +89,12 @@ public class RectObstacle extends Obstacle{
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.draw(rect);
 	}
+
+    @Override
+    public boolean wasCaptured()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
 }

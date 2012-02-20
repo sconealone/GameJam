@@ -3,11 +3,13 @@ package game;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,6 +22,7 @@ import javax.imageio.ImageIO;
 
 import javax.swing.*;
 
+import obstacles.CircleObstacle;
 import obstacles.Obstacle;
 
 
@@ -29,7 +32,7 @@ public class Game implements KeyListener, MouseListener {
 	
 	public static final int FRAME_WIDTH = 600;
 	public static final int FRAME_HEIGHT = 600;
-	private static final int GROW_EVERY_NUM_LOOPS = 80;
+	private static final int GROW_EVERY_NUM_LOOPS = 40;
 
 	private int gameTime = 0;
 	private int score = 0;
@@ -39,15 +42,12 @@ public class Game implements KeyListener, MouseListener {
 	
 	private Scene scene;
 
-	private SnakeBoundary snakeBoundary;
-	private SnakeSpriteManager snake;
+	private Snake snake;
 	private Wall wall;
 	private ArrayList<Obstacle> obstacles;
 	private boolean isUp, isDown, isLeft, isRight, isShrink = false;
 	private Image background;
-	private JLabel scoreLabel = new JLabel("Score: " + Integer.toString(score));
 
-	private String filename;
 	Music bgm;
 	JFrame frame;
 	Image gmenu;
@@ -86,9 +86,8 @@ public class Game implements KeyListener, MouseListener {
 
 		bgm.play();
 		
-		snakeBoundary = new SnakeBoundary();
-		snake = new SnakeSpriteManager();
-		wall = new Wall(4, snakeBoundary);
+		snake = new SnakeManager();
+		wall = new Wall(4, ((SnakeManager)snake).getBoundary());
 		frame.setIgnoreRepaint(true);
 		frame.setVisible(true);
 		frame.createBufferStrategy(2);
@@ -200,39 +199,33 @@ public class Game implements KeyListener, MouseListener {
 		boolean[] arrived = new boolean[10];
 		Obstacle[] arrivedObstacle = new Obstacle[10];
 
+		final int MOVE_BY = 10;
 		while (true) {
 			try {
 				if (isDown) {
-					snake.moveUp();
-					snakeBoundary.moveUp();
+					snake.moveBy(new Point2D.Double(0, MOVE_BY));
 				}
 				if (isUp) {
-					snake.moveDown();
-					snakeBoundary.moveDown();
+				    snake.moveBy(new Point2D.Double(0, -MOVE_BY));
 				}
 				if (isRight) {
-					snake.moveRight();
-					snakeBoundary.moveRight();
+				    snake.moveBy(new Point2D.Double(MOVE_BY, 0));
 				}
 				if (isLeft) {
-					snake.moveLeft();
-					snakeBoundary.moveLeft();
+				    snake.moveBy(new Point2D.Double(-MOVE_BY, 0));
 				}
 				if (isShrink) {
-					snake.shrink();
-					snakeBoundary.shrink();
+				    snake.shrink();
 					isShrink = false;
 				}
 				g = bf.getDrawGraphics();
 				g.setColor(new Color(255, 255, 255));
 				g.drawImage(background, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
-
 				Date date = new Date();
 				long time = date.getTime() - systemStart;
 				g.drawString(
 						("Score: " + Integer.toString(getScore((int) time))),
-						frame.getWidth() - 70, frame.getHeight() - (frame.getHeight() - 50));
-
+						frame.getWidth() - 140, frame.getHeight() - (frame.getHeight() - 50));
 				for (int i = 0; i < arrived.length - 1; i++) {
 					arrived[i] = true;
 					arrivedObstacle[i] = null;
@@ -259,10 +252,9 @@ public class Game implements KeyListener, MouseListener {
 				for (Obstacle o : wall.getObstacles()) {
 					o.draw(g);
 				}
+				    
 
-				snake.spin();
 				snake.draw(g);
-				//snakeBoundary.draw(g);
 				// /// Update the score (based on system time)
 				//
 				if (gameTime % 10 == (int) (Math.random() * 10))
@@ -270,7 +262,6 @@ public class Game implements KeyListener, MouseListener {
 
 				// autogrow snake
 				if (loopCounter % GROW_EVERY_NUM_LOOPS == 0) {
-					snakeBoundary.grow();
 					snake.grow();
 					loopCounter = 1;
 				} else {

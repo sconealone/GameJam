@@ -19,6 +19,12 @@ public abstract class Obstacle {
 	 */
 	public abstract boolean haveCollided();
 	
+	/**
+	 * True if the obstacle was captured
+	 * @return
+	 */
+	public abstract boolean wasCaptured();
+	
 	protected int timer;
 	protected int origTimer;
 

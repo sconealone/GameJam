@@ -4,14 +4,9 @@ package game;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Ellipse2D;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
+import java.awt.geom.Point2D.Double;
 
 /**
  * Keeps track of snake's size and movement
@@ -20,37 +15,29 @@ import javax.imageio.ImageIO;
  * and GameProcessing
  *
  */
-public class SnakeBoundary {
+public class SnakeBoundary extends Snake {
 	
 	// instance variables
 	Ellipse2D.Double outerEdge;
 	Ellipse2D.Double innerEdge;
 	
-	//private Image img;
 	
 	// constants
 	
-	// TODO this should be the actual snake width
-	private final int SNAKE_WIDTH = 52; // measured
 	
-//	private final int MAX_SNAKE_RADIUS = 600;
-	
-	private final int MOVE_BY_AMOUNT = 5; // pixels
-	
-//	private final int CHANGE_DIAMETER_BY = 50; // pixels
 	private final int INNER = 0;
 	private final int OUTER = 1;
 	
 	private Dimension[][] stageSizes;
 	
 	// synced with SnakeSpriteManager stage counter
-	private int stageCounter = 3;
+	private int stageCounter;
 	private final int NUM_STAGES = 6;
 	
 	// constructor
 	SnakeBoundary()
 	{
-
+	    stageCounter = 3;
 		
 		stageSizes = new Dimension[NUM_STAGES][];
 		for (int i = 0; i < NUM_STAGES; i++)
@@ -69,20 +56,25 @@ public class SnakeBoundary {
 		stageSizes[4][OUTER] = new Dimension(210,210);
 		stageSizes[5][INNER] = new Dimension(100,100);
 		stageSizes[5][OUTER] = new Dimension(210,210);
+		
+		// batch correction of radii
+		int correctionAmount = 35;
+		for (int i = 0; i < NUM_STAGES; i++)
+		{
+		    for (int j = INNER; j <= OUTER; j++)
+		    {
+		        int d = (j == INNER) ? stageSizes[i][j].width + correctionAmount : stageSizes[i][j].width - correctionAmount;
+		        stageSizes[i][j] = new Dimension(d, d);
+		    }
+		}
+		
 		final int DEFAULT_X_POS = 300;
 		final int DEFAULT_Y_POS = 300;
-		double diameter = stageSizes[stageCounter][OUTER].width + stageSizes[stageCounter][OUTER].width;
-		outerEdge = new Ellipse2D.Double(
-					DEFAULT_X_POS-diameter / 2, // 
-					DEFAULT_Y_POS-diameter / 2, //DEFAULT_Y_POS
-					diameter, 
-					diameter);
-		double innerDiameter = diameter - SNAKE_WIDTH;
-		innerEdge = new Ellipse2D.Double(
-					DEFAULT_X_POS + SNAKE_WIDTH - diameter / 2,
-					DEFAULT_Y_POS + SNAKE_WIDTH - diameter / 2,
-					innerDiameter,
-					innerDiameter);
+		pos = new Point2D.Double(DEFAULT_X_POS, DEFAULT_Y_POS);
+		double diameter = stageSizes[stageCounter][OUTER].width;
+		outerEdge = new Ellipse2D.Double(0, 0,diameter,	diameter);
+		double innerDiameter = stageSizes[stageCounter][INNER].width;
+		innerEdge = new Ellipse2D.Double(0,	0,innerDiameter,innerDiameter);
 	}
 	
 	/**
@@ -103,8 +95,8 @@ public class SnakeBoundary {
 	
 	/**
 	 * Increases the radius of the snake
-	 * @param growRadiusBy
 	 */
+	@Override
 	public void grow()
 	{
 		if (stageCounter > 0 && stageCounter <= 5)
@@ -115,12 +107,15 @@ public class SnakeBoundary {
 		this.outerEdge.height = stageSizes[stageCounter][OUTER].height;
 		this.innerEdge.width = stageSizes[stageCounter][INNER].width;
 		this.innerEdge.height = stageSizes[stageCounter][INNER].height;
+		
+        outerEdge.setFrameFromCenter(pos, toTLCoord(pos, new Dimension((int)outerEdge.getWidth(), (int)outerEdge.getHeight())));
+        innerEdge.setFrameFromCenter(pos, toTLCoord(pos, new Dimension((int)innerEdge.getWidth(), (int)innerEdge.getHeight())));
 	}
 	
 	/**
 	 * Decreases the radius of the snake
-	 * @param shrinkRadiusBy
 	 */
+	@Override
 	public void shrink()
 	{
 		if (stageCounter >= 0 && stageCounter < 5)
@@ -131,37 +126,9 @@ public class SnakeBoundary {
 		this.outerEdge.height = stageSizes[stageCounter][OUTER].height;
 		this.innerEdge.width = stageSizes[stageCounter][INNER].width;
 		this.innerEdge.height = stageSizes[stageCounter][INNER].height;
-	}
-	/*
-	public void draw(Graphics2D g) {
-		AffineTransform at = new AffineTransform();
-		g.drawImage(img, at, null);
-	}*/
-	
-	/**
-	 * Gets the upper left hand corner of the snake
-	 * @return
-	 */
-	public Point2D.Double getOrigin()
-	{
-		return new Point2D.Double(outerEdge.x, outerEdge.y);
-	}
-	
-	/**
-	 * Sets the position of the upper left hand corner
-	 * of the snake
-	 * @param origin
-	 */
-	public void setOrigin(Point2D.Double origin)
-	{
-		double outerRadius = outerEdge.height;
-		outerEdge.setFrame(origin.x, origin.y, outerRadius, outerRadius);
-		double innerRadius = innerEdge.height;
-		innerEdge.setFrame(	origin.x + SNAKE_WIDTH,
-							origin.y + SNAKE_WIDTH,
-							innerRadius,
-							innerRadius);
-		
+
+        outerEdge.setFrameFromCenter(pos, toTLCoord(pos, new Dimension((int)outerEdge.getWidth(), (int)outerEdge.getHeight())));
+        innerEdge.setFrameFromCenter(pos, toTLCoord(pos, new Dimension((int)innerEdge.getWidth(), (int)innerEdge.getHeight())));
 	}
 	
 	/**
@@ -182,142 +149,42 @@ public class SnakeBoundary {
 		return innerEdge.height / 2;
 	}
 	
-	
-	/**
-	 * Moves the snake to the up by a certain amount
-	 */
-	public void moveUp(){
-			
-			outerEdge.setFrame(	outerEdge.x,
-								outerEdge.y+MOVE_BY_AMOUNT,
-								outerEdge.width,
-								outerEdge.height);
-			innerEdge.setFrame(	innerEdge.x,
-					innerEdge.y+MOVE_BY_AMOUNT,
-					innerEdge.width,
-					innerEdge.height);
-		
-	}
-	/**
-	 * Moves the snake to the down by a certain amount
-	 */
-	public void moveDown(){
-		
-		outerEdge.setFrame(	outerEdge.x,
-							outerEdge.y-MOVE_BY_AMOUNT,
-							outerEdge.width,
-							outerEdge.height);
-		innerEdge.setFrame(	innerEdge.x,
-				innerEdge.y-MOVE_BY_AMOUNT,
-				innerEdge.width,
-				innerEdge.height);
-	
-	}
-	/**
-	 * Moves the snake to the right by a certain amount
-	 */
-	public void moveRight(){
-		
-		outerEdge.setFrame(	outerEdge.x+MOVE_BY_AMOUNT,
-							outerEdge.y,
-							outerEdge.width,
-							outerEdge.height);
-		innerEdge.setFrame(	innerEdge.x+MOVE_BY_AMOUNT,
-				innerEdge.y,
-				innerEdge.width,
-				innerEdge.height);
-	
-	}
-
-	/**
-	 * Moves the snake to the left by a certain amount
-	 */
-	public void moveLeft(){
-		
-		outerEdge.setFrame(	outerEdge.x-MOVE_BY_AMOUNT,
-							outerEdge.y,
-							outerEdge.width,
-							outerEdge.height);
-		innerEdge.setFrame(	innerEdge.x-MOVE_BY_AMOUNT,
-				innerEdge.y,
-				innerEdge.width,
-				innerEdge.height);
-	
-	}
-	
-	void draw(Graphics g) {
+	@Override
+	public void draw(Graphics g) {
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.draw(outerEdge);
 		g2d.draw(innerEdge);
 	}
-	
+		
 
+    @Override
     /**
-     * Debugging method
+     * Position of the snake's centre
      */
-	@Override
-	public String toString(){
-		String self = "Origin of outer circ = (" + outerEdge.x + ", " 
-					+ outerEdge.y 
-					+ ")\n";
-		self +="Inner Origin: = ("+innerEdge.x + ", " + innerEdge.y +
-				")\n";
-		self += "Outer radius = "+outerEdge.height/2+"\n";
-		self += "Inner radius = "+innerEdge.height/2+"\n";
-		
-		self += "difference between heights = " + (outerEdge.height - innerEdge.height)
-				+"\n";
-		self += "difference between widths = " + (outerEdge.width - innerEdge.width)
-				+"\n";
-		self += "Snake width (should be half the above) = " + SNAKE_WIDTH;
-				
-		return self;
-		
-	}
-/*
-	public static void main(String[] args)
-	{
-		System.out.println("Default snake");
-		SnakeModel s1 = new SnakeModel();
-		System.out.println(s1);
-		System.out.println();
-		
-		System.out.println("Testing move up");
-		s1.moveUp();
-		System.out.println(s1);
+    public Double getPosition()
+    {
+        return pos;
+    }
 
-		System.out.println();
-		System.out.println("Testing move down");
-		s1.moveDown();
-		System.out.println(s1);
-		System.out.println();
-		System.out.println("Testing move left");
-		s1.moveLeft();
-		System.out.println(s1);
-		System.out.println();
-		System.out.println("Testing move right");
-		s1.moveRight();
-		System.out.println(s1);
-		
-		System.out.println("Testing grow");
-		s1.grow();
-		System.out.println(s1);
-		
-		System.out.println("\nTesting shrink");
-		s1.shrink();
-		System.out.println(s1);
-		System.out.println();
-		s1.shrink();
-		System.out.println(s1);
-		System.out.println("\nTesting that you can't shrink inner circle past 0");
-		for (int i = 0; i < 10; i++)
-		{
-			s1.shrink();
-		}
-		System.out.println(s1);
-			
-			
-	}*/
+
+    @Override
+    public void moveBy(Point2D.Double p)
+    {
+        pos.x += p.x;
+        pos.y += p.y;
+        outerEdge.setFrameFromCenter(pos, toTLCoord(pos, new Dimension((int)outerEdge.getWidth(), (int)outerEdge.getHeight())));
+        innerEdge.setFrameFromCenter(pos, toTLCoord(pos, new Dimension((int)innerEdge.getWidth(), (int)innerEdge.getHeight())));
+    }
+
+    @Override
+    public void moveTo(Point2D.Double p)
+    {
+        pos = p;
+        outerEdge.setFrameFromCenter(pos, toTLCoord(pos, new Dimension((int)outerEdge.getWidth(), (int)outerEdge.getHeight())));
+        innerEdge.setFrameFromCenter(pos, toTLCoord(pos, new Dimension((int)innerEdge.getWidth(), (int)innerEdge.getHeight())));
+        
+    }
+
 		
 }
 

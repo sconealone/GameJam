@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
@@ -80,27 +81,17 @@ public class CircleObstacle extends Obstacle{
 	@Override
 	public boolean haveCollided() {
 		// centre of snake
-		double snakeX = mySnake.getOrigin().getX() + mySnake.getOuterRadius();
-		double snakeY = mySnake.getOrigin().getY() + mySnake.getOuterRadius();
+		double snakeX = mySnake.getPosition().x;
+		double snakeY = mySnake.getPosition().y;
 
 		/// centre of circle obstacle
-		//double topx = circle.getX();
-		//double topy = circle.getY();
 		double d = circle.getWidth();
 
-		//double circleX = topx + d / 2;
-		//double circleY = topy - d / 2;
 		double circleX = circle.getCenterX();
 		double circleY = circle.getCenterY();
 		double r1 = mySnake.getInnerRadius();
 		double r2 = mySnake.getOuterRadius();
 		// smaller and larger radii of snake
-		/*Dimension[][] dimArray = mySnake.getDimArray();
-		int counter = mySnake.getCounter() - 1;
-		if(counter >= 0 && counter < 6) {
-		int INNER = 0, OUTER = 1;
-		double r1 = dimArray[counter][INNER].height; 
-		double r2 = dimArray[counter][OUTER].height;*/
 
 		double distance = Math.sqrt( Math.pow( circleX - snakeX, 2 ) + Math.pow( circleY - snakeY, 2 ) );
 		if(distance >= r1 && distance <= r2)
@@ -109,10 +100,25 @@ public class CircleObstacle extends Obstacle{
 			return (distance + d / 2) >= r1;
 		else 
 			return (distance - d / 2) <= r2;
-		/*} else {
-			System.err.println("counter invalid");
-			return false;
-		}*/
+	}
+	
+	
+	@Override
+	/**
+	 * Checks if the distance from the centre of obstacle + its radius is 
+	 * less than the inner radius of the snake
+	 */
+	public boolean wasCaptured()
+	{
+	    double sx = mySnake.getPosition().x;
+	    double sy = mySnake.getPosition().y;
+	    double cx = circle.getCenterX();
+	    double cy = circle.getCenterY();
+	    double cr = circle.getHeight()/2;
+	    double deltaX = sx - cx;
+	    double deltaY = sy - cy;
+	    double distance = Math.sqrt(deltaX*deltaX + deltaY*deltaY); // pythagoras
+	    return distance - cr < mySnake.getInnerRadius();
 	}
 
 	@Override

@@ -9,7 +9,7 @@ public class SnakeManager extends Snake
     SnakeBoundary bounds;
     SnakeSpriteManager sprite;
     
-    private static boolean isDebugModeOn = true;
+    private static boolean isDebugModeOn = false;
     
     
     
@@ -17,6 +17,9 @@ public class SnakeManager extends Snake
     {
         bounds = new SnakeBoundary();
         sprite = new SnakeSpriteManager();
+        int screenWidth, screenHeight;
+        screenWidth = screenHeight = 600;
+        moveTo(new Point2D.Double(screenWidth/2, screenHeight/2));
     }
     
     
@@ -37,46 +40,42 @@ public class SnakeManager extends Snake
      */
     public Point2D.Double getPosition()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return pos;
     }
 
-    @Override
-    /**
-     * Assumes the position is for the centre of the snake
-     */
-    public void setPosition(Point2D.Double p)
-    {
-        // TODO Auto-generated method stub
-        
-    }
 
     @Override
     public void moveBy(Point2D.Double p)
     {
-        // TODO Auto-generated method stub
-        
+        moveTo(new Point2D.Double(pos.x + p.x, pos.y + p.y));        
     }
 
     @Override
     public void moveTo(Point2D.Double p)
     {
-        // TODO Auto-generated method stub
-        
+        pos = new Point2D.Double(p.x, p.y);
+        bounds.moveTo(pos);
+        sprite.moveTo(pos);
     }
 
     @Override
     public void grow()
     {
-        // TODO Auto-generated method stub
-        
+        bounds.grow();
+        sprite.grow();
     }
 
     @Override
     public void shrink()
     {
-        // TODO Auto-generated method stub
-        
+        bounds.shrink();
+        sprite.shrink();
     }
+    
+    public SnakeBoundary getBoundary()
+    {
+        return bounds;
+    }
+
 
 }
