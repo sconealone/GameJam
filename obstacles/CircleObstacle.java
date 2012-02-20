@@ -19,10 +19,12 @@ import javax.imageio.ImageIO;
 
 public class CircleObstacle extends Obstacle{
 
-	private final int FRAMES_PER_SECOND = 50;
+	private final int FRAMES_PER_SECOND = 40; // original value = 50
+	//private final int FRAMES_PER_SECOND = 2; // debug
 	private float originalDiameter;
 
 	Image circleImage;
+	Image explosion;
 	
 	SnakeBoundary mySnake;
 
@@ -36,6 +38,7 @@ public class CircleObstacle extends Obstacle{
 		originalDiameter = d;
 		try {
 			circleImage = ImageIO.read(new File("src" + File.separatorChar + "resources" + File.separatorChar + "Circle_deep_outerGlow.png"));
+			explosion = ImageIO.read(new File("src" + File.separatorChar + "resources" + File.separatorChar + "explosion.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -61,10 +64,6 @@ public class CircleObstacle extends Obstacle{
 		float centerY = (float) centerYdouble;
 
 		if (timer >= origTimer * FRAMES_PER_SECOND) {
-			if (haveCollided())
-				throw new GameOverException();
-
-			circle.setFrame(0,0,0,0);
 			return false;
 		}
 		else
@@ -126,7 +125,21 @@ public class CircleObstacle extends Obstacle{
 		Graphics2D g2d = (Graphics2D)g;
 		Color color = g2d.getColor();
 		g2d.setColor(Color.red);
-		g2d.drawImage(circleImage, (int)circle.getX(), (int)circle.getY(), 
-				(int)circle.getWidth(), (int)circle.getHeight(), null);
+		int radius = (int) circle.width/2;
+		g2d.drawImage(circleImage, (int)circle.getCenterX() - radius, (int)circle.getCenterY() - radius, 
+				radius+radius, radius+radius, null);
+		//g.drawOval((int)circle.x, (int)circle.y, (int)circle.width, (int)circle.height); // debug
+	}
+	
+	public void explode(Graphics g) {
+	    Graphics2D g2 = (Graphics2D) g;
+	    circleImage = explosion;
+	    draw(g);
+	}
+	
+	@Override
+	public Point2D.Double getTLCoord()
+	{
+	    return new Point2D.Double(circle.getX(), circle.getY());
 	}
 }

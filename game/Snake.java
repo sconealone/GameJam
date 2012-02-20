@@ -63,4 +63,6 @@ public abstract class Snake
     public abstract void shrink();
     
     public abstract void draw(Graphics g);
+    
+    public abstract int getStage();
 }

@@ -16,8 +16,8 @@ Test capture functionality DONE
 
 SCORING SYSTEM
 
-Give points for captures -Mitch
-add levels
+Give points for captures DONE
+add levels DONE
 Make moons translucent
 
 
@@ -25,6 +25,7 @@ Make moons translucent
 GAMEPLAY TWEAKS
 
 Add sound effects for captures
+Add sound effects for taking damage
 Make bg music loop
 Add boundaries to screen
 Add penalty for staying at maximum size

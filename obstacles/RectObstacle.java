@@ -4,6 +4,7 @@ import game.SnakeBoundary;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.geom.Point2D.Double;
 import java.awt.geom.Rectangle2D;
 
 
@@ -95,6 +96,13 @@ public class RectObstacle extends Obstacle{
     {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    @Override
+    public Double getTLCoord()
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

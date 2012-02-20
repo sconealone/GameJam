@@ -25,11 +25,14 @@ public class SnakeManager extends Snake
     
     public void draw(Graphics g)
     {
-        sprite.spin();
-        sprite.draw(g);
         if (isDebugModeOn)
         {
             bounds.draw(g);
+        }
+        else
+        {
+            sprite.spin();
+            sprite.draw(g);
         }
     }
     
@@ -75,6 +78,11 @@ public class SnakeManager extends Snake
     public SnakeBoundary getBoundary()
     {
         return bounds;
+    }
+    
+    public int getStage()
+    {
+        return bounds.getStage();
     }
 
 

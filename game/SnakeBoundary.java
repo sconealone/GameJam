@@ -184,6 +184,12 @@ public class SnakeBoundary extends Snake {
         innerEdge.setFrameFromCenter(pos, toTLCoord(pos, new Dimension((int)innerEdge.getWidth(), (int)innerEdge.getHeight())));
         
     }
+    
+    @Override
+    public int getStage()
+    {
+        return stageCounter;
+    }
 
 		
 }

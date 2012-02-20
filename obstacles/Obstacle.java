@@ -1,6 +1,7 @@
 package obstacles;
 
 import java.awt.Graphics;
+import java.awt.geom.Point2D;
 
 import game.GameOverException;
 
@@ -27,5 +28,9 @@ public abstract class Obstacle {
 	
 	protected int timer;
 	protected int origTimer;
+	
+	public abstract Point2D.Double getTLCoord();
+	
+	
 
 }

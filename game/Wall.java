@@ -14,6 +14,7 @@ public class Wall {
 	private int maxDiffObstacles = 2;
 	private ArrayList<Obstacle> obstacles;
 	private SnakeBoundary snake;
+	private int size;
 
 
 	/**
@@ -42,10 +43,11 @@ public class Wall {
 		//num =  (((int )Math.random()*100)%maxDiffObstacles);
 		if (obstacles.size() < maxNumObstacles)
 		{
-		switch(num){
-		case 0: 	obstacles.add(new CircleObstacle(dur, x, y , d, snake));		break;
-		case 1: 	obstacles.add(new RectObstacle(dur, x, y, d, snake));			break;
-		}
+    		switch(num){
+            		case 0: 	obstacles.add(new CircleObstacle(dur, x, y , d, snake));		break;
+            		case 1: 	obstacles.add(new RectObstacle(dur, x, y, d, snake));			break;
+    		}
+    		size++;
 		}
 
 	}
@@ -56,10 +58,15 @@ public class Wall {
 	 */
 	public void deleteObstacle( Obstacle o){
 		obstacles.remove(o);
+		size--;
 	}
 	
 	public ArrayList<Obstacle> getObstacles(){
 		return obstacles;
+	}
+	
+	public int getSize(){
+	    return size;
 	}
 
 }

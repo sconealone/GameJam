@@ -168,4 +168,10 @@ public class SnakeSpriteManager extends Snake {
         pos.setLocation(p);
         
     }
+    
+    @Override
+    public int getStage()
+    {
+        return stageCounter;
+    }
 }

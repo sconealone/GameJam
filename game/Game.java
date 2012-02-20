@@ -1,9 +1,7 @@
 package game;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -12,8 +10,6 @@ import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferStrategy;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,7 +18,6 @@ import javax.imageio.ImageIO;
 
 import javax.swing.*;
 
-import obstacles.CircleObstacle;
 import obstacles.Obstacle;
 
 
@@ -33,11 +28,14 @@ public class Game implements KeyListener, MouseListener {
 	public static final int FRAME_WIDTH = 600;
 	public static final int FRAME_HEIGHT = 600;
 	private static final int GROW_EVERY_NUM_LOOPS = 40;
-
+	private static final int MAX_LEVEL = 25;
+    private static final int LEVEL_CHANGE_MULTIPLIER = 1000 * 5;
+	
+	private int level;
 	private int gameTime = 0;
 	private int score = 0;
 	private int captured = 0;
-	private int loopCounter = 0;
+	private int loopCounter = 1;
 	private long systemStart = System.currentTimeMillis();
 	
 	private Scene scene;
@@ -54,11 +52,7 @@ public class Game implements KeyListener, MouseListener {
 
 	// game over scene
 	Image gover;
-
-	// just a variable to check if the obstacle is
-	// inside the snake, change this when you get ur collision methods working
-	// true if an obstacle is captured, false otherwise
-	private boolean hasCaughtInside = false;
+    private int nextLevelAt;
 	static boolean hasClickedStart = false;
 	static boolean hasClickedRetry = false;
 	private static boolean hasClickedInstruction = false;
@@ -76,6 +70,8 @@ public class Game implements KeyListener, MouseListener {
 	public void initGame() {
 		scene = Scene.GAME;
 
+		level = 1;
+		nextLevelAt = 0;
 		gameTime = 0;
 		score = 0;
 		captured = 0;
@@ -87,7 +83,7 @@ public class Game implements KeyListener, MouseListener {
 		bgm.play();
 		
 		snake = new SnakeManager();
-		wall = new Wall(4, ((SnakeManager)snake).getBoundary());
+		wall = new Wall(MAX_LEVEL, ((SnakeManager)snake).getBoundary());
 		frame.setIgnoreRepaint(true);
 		frame.setVisible(true);
 		frame.createBufferStrategy(2);
@@ -182,6 +178,7 @@ public class Game implements KeyListener, MouseListener {
 	
 			}
 			catch(GameOverException e){	
+			    
 				game.gameOverScene();
 				while (!hasClickedRetry)
 				{
@@ -196,12 +193,13 @@ public class Game implements KeyListener, MouseListener {
 	public void gameLoop() throws InterruptedException, GameOverException{
 		BufferStrategy bf = frame.getBufferStrategy();
 		Graphics g = null;
-		boolean[] arrived = new boolean[10];
-		Obstacle[] arrivedObstacle = new Obstacle[10];
+		boolean[] arrived = new boolean[MAX_LEVEL];
+		Obstacle[] arrivedObstacle = new Obstacle[MAX_LEVEL];
 
 		final int MOVE_BY = 10;
 		while (true) {
 			try {
+			    boolean gameOver = false;
 				if (isDown) {
 					snake.moveBy(new Point2D.Double(0, MOVE_BY));
 				}
@@ -221,43 +219,53 @@ public class Game implements KeyListener, MouseListener {
 				g = bf.getDrawGraphics();
 				g.setColor(new Color(255, 255, 255));
 				g.drawImage(background, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
-				Date date = new Date();
-				long time = date.getTime() - systemStart;
-				g.drawString(
-						("Score: " + Integer.toString(getScore((int) time))),
-						frame.getWidth() - 140, frame.getHeight() - (frame.getHeight() - 50));
 				for (int i = 0; i < arrived.length - 1; i++) {
 					arrived[i] = true;
 					arrivedObstacle[i] = null;
 				}
 
-				Obstacle myO;
-				for (int i = 0; i < obstacles.size(); i++)// Obstacle o:
-															// obstacles) {
+                int numCaptures = 0;
+				Obstacle myO = null;
+				Obstacle gameOverObstacle = null;
+                // arrived seems to be the opposite of arrived
+                // use !arrived[i] if the obstacle has actually arrived
+				for (int i = 0; i < obstacles.size(); i++)
 				{
 					myO = obstacles.get(i);
-					arrived[i] = myO.update();
-					arrivedObstacle[i] = myO;
-
+					if (null != myO)
+					{
+    					arrived[i] = myO.update();
+    					arrivedObstacle[i] = myO;
+                        if (!arrived[i])
+                        {
+                            if (myO.wasCaptured()){
+                                numCaptures++;
+                            }
+                            if (myO.haveCollided()){
+                                gameOver = true;
+                                gameOverObstacle = myO;
+                                ((obstacles.CircleObstacle)gameOverObstacle).explode(g);
+                            }
+                        }
+                    }
 				}
-				for (int i = 0; i < arrived.length - 1; i++) {
-					if (!arrived[i]) {
-						wall.deleteObstacle(arrivedObstacle[i]);
-						arrived[i] = true;
-
-					}
-
-				}
-				// repaint
-				for (Obstacle o : wall.getObstacles()) {
-					o.draw(g);
-				}
+				
+				// score update
+				
+				
+                g.drawString(
+                        ("Score: " + Integer.toString(getScore(numCaptures))), 
+                        frame.getWidth() - 140, frame.getHeight() - (frame.getHeight() - 50));
 				    
 
+                // repaint
+                for (Obstacle o : wall.getObstacles()) {
+                    if (null != o)
+                        o.draw(g);
+                }
 				snake.draw(g);
-				// /// Update the score (based on system time)
-				//
-				if (gameTime % 10 == (int) (Math.random() * 10))
+				g.setColor(Color.WHITE);
+				if ((gameTime % 50 == (int) (Math.random() * 50)) && wall.getSize() < level)
 					wall.createObstacle();
 
 				// autogrow snake
@@ -267,15 +275,47 @@ public class Game implements KeyListener, MouseListener {
 				} else {
 					loopCounter++;
 				}
+				
+
+                level++;
+				if (level >= nextLevelAt)
+				{
+				    //System.out.println(level);
+				    nextLevelAt = level * level * LEVEL_CHANGE_MULTIPLIER;
+				}
 				gameTime++;
 				bf.show();
 				Thread.sleep(20);
+                if (gameOver)
+                {
+                    
+                    // TODO This is not drawing. Don't know how to fix it.
+                    /*
+                    g.setColor(new Color(255, 0, 0));
+                    g.drawString(
+                            "You've been hit!", 
+                            (int)gameOverObstacle.getTLCoord().x, (int)gameOverObstacle.getTLCoord().y);
+                            */
+                    throw new GameOverException();
+                }
 				g.dispose();
+			} catch (GameOverException goe) {
+                Thread.sleep(3000); // let the player see which moon hit him  
+                throw new GameOverException();
 			} finally {
-				if (g != null)
-					g.dispose();
+	            if (g != null)
+	                g.dispose();
+	            
+                for (int i = 0; i < arrived.length - 1; i++) {
+                    if (!arrived[i]) {
+                        wall.deleteObstacle(arrivedObstacle[i]);
+                        arrived[i] = true;
+
+                    }
+
+                }
 			}
-		}
+		} // end while
 	}
 
 	@Override
@@ -393,10 +433,12 @@ public class Game implements KeyListener, MouseListener {
 	 * @param captures
 	 * @return
 	 */
-	private int getScore(int time) {
+	private int getScore(int captures) {
 		final int FRAMES_PER_SECOND = 50;
 		final int CAPTURE_MULTIPLIER = 100;
-		score = ((int) time / FRAMES_PER_SECOND + CAPTURE_MULTIPLIER * captured);
+		//score = ((int) time / FRAMES_PER_SECOND + CAPTURE_MULTIPLIER * captured);
+		
+		score = score + captures * CAPTURE_MULTIPLIER * (1 + snake.getStage());
 		return score;
 	}
 
