@@ -29,7 +29,7 @@ public class Game implements KeyListener, MouseListener {
 	public static final int FRAME_HEIGHT = 600;
 	private static final int GROW_EVERY_NUM_LOOPS = 40;
 	private static final int MAX_LEVEL = 25;
-    private static final int LEVEL_CHANGE_MULTIPLIER = 1000 * 5;
+    private static final int LEVEL_CHANGE_MULTIPLIER = 1000 * 25;
 	
 	private int level;
 	private int gameTime = 0;
@@ -309,16 +309,18 @@ public class Game implements KeyListener, MouseListener {
     private void getInput()
     {
         final int MOVE_BY = 10;
-        if (isDown) {
-        	snake.moveBy(new Point2D.Double(0, MOVE_BY));
+        Point2D.Double pos = snake.getPosition();
+        double r = ((SnakeManager)snake).getBoundary().getInnerRadius();
+        if (isDown && pos.y + r < FRAME_HEIGHT) {
+                snake.moveBy(new Point2D.Double(0, MOVE_BY));
         }
-        if (isUp) {
+        if (isUp && pos.y -r > 0) {
             snake.moveBy(new Point2D.Double(0, -MOVE_BY));
         }
-        if (isRight) {
+        if (isRight && pos.x + r < FRAME_WIDTH) {
             snake.moveBy(new Point2D.Double(MOVE_BY, 0));
         }
-        if (isLeft) {
+        if (isLeft && pos.x - r > 0) {
             snake.moveBy(new Point2D.Double(-MOVE_BY, 0));
         }
         if (isShrink) {
