@@ -196,26 +196,11 @@ public class Game implements KeyListener, MouseListener {
 		boolean[] arrived = new boolean[MAX_LEVEL];
 		Obstacle[] arrivedObstacle = new Obstacle[MAX_LEVEL];
 
-		final int MOVE_BY = 10;
 		while (true) {
 			try {
 			    boolean gameOver = false;
-				if (isDown) {
-					snake.moveBy(new Point2D.Double(0, MOVE_BY));
-				}
-				if (isUp) {
-				    snake.moveBy(new Point2D.Double(0, -MOVE_BY));
-				}
-				if (isRight) {
-				    snake.moveBy(new Point2D.Double(MOVE_BY, 0));
-				}
-				if (isLeft) {
-				    snake.moveBy(new Point2D.Double(-MOVE_BY, 0));
-				}
-				if (isShrink) {
-				    snake.shrink();
-					isShrink = false;
-				}
+
+		        getInput();
 				g = bf.getDrawGraphics();
 				g.setColor(new Color(255, 255, 255));
 				g.drawImage(background, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, null);
@@ -317,6 +302,30 @@ public class Game implements KeyListener, MouseListener {
 			}
 		} // end while
 	}
+
+    /**
+     * Modifies the position of the snake according to input
+     */
+    private void getInput()
+    {
+        final int MOVE_BY = 10;
+        if (isDown) {
+        	snake.moveBy(new Point2D.Double(0, MOVE_BY));
+        }
+        if (isUp) {
+            snake.moveBy(new Point2D.Double(0, -MOVE_BY));
+        }
+        if (isRight) {
+            snake.moveBy(new Point2D.Double(MOVE_BY, 0));
+        }
+        if (isLeft) {
+            snake.moveBy(new Point2D.Double(-MOVE_BY, 0));
+        }
+        if (isShrink) {
+            snake.shrink();
+        	isShrink = false;
+        }
+    }
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -434,11 +443,16 @@ public class Game implements KeyListener, MouseListener {
 	 * @return
 	 */
 	private int getScore(int captures) {
-		final int FRAMES_PER_SECOND = 50;
-		final int CAPTURE_MULTIPLIER = 100;
-		//score = ((int) time / FRAMES_PER_SECOND + CAPTURE_MULTIPLIER * captured);
-		
-		score = score + captures * CAPTURE_MULTIPLIER * (1 + snake.getStage());
+		final int CAPTURE_MULTIPLIER = 100;		
+		int stage = snake.getStage();
+        if (0 == stage)
+        {
+            score += captures;
+        } 
+        else
+        {
+            score = score + captures * CAPTURE_MULTIPLIER * stage;
+        }
 		return score;
 	}
 
