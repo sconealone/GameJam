@@ -1,6 +1,7 @@
 package game;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -122,16 +123,31 @@ public class Game implements KeyListener, MouseListener {
 		scene = Scene.GAME_OVER;
 		bgm.stopBGM();
 
-		try {
-			gover = ImageIO.read(new File("src" + File.separatorChar
-					+ "resources" + File.separatorChar
-					+ "game_over_retryButton.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		frame.setContentPane(new JLabel(new ImageIcon(gover)));
+		JPanel gopanel = new JPanel() {
+		    private String path = "src"+File.separatorChar+"resources"+File.separatorChar+"game_over_retryButton.png";
+            private Image bg = null;
+            // static initializer
+		    {
+	            try {
+	                bg = ImageIO.read(new File(path));
+	            } catch (IOException ioe) {
+	                ioe.printStackTrace();
+	            }
+		    }
+		    public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+		        
+		        if (bg != null) {
+		            g.drawImage(bg, 0, 0, null);
+		        }
+		    }
+		};
+		JLabel golabel = new JLabel("Your score was "+score);
+		golabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		golabel.setForeground(Color.YELLOW);
+		gopanel.add(golabel);
+		
+		frame.setContentPane(gopanel);
 		frame.setVisible(true);
 
 	}
@@ -199,7 +215,6 @@ public class Game implements KeyListener, MouseListener {
 		while (true) {
 			try {
 			    boolean gameOver = false;
-
 		        getInput();
 				g = bf.getDrawGraphics();
 				g.setColor(new Color(255, 255, 255));
@@ -285,7 +300,7 @@ public class Game implements KeyListener, MouseListener {
                 }
 				g.dispose();
 			} catch (GameOverException goe) {
-                Thread.sleep(3000); // let the player see which moon hit him  
+                Thread.sleep(2000); // let the player see which moon hit him  
                 throw new GameOverException();
 			} finally {
 	            if (g != null)
