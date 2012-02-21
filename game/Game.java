@@ -71,7 +71,7 @@ public class Game implements KeyListener, MouseListener {
 	public void initGame() {
 		scene = Scene.GAME;
 
-		level = 1;
+		level = 0;
 		nextLevelAt = 0;
 		gameTime = 0;
 		score = 0;
